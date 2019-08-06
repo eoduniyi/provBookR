@@ -1,0 +1,24 @@
+Package: provBookR
+Title: Creates an HTML-Based Visualization of Provenance
+Version: 0.1
+Date: 2019-08-06
+Authors@R: c( person("Erick", "Oduniyi", role = "cre",
+                      email = "e959o471@ku.edu"))
+		    )
+Copyright: President and Fellows of Harvard College, Trustees of Mount Holyoke College
+Description: Reads the provenance collected by the 'rdt' or
+    'rdtLite' packages, or other tools providing compatible PROV JSON output
+    created by the execution of a script, and creates an HTML-based visualization of provenance.
+Depends: R (>= 3.5)
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    provParseR (>= 0.1.2)
+Suggests:
+    rdtLite,
+    rdt
+Additional_repositories:  https://end-to-end-provenance.github.io/drat/
+URL: https://github.com/End-to-end-provenance
+BugReports: https://github.com/End-to-end-provenance/provBookR/issues
+RoxygenNote: 6.1.1
