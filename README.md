@@ -1,6 +1,15 @@
 
 # 1. Running ```R provBookR()```
 
+# TODO: 
+* Finish provbook generation
+	* Generate html from R
+	* Collect provenance from browser
+
+* Clean up README file
+
+
+
 
 ```R
 # Data tools:
