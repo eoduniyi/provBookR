@@ -22,7 +22,9 @@ library(provParseR) # Load Provenance Parser
 library(provDebugR) # Load Provenance Debugger
 library(provSummarizeR) # Load Provenance Summarizer
 ```
+---
 
+# 2. Using ```provBookR().browser```
 ```R
 # Run provBookR with full options specified (E2E provenance tools)
 provBookR("prov.json", mode="full")
@@ -33,8 +35,8 @@ provBookR("prov.json", mode="full")
     provBookR browser initialized!
     provBookR browser running, type "help" for more information or Q to quit
     prov.json
-
-
+    .
+    .
     provBookR> help
     provBookR(operations)> [command][space][variable.name]:
     Quit provBookR                                : "q"   
@@ -45,49 +47,53 @@ provBookR("prov.json", mode="full")
     Summarize provenance                          : "S"   
     Debug script                                  : "DB"  
     Clean script                                  : "C"   
-
-
+    .
+    .
     provBookR browser running, type "help" for more information or Q to quit
     prov.json
-
-
+    .
+    .
     provBookR> S
-    
-
-
+    .
+    .
+    .
     Running provSummarizeR...
-
-
-    
-
-
+    .
+    .
+    .
+    .
+    .
     provBookR browser running, type "help" for more information or Q to quit
     prov.json
-
-
+    .
+    .
+    .
     provBookR> C
-    
-
-
+    .
+    .
+    .
     Running RClean...
-
-
-    
-
-
+    .
+    .
+    .
+    .
+    .
     provBookR browser running, type "help" for more information or Q to quit
     prov.json
-
-
+    .
+    .
+    .
     provBookR> DB
-    
+    .
+    .
+    .
 
 
     Running provDebugR...
 
 
     Debug> Q
-    
+
     Debugger initialized, type "help" for more information or Q to quit
     /Users/erickoduniyi/Documents/School/KU/Academics/2018-2019/Research/Hardvard-Forest/Projects/Fruits-Of-Provenance/Construction/Development-Code/Jupyter/myscript.r
     2: f <- function(x) {	y <- x^2	return(y)}
@@ -259,7 +265,7 @@ provBookR("prov.json", mode="full")
 provBookR("prov.json", mode="lite")
 ```
 
-    variable name?: 
+    variable name?:
 
 
     provBookR.lite> f
@@ -283,9 +289,3 @@ provBookR("prov.json", mode="lite")
 
 
     provbook for variable "f" is stored in /Users/erickoduniyi/Documents/School/KU/Academics/2018-2019/Research/Hardvard-Forest/Projects/Fruits-Of-Provenance/Construction/Development-Code/Jupyter
-
-# TODO: 
-* Finish provbook generation
-	* Generate html/css/javascript from R
-
-* Clean up README file
