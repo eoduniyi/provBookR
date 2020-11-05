@@ -48,9 +48,11 @@ provBookR.variable.lineage <- function(prov.json, lineage){
   var.vector <- c()
   for(i in 1:length(lineage)){
     if(grepl("p", lineage[i])){
+      
       # Collect procedure nodes
       var.vector <- c(proc.nodes[proc.nodes$id == lineage[i], c("name")], var.vector)
     }else{
+      
       # Collect data nodes
       var.vector <- c(data.nodes[data.nodes$id == lineage[i], c("name")], var.vector)
     }

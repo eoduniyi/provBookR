@@ -58,11 +58,14 @@ provBookR.lite <- function(file.name){
   
   # Check the file type of file.name
   if(json.check(file.name)){
+    
     # Query provenance
     provBookR.prov.querying(file.name, data.object.name, "BO")
   }else{
+    
     # Record provenance
     recorded.prov <- provBookR.prov.recording(file.name)
+    
     # Query provenance
     provBookR.prov.querying(recorded.prov, data.object.name, "BO")
   }
