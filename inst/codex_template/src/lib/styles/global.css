@@ -1,0 +1,266 @@
+/* ── Vibrational Codex — Global Styles ──
+   Inspired by Stripe Press & Liquid Hardware: light paper, serif body,
+   e-ink typography, liquid glass bubbles, and fluid micro-interactions. */
+
+:root {
+  --text: #1a1a24;
+  --text-secondary: #4a4a5a;
+  --text-muted: #8e8e9e;
+  --accent: #2b2b36;
+  --accent-light: rgba(0, 0, 0, 0.04);
+  --border: rgba(0, 0, 0, 0.07);
+  --bg: #ffffff;
+  --bg-warm: #fbfaf8;
+  --bg-figure: rgba(255, 255, 255, 0.7);
+
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+
+  --font-body: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --font-mono: "SF Mono", "Fira Code", "Cascadia Code", Menlo, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --max-width: 860px;
+  --page-padding: 2rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg-warm);
+  line-height: 1.82;
+}
+
+/* ── Typography ── */
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.6rem;
+  margin-bottom: 0.5rem;
+}
+h2 {
+  font-size: 1.6rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+h3 {
+  font-size: 1.15rem;
+  margin-top: 1.8rem;
+  margin-bottom: 0.6rem;
+}
+
+p {
+  margin-bottom: 1.35rem;
+}
+
+a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: rgba(0,0,0,0.2);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s;
+}
+a:hover {
+  text-decoration-color: var(--text);
+}
+
+/* ── Page / Spread ── */
+
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0;
+}
+
+.spread {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem var(--page-padding);
+}
+
+/* ── Liquid Glass Bubble Notes / Callouts ── */
+
+.chapter-label {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.note {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px; /* liquid bubble pill */
+  padding: 1rem 1.4rem;
+  margin: 1.5rem 0;
+  box-shadow: var(--glass-shadow);
+  line-height: 1.6;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+}
+
+.note:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
+}
+
+.note.green, .note.amber {
+  border-left: none; /* remove blue/colored highlight edges */
+  background: var(--glass-bg);
+}
+
+/* ── E-Ink Code Blocks ── */
+
+pre, code {
+  font-family: var(--font-mono);
+}
+
+.eink-code-block {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  color: #18181b;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+}
+
+/* ── Figures ── */
+
+figure {
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 2rem 0;
+  backdrop-filter: blur(12px);
+}
+
+/* ── Scroll progress ── */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--text);
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 640px) {
+  :root {
+    --page-padding: 1.5rem;
+  }
+  html {
+    font-size: 15px;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  h2 {
+    font-size: 1.35rem;
+  }
+}
+
+/* ── Custom E-Ink Syntax Highlighting (PrismJS) ── */
+.token.comment { color: var(--text-muted); font-style: italic; }
+.token.string, .token.char, .token.regex, .token.markup { color: var(--hl-string, #52525b); }
+.token.operator, .token.punctuation, .token.entity { color: var(--hl-operator, #18181b); font-weight: 600; }
+.token.number, .token.boolean { color: var(--hl-operator, #18181b); font-weight: 600; }
+.token.function, .token.keyword { color: var(--hl-operator, #18181b); font-weight: 600; }
+.token.property, .token.variable, .token.constant { color: var(--hl-property, #3f3f46); }
+
+/* ── Typography Skins ── */
+.font-system-mono {
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+}
+.font-fira-code {
+  --font-mono: "Fira Code", monospace;
+}
+.font-jetbrains {
+  --font-mono: "JetBrains Mono", monospace;
+}
+.font-sans-code {
+  --font-mono: var(--font-sans);
+}
+
+/* ── Theme Skins ── */
+.theme-eink-dark {
+  --text: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --bg: #18181b;
+  --bg-warm: #1a1a24;
+  --border: rgba(255, 255, 255, 0.15);
+  --glass-bg: rgba(26, 26, 36, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  
+  --hl-string: #a1a1aa;
+  --hl-operator: #e4e4e7;
+  --hl-property: #d4d4d8;
+}
+
+.theme-high-contrast {
+  --text: #000000;
+  --text-secondary: #000000;
+  --text-muted: #333333;
+  --bg: #ffffff;
+  --bg-warm: #ffffff;
+  --border: #000000;
+  --glass-bg: #ffffff;
+  --glass-border: #000000;
+  --glass-shadow: none;
+
+  --hl-string: #000000;
+  --hl-operator: #000000;
+  --hl-property: #000000;
+}
+
+.theme-eink-dark .eink-code-block, 
+.theme-eink-dark .eink-canvas-container {
+  background: var(--bg-warm);
+  border-color: var(--border);
+}
+.theme-eink-dark .eink-code {
+  color: var(--text);
+}

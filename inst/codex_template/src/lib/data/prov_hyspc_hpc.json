@@ -1,0 +1,284 @@
+{
+	"prefix": {
+		"prov": "http://www.w3.org/ns/prov#",
+		"rdt": "https://github.com/End-to-end-provenance/ExtendedProvJson/blob/master/JSON-format.md"
+	},
+
+	"agent": {
+		"rdt:a1": {
+			"rdt:tool.name": "git + extendr",
+			"rdt:tool.version": "extendr-0.7 / rextendr-0.3",
+			"rdt:json.version": "2.3",
+			"rdt:args.names": ["repo", "branch", "rust_toolchain"],
+			"rdt:args.values": ["r-hyperspec/hySpc.hpc", "main", "stable"],
+			"rdt:args.types": ["character", "character", "character"]
+		}
+	},
+
+	"activity": {
+		"rdt:p1": {
+			"rdt:name": "hySpc.hpc commits",
+			"rdt:type": "Start",
+			"rdt:elapsedTime": "0.00",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": "NA",
+			"rdt:startCol": "NA",
+			"rdt:endLine": "NA",
+			"rdt:endCol": "NA"
+		},
+		"rdt:p2": {
+			"rdt:name": "[589b2b5] feat: add the iterative solver for smoothing",
+			"rdt:type": "Operation",
+			"rdt:elapsedTime": "0.39",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": 1,
+			"rdt:startCol": 1,
+			"rdt:endLine": 3,
+			"rdt:endCol": 52,
+			"rdt:commit": "589b2b5",
+			"rdt:author": "shinigami-777",
+			"rdt:date": "2026-07-06T22:16:19+0530",
+			"rdt:insertions": 390,
+			"rdt:deletions": 75
+		},
+		"rdt:p3": {
+			"rdt:name": "[923013f] feat: add parallel spectral processing for solver",
+			"rdt:type": "Operation",
+			"rdt:elapsedTime": "0.17",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": 5,
+			"rdt:startCol": 1,
+			"rdt:endLine": 8,
+			"rdt:endCol": 40,
+			"rdt:commit": "923013f",
+			"rdt:author": "shinigami-777",
+			"rdt:date": "2026-07-27T00:54:38+0530",
+			"rdt:insertions": 25,
+			"rdt:deletions": 13
+		},
+		"rdt:p4": {
+			"rdt:name": "[0e2d28f] add unit test to check ffi bridge",
+			"rdt:type": "Operation",
+			"rdt:elapsedTime": "0.12",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": 10,
+			"rdt:startCol": 1,
+			"rdt:endLine": 12,
+			"rdt:endCol": 36,
+			"rdt:commit": "0e2d28f",
+			"rdt:author": "shinigami-777",
+			"rdt:date": "2026-08-03T15:31:29+0530",
+			"rdt:insertions": 96,
+			"rdt:deletions": 5
+		},
+		"rdt:p5": {
+			"rdt:name": "[3d252fe] feat: add unit test adjacency graph construction",
+			"rdt:type": "Operation",
+			"rdt:elapsedTime": "0.09",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": 14,
+			"rdt:startCol": 1,
+			"rdt:endLine": 16,
+			"rdt:endCol": 52,
+			"rdt:commit": "3d252fe",
+			"rdt:author": "shinigami-777",
+			"rdt:date": "2026-08-03T16:03:35+0530",
+			"rdt:insertions": 79,
+			"rdt:deletions": 0
+		},
+		"rdt:p6": {
+			"rdt:name": "[2433571] unit tests for laplacian matrix construction",
+			"rdt:type": "Operation",
+			"rdt:elapsedTime": "0.11",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": 18,
+			"rdt:startCol": 1,
+			"rdt:endLine": 20,
+			"rdt:endCol": 48,
+			"rdt:commit": "2433571",
+			"rdt:author": "shinigami-777",
+			"rdt:date": "2026-08-03T20:45:33+0530",
+			"rdt:insertions": 90,
+			"rdt:deletions": 0
+		},
+		"rdt:p7": {
+			"rdt:name": "[62681c3] feat: added unit tests for solver",
+			"rdt:type": "Operation",
+			"rdt:elapsedTime": "0.08",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": 22,
+			"rdt:startCol": 1,
+			"rdt:endLine": 23,
+			"rdt:endCol": 44,
+			"rdt:commit": "62681c3",
+			"rdt:author": "shinigami-777",
+			"rdt:date": "2026-08-03T20:50:15+0530",
+			"rdt:insertions": 74,
+			"rdt:deletions": 11
+		},
+		"rdt:p8": {
+			"rdt:name": "hySpc.hpc commits",
+			"rdt:type": "Finish",
+			"rdt:elapsedTime": "0.00",
+			"rdt:scriptNum": 1,
+			"rdt:startLine": "NA",
+			"rdt:startCol": "NA",
+			"rdt:endLine": "NA",
+			"rdt:endCol": "NA"
+		}
+	},
+
+	"entity": {
+		"rdt:d1": {
+			"rdt:name": "src/rust/src/lib.rs (solver core)",
+			"rdt:value": "csc_matvec(), solve_cg(), solve_bicgstab(), graph_smooth_rust() — 429 lines",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"Rust\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "R_GlobalEnv",
+			"rdt:fromEnv": false,
+			"rdt:hash": "a1b2c3d4e5f6",
+			"rdt:timestamp": "2026-07-06T22:16:19+0530",
+			"rdt:location": "src/rust/src/lib.rs"
+		},
+		"rdt:d2": {
+			"rdt:name": "R/graphSmooth.R",
+			"rdt:value": "graphSmooth() S4 generic + hyperSpec method — backend dispatch: 'rust' / 'r'",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"R\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "R_GlobalEnv",
+			"rdt:fromEnv": false,
+			"rdt:hash": "b2c3d4e5f6a1",
+			"rdt:timestamp": "2026-07-06T22:16:19+0530",
+			"rdt:location": "R/graphSmooth.R"
+		},
+		"rdt:d3": {
+			"rdt:name": "R/extendr-wrappers.R",
+			"rdt:value": "graph_smooth_rust(), dgc_row_sums_rust(), laplacian_matrix_rust(), pixel_graph_stats_rust()",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"R\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "R_GlobalEnv",
+			"rdt:fromEnv": false,
+			"rdt:hash": "c3d4e5f6a1b2",
+			"rdt:timestamp": "2026-07-27T00:54:38+0530",
+			"rdt:location": "R/extendr-wrappers.R"
+		},
+		"rdt:d4": {
+			"rdt:name": "src/rust/Cargo.toml (rayon dep)",
+			"rdt:value": "rayon = \"1\" — enables parallel band-wise smoothing via par_iter()",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"TOML\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "undefined",
+			"rdt:fromEnv": false,
+			"rdt:hash": "d4e5f6a1b2c3",
+			"rdt:timestamp": "2026-07-27T00:54:38+0530",
+			"rdt:location": "src/rust/Cargo.toml"
+		},
+		"rdt:d5": {
+			"rdt:name": "tests/testthat/test_ffi_bridge.R",
+			"rdt:value": "96 lines — slot extraction, monotonic pointers, length mismatch, round-trip row-sum validation",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"R\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "undefined",
+			"rdt:fromEnv": false,
+			"rdt:hash": "e5f6a1b2c3d4",
+			"rdt:timestamp": "2026-08-03T15:31:29+0530",
+			"rdt:location": "tests/testthat/test_ffi_bridge.R"
+		},
+		"rdt:d6": {
+			"rdt:name": "tests/testthat/test_graph_construction.R",
+			"rdt:value": "53 lines — node count, 4/8-connectivity edge count, corner/edge/interior degree checks",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"R\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "undefined",
+			"rdt:fromEnv": false,
+			"rdt:hash": "f6a1b2c3d4e5",
+			"rdt:timestamp": "2026-08-03T16:03:35+0530",
+			"rdt:location": "tests/testthat/test_graph_construction.R"
+		},
+		"rdt:d7": {
+			"rdt:name": "tests/testthat/test_laplacian.R",
+			"rdt:value": "46 lines — L=D-W diagonal, off-diagonal -1, symmetry, positive semi-definiteness checks",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"R\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "undefined",
+			"rdt:fromEnv": false,
+			"rdt:hash": "a1b2c3d4e5f7",
+			"rdt:timestamp": "2026-08-03T20:45:33+0530",
+			"rdt:location": "tests/testthat/test_laplacian.R"
+		},
+		"rdt:d8": {
+			"rdt:name": "tests/testthat/test_solvers.R",
+			"rdt:value": "73 lines — CG vs dense solve, BiCGSTAB vs dense solve, zero-alpha identity, 4/8-connectivity variants",
+			"rdt:valType": "{\"container\":\"file\", \"type\":[\"R\"]}",
+			"rdt:type": "File",
+			"rdt:scope": "undefined",
+			"rdt:fromEnv": false,
+			"rdt:hash": "b2c3d4e5f6a8",
+			"rdt:timestamp": "2026-08-03T20:50:15+0530",
+			"rdt:location": "tests/testthat/test_solvers.R"
+		},
+
+		"rdt:environment": {
+			"rdt:name": "environment",
+			"rdt:architecture": "aarch64, darwin20",
+			"rdt:operatingSystem": "macOS 26.5.2",
+			"rdt:language": "R + Rust",
+			"rdt:langVersion": "R 4.4.0 / rustc 1.79 (stable)",
+			"rdt:ui": "terminal",
+			"rdt:pandoc": "3.9 @ /opt/homebrew/bin/pandoc",
+			"rdt:script": "/Users/erickoduniyi/Desktop/hpc/hySpc.hpc — commits 589b2b5..62681c3",
+			"rdt:scriptTimeStamp": "2026-08-03T20:50:15+0530",
+			"rdt:scriptHash": "72638e30fbfd5d4fefb0497895c44352",
+			"rdt:totalElapsedTime": "0.96",
+			"rdt:sourcedScripts": "src/rust/src/lib.rs, R/graphSmooth.R, R/extendr-wrappers.R",
+			"rdt:sourcedScriptTimeStamps": "2026-07-06, 2026-07-27, 2026-08-03",
+			"rdt:sourcedScriptHashes": "",
+			"rdt:workingDirectory": "/Users/erickoduniyi/Desktop/hpc/hySpc.hpc",
+			"rdt:provDirectory": "/Users/erickoduniyi/Desktop/hpc/hySpc.hpc/prov_hyspc_hpc",
+			"rdt:provTimestamp": "2026-08-03T20:50:15+0530",
+			"rdt:hashAlgorithm": "md5"
+		},
+
+		"rdt:l1": { "name": "extendr-api", "version": "0.7", "whereLoaded": "Cargo.toml", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } },
+		"rdt:l2": { "name": "faer", "version": "0.19", "whereLoaded": "Cargo.toml", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } },
+		"rdt:l3": { "name": "petgraph", "version": "0.6", "whereLoaded": "Cargo.toml", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } },
+		"rdt:l4": { "name": "rayon", "version": "1.10", "whereLoaded": "Cargo.toml", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } },
+		"rdt:l5": { "name": "dgcmatrix-faer-bridge", "version": "0.1.0", "whereLoaded": "Cargo.toml", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } },
+		"rdt:l6": { "name": "Matrix", "version": "1.6-5", "whereLoaded": "testthat", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } },
+		"rdt:l7": { "name": "testthat", "version": "3.2.1", "whereLoaded": "devtools", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } },
+		"rdt:l8": { "name": "rextendr", "version": "0.3.1", "whereLoaded": "devtools", "prov:type": { "$": "prov:Collection", "type": "xsd:QName" } }
+	},
+
+	"wasInformedBy": {
+		"rdt:pp1": { "prov:informant": "rdt:p1", "prov:informed": "rdt:p2" },
+		"rdt:pp2": { "prov:informant": "rdt:p2", "prov:informed": "rdt:p3" },
+		"rdt:pp3": { "prov:informant": "rdt:p3", "prov:informed": "rdt:p4" },
+		"rdt:pp4": { "prov:informant": "rdt:p4", "prov:informed": "rdt:p5" },
+		"rdt:pp5": { "prov:informant": "rdt:p5", "prov:informed": "rdt:p6" },
+		"rdt:pp6": { "prov:informant": "rdt:p6", "prov:informed": "rdt:p7" },
+		"rdt:pp7": { "prov:informant": "rdt:p7", "prov:informed": "rdt:p8" }
+	},
+
+	"wasGeneratedBy": {
+		"rdt:pd1": { "prov:activity": "rdt:p2", "prov:entity": "rdt:d1" },
+		"rdt:pd2": { "prov:activity": "rdt:p2", "prov:entity": "rdt:d2" },
+		"rdt:pd3": { "prov:activity": "rdt:p2", "prov:entity": "rdt:d3" },
+		"rdt:pd4": { "prov:activity": "rdt:p3", "prov:entity": "rdt:d4" },
+		"rdt:pd5": { "prov:activity": "rdt:p4", "prov:entity": "rdt:d5" },
+		"rdt:pd6": { "prov:activity": "rdt:p5", "prov:entity": "rdt:d6" },
+		"rdt:pd7": { "prov:activity": "rdt:p6", "prov:entity": "rdt:d7" },
+		"rdt:pd8": { "prov:activity": "rdt:p7", "prov:entity": "rdt:d8" }
+	},
+
+	"used": {
+		"rdt:dp1": { "prov:entity": "rdt:d1", "prov:activity": "rdt:p3" },
+		"rdt:dp2": { "prov:entity": "rdt:d1", "prov:activity": "rdt:p7" },
+		"rdt:dp3": { "prov:entity": "rdt:d2", "prov:activity": "rdt:p3" },
+		"rdt:dp4": { "prov:entity": "rdt:d3", "prov:activity": "rdt:p3" },
+		"rdt:dp5": { "prov:entity": "rdt:d3", "prov:activity": "rdt:p4" },
+		"rdt:dp6": { "prov:entity": "rdt:d4", "prov:activity": "rdt:p3" },
+		"rdt:dp7": { "prov:entity": "rdt:d5", "prov:activity": "rdt:p5" },
+		"rdt:dp8": { "prov:entity": "rdt:d6", "prov:activity": "rdt:p6" },
+		"rdt:dp9": { "prov:entity": "rdt:d7", "prov:activity": "rdt:p7" }
+	}
+}
