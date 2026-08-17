@@ -42,7 +42,7 @@
 
     return Object.entries(ents).filter(([k, e]: [string, any]) => 
       relatedEntityIds.has(k) && e['rdt:type'] !== 'Environment' && k.startsWith('rdt:d')
-    );
+    ) as [string, any][];
   });
 
   const snapshots = $derived(filteredEntities.filter(([_, e]) => e['rdt:type'] === 'Snapshot'));
@@ -107,11 +107,12 @@
   }
   .graph-intro h2 {
     margin-top: 0.25rem;
+    color: var(--text);
   }
   .section-desc {
     font-size: 0.95rem;
     line-height: 1.5;
-    color: var(--text-secondary, #4a4a5a);
+    color: var(--text-secondary);
     margin-bottom: 1.25rem;
   }
   .script-pill-grid {
@@ -127,22 +128,23 @@
     padding: 0.45rem 0.8rem;
     font-size: 0.78rem;
     font-family: var(--font-sans);
-    color: var(--text-secondary, #4a4a5a);
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: var(--text-secondary);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 9999px;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .script-select-pill:hover {
-    background: rgba(255, 255, 255, 0.7);
-    color: var(--text, #1a1a24);
+    background: var(--glass-bg-hover);
+    color: var(--text);
   }
   .script-select-pill.active {
-    background: #1a1a24;
-    color: #ffffff;
-    border-color: #1a1a24;
-    box-shadow: 0 4px 12px -2px rgba(0,0,0,0.15);
+    background: var(--pill-badge-bg, #1a1a24);
+    color: var(--pill-badge-text, #ffffff);
+    border-color: var(--card-border-active, #1a1a24);
+    box-shadow: 0 4px 12px -2px rgba(0,0,0,0.2);
+    font-weight: 600;
   }
   .sc-name {
     font-family: var(--font-mono, monospace);
@@ -156,10 +158,11 @@
     font-size: 0.8rem;
     font-weight: 600;
     margin: 0 0 0.75rem;
+    color: var(--text);
   }
   .count {
     font-weight: 400;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
   .entity-grid {
     display: flex;
@@ -172,46 +175,46 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.6rem 1.1rem;
-    background: rgba(255, 255, 255, 0.65);
+    background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--glass-border);
     border-radius: 9999px;
     font-size: 0.8rem;
     gap: 0.75rem;
-    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
   }
 
   .glass-pill:hover {
     transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--glass-bg-hover);
   }
 
   .ent-name {
     font-family: var(--font-mono, monospace);
-    color: var(--text, #1a1a24);
+    color: var(--text);
     font-weight: 600;
     white-space: nowrap;
   }
   .ent-value {
     font-family: var(--font-mono, monospace);
-    color: var(--text-secondary, #4a4a5a);
+    color: var(--text-secondary);
     font-size: 0.74rem;
     text-align: right;
     word-break: break-word;
   }
   .file-pill {
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--card-bg);
   }
   .ent-hash {
     font-family: var(--font-mono, monospace);
     font-size: 0.68rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
   .empty-state {
     font-size: 0.85rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
     font-style: italic;
     padding: 0.5rem;
   }

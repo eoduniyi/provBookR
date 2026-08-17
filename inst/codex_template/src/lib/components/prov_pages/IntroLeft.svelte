@@ -61,9 +61,11 @@
   .intro-page h2 {
     margin-top: 0.2rem;
     margin-bottom: 0.3rem;
+    color: var(--text);
   }
   .subtitle {
     margin-bottom: 1.2rem;
+    color: var(--text-secondary);
   }
 
   .flow-container {
@@ -79,18 +81,18 @@
     align-items: flex-start;
     gap: 0.9rem;
     padding: 0.85rem 1.2rem;
-    background: rgba(255, 255, 255, 0.65);
+    background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
-    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s, box-shadow 0.2s;
   }
 
   .flow-pill:hover {
     transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--glass-bg-hover);
   }
 
   .pill-badge {
@@ -98,8 +100,8 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: var(--text, #1a1a24);
-    color: #ffffff;
+    background: var(--pill-badge-bg, var(--text));
+    color: var(--pill-badge-text, #ffffff);
     font-family: var(--font-mono, monospace);
     font-size: 0.72rem;
     font-weight: 700;
@@ -107,20 +109,21 @@
     align-items: center;
     justify-content: center;
     margin-top: 0.1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   }
 
   .pill-content h4 {
     font-family: var(--font-sans);
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--text, #1a1a24);
+    color: var(--text);
     margin: 0 0 0.15rem;
   }
 
   .pill-content p {
     font-family: var(--font-sans);
     font-size: 0.75rem;
-    color: var(--text-secondary, #4a4a5a);
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.45;
   }

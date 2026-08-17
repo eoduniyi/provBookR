@@ -48,10 +48,7 @@
     <button 
       class="dock-btn"
       class:active={annotationsPanelState.isOpen}
-      onclick={() => {
-        annotationsPanelState.isOpen = !annotationsPanelState.isOpen;
-        if (annotationsPanelState.isOpen) themeState.isOpen = false;
-      }}
+      onclick={() => annotationsPanelState.isOpen = !annotationsPanelState.isOpen}
       aria-label="Annotations"
       title="Annotations"
     >
@@ -65,10 +62,7 @@
     <button 
       class="dock-btn"
       class:active={themeState.isOpen}
-      onclick={() => {
-        themeState.isOpen = !themeState.isOpen;
-        if (themeState.isOpen) annotationsPanelState.isOpen = false;
-      }}
+      onclick={() => themeState.isOpen = !themeState.isOpen}
       aria-label="Typography Settings"
       title="Typography & Theme"
     >

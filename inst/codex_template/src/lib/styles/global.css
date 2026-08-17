@@ -3,19 +3,49 @@
    e-ink typography, liquid glass bubbles, and fluid micro-interactions. */
 
 :root {
-  --text: #1a1a24;
-  --text-secondary: #4a4a5a;
-  --text-muted: #8e8e9e;
-  --accent: #2b2b36;
-  --accent-light: rgba(0, 0, 0, 0.04);
-  --border: rgba(0, 0, 0, 0.07);
+  --page-bg: #f7f6f1;
   --bg: #ffffff;
   --bg-warm: #fbfaf8;
   --bg-figure: rgba(255, 255, 255, 0.7);
 
+  --text: #1a1a24;
+  --text-body: #242432;
+  --text-secondary: #4a4a5a;
+  --text-muted: #787888;
+
+  --accent: #2b2b36;
+  --accent-light: rgba(0, 0, 0, 0.04);
+  --border: rgba(0, 0, 0, 0.08);
+
   --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-bg-hover: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(255, 255, 255, 0.85);
-  --glass-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-bg-hover: rgba(255, 255, 255, 0.85);
+  --card-bg-active: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-border-active: rgba(0, 0, 0, 0.16);
+
+  --pill-bg: rgba(0, 0, 0, 0.04);
+  --pill-text: #1a1a24;
+  --pill-badge-bg: #1a1a24;
+  --pill-badge-text: #ffffff;
+
+  --code-paper-bg: #ffffff;
+  --code-paper-border: rgba(0, 0, 0, 0.08);
+  --code-text: #18181b;
+
+  --page-edge-1: #e4e3de;
+  --page-edge-2: #eeebe6;
+  --page-edge-3: #d4d3ce;
+  --page-shadow: -20px 25px 40px rgba(0,0,0,0.5);
+
+  --noise-opacity: 0.04;
+  --bleed-opacity: 0.035;
+  --bleed-fill: %23000;
+  --spine-shadow: rgba(0,0,0,0.12);
 
   --font-body: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
   --font-mono: "SF Mono", "Fira Code", "Cascadia Code", Menlo, monospace;
@@ -42,7 +72,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  color: var(--text);
+  color: var(--text-body, var(--text));
   background: var(--bg-warm);
   line-height: 1.82;
 }
@@ -50,6 +80,7 @@ body {
 /* ── Typography ── */
 
 h1, h2, h3, h4 {
+  color: var(--text);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -71,6 +102,7 @@ h3 {
 }
 
 p {
+  color: var(--text-body, var(--text));
   margin-bottom: 1.35rem;
 }
 
@@ -123,7 +155,7 @@ a:hover {
 .note {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--text-body, var(--text));
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -138,11 +170,11 @@ a:hover {
 
 .note:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .note.green, .note.amber {
-  border-left: none; /* remove blue/colored highlight edges */
+  border-left: none;
   background: var(--glass-bg);
 }
 
@@ -153,11 +185,11 @@ pre, code {
 }
 
 .eink-code-block {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--code-paper-bg, #ffffff);
+  border: 1px solid var(--code-paper-border, rgba(0, 0, 0, 0.08));
   border-radius: 16px;
   padding: 1.25rem 1.5rem;
-  color: #18181b;
+  color: var(--code-text, #18181b);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
 }
 
@@ -224,32 +256,148 @@ figure {
 }
 
 /* ── Theme Skins ── */
+.theme-eink-light {
+  --page-bg: #f7f6f1;
+  --bg: #ffffff;
+  --bg-warm: #fbfaf8;
+  --bg-figure: rgba(255, 255, 255, 0.7);
+
+  --text: #1a1a24;
+  --text-body: #242432;
+  --text-secondary: #4a4a5a;
+  --text-muted: #787888;
+
+  --accent: #2b2b36;
+  --accent-light: rgba(0, 0, 0, 0.04);
+  --border: rgba(0, 0, 0, 0.08);
+
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-bg-hover: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-bg-hover: rgba(255, 255, 255, 0.85);
+  --card-bg-active: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-border-active: rgba(0, 0, 0, 0.16);
+
+  --pill-bg: rgba(0, 0, 0, 0.04);
+  --pill-text: #1a1a24;
+  --pill-badge-bg: #1a1a24;
+  --pill-badge-text: #ffffff;
+
+  --code-paper-bg: #ffffff;
+  --code-paper-border: rgba(0, 0, 0, 0.08);
+  --code-text: #18181b;
+
+  --page-edge-1: #e4e3de;
+  --page-edge-2: #eeebe6;
+  --page-edge-3: #d4d3ce;
+  --page-shadow: -20px 25px 40px rgba(0,0,0,0.5);
+
+  --noise-opacity: 0.04;
+  --bleed-opacity: 0.035;
+  --bleed-fill: %23000;
+  --spine-shadow: rgba(0,0,0,0.12);
+}
+
 .theme-eink-dark {
-  --text: #e4e4e7;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --bg: #18181b;
-  --bg-warm: #1a1a24;
-  --border: rgba(255, 255, 255, 0.15);
-  --glass-bg: rgba(26, 26, 36, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  
-  --hl-string: #a1a1aa;
-  --hl-operator: #e4e4e7;
-  --hl-property: #d4d4d8;
+  --page-bg: #161622;
+  --bg: #0e0e16;
+  --bg-warm: #12121c;
+  --bg-figure: rgba(30, 30, 44, 0.7);
+
+  /* High contrast, radiant text — pure white for titles, bright silver for body */
+  --text: #ffffff;
+  --text-body: #f1f1f6;
+  --text-secondary: #c4c4d6;
+  --text-muted: #9292a8;
+
+  --accent: #38bdf8;
+  --accent-light: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.14);
+
+  /* Deep, vibrant dark slate liquid glass */
+  --glass-bg: rgba(30, 30, 46, 0.75);
+  --glass-bg-hover: rgba(42, 42, 64, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.09);
+
+  --card-bg: rgba(26, 26, 40, 0.8);
+  --card-bg-hover: rgba(38, 38, 56, 0.9);
+  --card-bg-active: rgba(48, 48, 72, 0.95);
+  --card-border: rgba(255, 255, 255, 0.14);
+  --card-border-active: rgba(255, 255, 255, 0.28);
+
+  --pill-bg: rgba(255, 255, 255, 0.08);
+  --pill-text: #f0f0f8;
+  --pill-badge-bg: #ffffff;
+  --pill-badge-text: #14141e;
+
+  --code-paper-bg: #101018;
+  --code-paper-border: rgba(255, 255, 255, 0.12);
+  --code-text: #f5f5fa;
+
+  --page-edge-1: #28283a;
+  --page-edge-2: #20202e;
+  --page-edge-3: #161622;
+  --page-shadow: -20px 25px 50px rgba(0,0,0,0.85);
+
+  --noise-opacity: 0.025;
+  --bleed-opacity: 0.015;
+  --bleed-fill: %23fff;
+  --spine-shadow: rgba(0,0,0,0.4);
+
+  --hl-string: #86efac;
+  --hl-operator: #ffffff;
+  --hl-property: #93c5fd;
 }
 
 .theme-high-contrast {
-  --text: #000000;
-  --text-secondary: #000000;
-  --text-muted: #333333;
+  --page-bg: #ffffff;
   --bg: #ffffff;
   --bg-warm: #ffffff;
+  --bg-figure: #ffffff;
+
+  --text: #000000;
+  --text-body: #000000;
+  --text-secondary: #111111;
+  --text-muted: #333333;
+
+  --accent: #000000;
+  --accent-light: #f0f0f0;
   --border: #000000;
+
   --glass-bg: #ffffff;
+  --glass-bg-hover: #f4f4f4;
   --glass-border: #000000;
-  --glass-shadow: none;
+  --glass-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  --card-bg: #ffffff;
+  --card-bg-hover: #f4f4f4;
+  --card-bg-active: #ffffff;
+  --card-border: #000000;
+  --card-border-active: #000000;
+
+  --pill-bg: #f4f4f4;
+  --pill-text: #000000;
+  --pill-badge-bg: #000000;
+  --pill-badge-text: #ffffff;
+
+  --code-paper-bg: #ffffff;
+  --code-paper-border: #000000;
+  --code-text: #000000;
+
+  --page-edge-1: #000000;
+  --page-edge-2: #333333;
+  --page-edge-3: #666666;
+  --page-shadow: none;
+
+  --noise-opacity: 0;
+  --bleed-opacity: 0;
+  --bleed-fill: %23000;
+  --spine-shadow: rgba(0,0,0,0.3);
 
   --hl-string: #000000;
   --hl-operator: #000000;
@@ -258,9 +406,9 @@ figure {
 
 .theme-eink-dark .eink-code-block, 
 .theme-eink-dark .eink-canvas-container {
-  background: var(--bg-warm);
-  border-color: var(--border);
+  background: var(--code-paper-bg);
+  border-color: var(--code-paper-border);
 }
 .theme-eink-dark .eink-code {
-  color: var(--text);
+  color: var(--code-text);
 }

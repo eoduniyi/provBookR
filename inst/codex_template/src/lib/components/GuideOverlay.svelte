@@ -52,8 +52,8 @@
 <style>
   .guide-overlay {
     position: fixed;
-    top: 2rem;
-    right: 2rem;
+    top: 2.5rem;
+    right: 5.5rem;
     z-index: 900;
     max-width: 320px;
     animation: guideSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -72,16 +72,13 @@
   }
 
   .guide-card {
-    background: var(--glass-bg, rgba(255, 255, 255, 0.82));
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.9));
+    background: var(--code-paper-bg, #ffffff);
+    border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
     border-radius: 18px;
-    padding: 1.1rem 1.3rem;
+    padding: 1.15rem 1.35rem;
     box-shadow: 
-      0 8px 32px -4px rgba(0, 0, 0, 0.12),
-      0 2px 8px rgba(0, 0, 0, 0.04),
-      inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      0 12px 36px -4px rgba(0, 0, 0, 0.18),
+      0 2px 8px rgba(0, 0, 0, 0.06);
   }
 
   .guide-header {
@@ -98,7 +95,7 @@
     color: var(--text-muted, #94a3b8);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--pill-bg, rgba(0, 0, 0, 0.05));
     padding: 0.2rem 0.6rem;
     border-radius: 9999px;
   }
@@ -116,7 +113,7 @@
     transition: all 0.15s;
   }
   .guide-dismiss:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: var(--pill-bg, rgba(0, 0, 0, 0.06));
     color: var(--text, #1a1a24);
   }
 
@@ -142,20 +139,20 @@
     align-items: flex-start;
     gap: 0.5rem;
     padding: 0.55rem 0.7rem;
-    background: rgba(37, 99, 235, 0.06);
-    border: 1px solid rgba(37, 99, 235, 0.12);
+    background: var(--pill-bg, rgba(37, 99, 235, 0.06));
+    border: 1px solid var(--border, rgba(37, 99, 235, 0.12));
     border-radius: 10px;
     margin-bottom: 0.6rem;
   }
   .guide-hint svg {
     flex-shrink: 0;
-    color: rgba(37, 99, 235, 0.7);
+    color: var(--accent);
     margin-top: 1px;
   }
   .guide-hint span {
     font-family: var(--font-sans);
     font-size: 0.72rem;
-    color: rgba(37, 99, 235, 0.8);
+    color: var(--text-body, #242432);
     font-weight: 500;
     line-height: 1.45;
   }
@@ -163,7 +160,7 @@
   .guide-nav-hint {
     text-align: center;
     padding-top: 0.4rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid var(--border, rgba(0, 0, 0, 0.05));
   }
   .guide-nav-hint span {
     font-family: var(--font-sans);

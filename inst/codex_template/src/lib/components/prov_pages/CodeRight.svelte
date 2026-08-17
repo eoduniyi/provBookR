@@ -80,46 +80,42 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.4rem 0.85rem;
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--pill-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
     border-radius: 9999px;
     font-family: var(--font-mono, monospace);
     font-size: 0.72rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
   }
 
   .tab-pill:hover {
-    background: rgba(255, 255, 255, 0.85);
-    color: var(--text, #1a1a24);
+    background: var(--glass-bg-hover);
+    color: var(--text);
     transform: translateY(-1px);
   }
 
   .tab-pill.active {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.12);
-    color: var(--text, #1a1a24);
+    background: var(--card-bg-active);
+    border-color: var(--card-border-active);
+    color: var(--text);
     font-weight: 600;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  }
-
-  .tab-icon {
-    font-size: 0.75rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   }
 
   /* E-Ink Paper */
   .eink-paper {
     flex: 1;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--code-paper-bg);
+    border: 1px solid var(--code-paper-border);
     border-radius: 20px;
     padding: 1.3rem 1.5rem;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+    box-shadow: var(--glass-shadow);
     overflow: hidden;
   }
 
@@ -128,7 +124,7 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid var(--border);
     font-family: var(--font-mono, monospace);
   }
 
@@ -143,22 +139,22 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     padding: 0.15rem 0.5rem;
-    background: var(--bg-warm, #fbfaf8);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: var(--pill-bg);
+    border: 1px solid var(--border);
     border-radius: 9999px;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 
   .file-title {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--text, #1a1a24);
+    color: var(--text);
   }
 
   .file-cat {
     font-family: var(--font-sans);
     font-size: 0.64rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 
   /* Flow Bar inside E-ink Paper */
@@ -168,16 +164,16 @@
     gap: 0.5rem;
     padding: 0.4rem 0.8rem;
     margin: 0.75rem 0 1rem;
-    background: var(--bg-warm, #fbfaf8);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    background: var(--pill-bg);
+    border: 1px solid var(--border);
     border-radius: 12px;
     font-family: var(--font-mono, monospace);
     font-size: 0.7rem;
-    color: var(--text-secondary, #4a4a5a);
+    color: var(--text-secondary);
   }
 
   .flow-sep {
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
     font-weight: 700;
   }
 
@@ -191,7 +187,7 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.8rem;
     line-height: 1.75;
-    color: #18181b;
+    color: var(--code-text);
     white-space: pre-wrap;
     word-break: break-word;
     margin: 0;

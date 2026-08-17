@@ -445,12 +445,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f7f6f1;
+    background: var(--page-bg, #f7f6f1);
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
     overflow-y: auto;
     cursor: pointer;
     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     border-radius: 4px;
+    color: var(--text);
   }
 
   /* ── Page halves (The book block) ── */
@@ -460,10 +461,11 @@
     height: 100%;
     max-height: 1300px;
     position: relative;
-    background-color: #f7f6f1;
+    background-color: var(--page-bg, #f7f6f1);
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
     overflow-y: auto;
     overflow-x: hidden;
+    color: var(--text-body, var(--text));
   }
 
   /* ── Bleed-through text effect (from reference image) ── */
@@ -473,8 +475,8 @@
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Cstyle%3Etext%7Bfont-family:serif;font-size:12px;fill:%23000;%7D%3C/style%3E%3Cg transform='scale(-1, 1) translate(-400, 0)'%3E%3Ctext x='10' y='20'%3ESome faint text bleeding through from the other side of the page.%3C/text%3E%3Ctext x='10' y='45'%3EIt gives a realistic print texture like a physical book.%3C/text%3E%3Ctext x='10' y='70'%3EThe opacity is kept very low so it doesn't distract.%3C/text%3E%3Ctext x='10' y='95'%3EJust enough to trick the eye into seeing physical paper.%3C/text%3E%3Ctext x='10' y='120'%3EThis matches the reference image perfectly.%3C/text%3E%3Ctext x='10' y='145'%3EAnother line of text for the bleed through effect.%3C/text%3E%3Ctext x='10' y='170'%3EAnd one more line to fill the pattern.%3C/text%3E%3C/g%3E%3C/svg%3E");
+    opacity: var(--bleed-opacity, 0.035);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Cstyle%3Etext%7Bfont-family:serif;font-size:12px;fill:%23888;%7D%3C/style%3E%3Cg transform='scale(-1, 1) translate(-400, 0)'%3E%3Ctext x='10' y='20'%3ESome faint text bleeding through from the other side of the page.%3C/text%3E%3Ctext x='10' y='45'%3EIt gives a realistic print texture like a physical book.%3C/text%3E%3Ctext x='10' y='70'%3EThe opacity is kept very low so it doesn't distract.%3C/text%3E%3Ctext x='10' y='95'%3EJust enough to trick the eye into seeing physical paper.%3C/text%3E%3Ctext x='10' y='120'%3EThis matches the reference image perfectly.%3C/text%3E%3Ctext x='10' y='145'%3EAnother line of text for the bleed through effect.%3C/text%3E%3Ctext x='10' y='170'%3EAnd one more line to fill the pattern.%3C/text%3E%3C/g%3E%3C/svg%3E");
     background-repeat: repeat;
   }
 
@@ -490,9 +492,9 @@
     border-bottom-left-radius: 6px;
     /* Spine gradient + stacked page edges on the left + drop shadow */
     box-shadow: 
-      inset -25px 0 40px -15px rgba(0,0,0,0.12),
-      -1px 1px 0px #e4e3de, -2px 2px 0px #eeebe6, -3px 3px 0px #e4e3de, -4px 4px 0px #eeebe6, -5px 5px 0px #d4d3ce,
-      -20px 25px 40px rgba(0,0,0,0.5);
+      inset -25px 0 40px -15px var(--spine-shadow, rgba(0,0,0,0.12)),
+      -1px 1px 0px var(--page-edge-1, #e4e3de), -2px 2px 0px var(--page-edge-2, #eeebe6), -3px 3px 0px var(--page-edge-1, #e4e3de), -4px 4px 0px var(--page-edge-2, #eeebe6), -5px 5px 0px var(--page-edge-3, #d4d3ce),
+      var(--page-shadow, -20px 25px 40px rgba(0,0,0,0.5));
   }
 
   .right {
@@ -500,9 +502,9 @@
     border-bottom-right-radius: 6px;
     /* Spine gradient + stacked page edges on the right + drop shadow */
     box-shadow: 
-      inset 25px 0 40px -15px rgba(0,0,0,0.12),
-      1px 1px 0px #e4e3de, 2px 2px 0px #eeebe6, 3px 3px 0px #e4e3de, 4px 4px 0px #eeebe6, 5px 5px 0px #d4d3ce,
-      20px 25px 40px rgba(0,0,0,0.5);
+      inset 25px 0 40px -15px var(--spine-shadow, rgba(0,0,0,0.12)),
+      1px 1px 0px var(--page-edge-1, #e4e3de), 2px 2px 0px var(--page-edge-2, #eeebe6), 3px 3px 0px var(--page-edge-1, #e4e3de), 4px 4px 0px var(--page-edge-2, #eeebe6), 5px 5px 0px var(--page-edge-3, #d4d3ce),
+      var(--page-shadow, 20px 25px 40px rgba(0,0,0,0.5));
   }
 
   /* ── Page inner — generous notebook-like margins ── */
@@ -650,7 +652,8 @@
   .mobile-card {
     position: absolute;
     inset: 0;
-    background: #fff;
+    background: var(--page-bg, #fff);
+    color: var(--text-body, var(--text));
     border-radius: 0;
     overflow-y: auto;
     overflow-x: hidden;

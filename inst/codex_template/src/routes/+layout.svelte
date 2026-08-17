@@ -11,10 +11,9 @@
 
 <div class="theme-wrapper {themeState.skin} {themeState.codeFont}">
   {@render children()}
+  <SettingsPanel />
+  <AnnotationsPanel />
 </div>
-
-<SettingsPanel />
-<AnnotationsPanel />
 
 <style>
   .theme-wrapper {

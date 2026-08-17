@@ -173,7 +173,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    box-shadow: 0 12px 48px -4px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    box-shadow: var(--glass-shadow);
     animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
@@ -210,7 +210,7 @@
   /* ── Segmented bar ── */
   .seg-bar {
     display: flex;
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--pill-bg, rgba(0, 0, 0, 0.04));
     border-radius: 8px;
     padding: 3px;
     gap: 2px;
@@ -233,11 +233,12 @@
   }
   .seg:hover {
     color: var(--text, #1a1a24);
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--glass-bg-hover, rgba(255, 255, 255, 0.5));
   }
   .seg.on {
-    background: var(--text, #1a1a24);
-    color: var(--bg, #ffffff);
+    background: var(--pill-badge-bg, #1a1a24);
+    color: var(--pill-badge-text, #ffffff);
+    border: 1px solid var(--card-border-active, transparent);
     font-weight: 600;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
   }
@@ -252,7 +253,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--pill-bg, rgba(0, 0, 0, 0.04));
     border-radius: 8px;
     padding: 4px;
   }
@@ -271,7 +272,8 @@
     transition: background 0.15s;
   }
   .step-btn:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: var(--glass-bg-hover, rgba(0, 0, 0, 0.06));
+    color: var(--text);
   }
   .step-val {
     font-family: var(--font-mono, monospace);
@@ -304,7 +306,7 @@
     flex: 1;
     height: 4px;
     border-radius: 2px;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--pill-bg, rgba(0, 0, 0, 0.1));
     outline: none;
   }
   .custom-range::-webkit-slider-thumb {
@@ -313,11 +315,23 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: var(--text, #1a1a24);
+    background: var(--pill-badge-bg, #1a1a24);
     cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.1s;
   }
-  .custom-range::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
+  .custom-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--pill-badge-bg, #1a1a24);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s;
+  }
+  .custom-range::-webkit-slider-thumb:hover,
+  .custom-range::-moz-range-thumb:hover {
+    transform: scale(1.15);
   }
 </style>

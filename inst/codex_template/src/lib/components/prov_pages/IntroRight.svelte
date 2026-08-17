@@ -78,10 +78,11 @@
   }
   .intro-right h3 {
     margin-top: 0;
+    color: var(--text);
   }
   .ex-desc {
     font-size: 0.82rem;
-    color: var(--text-secondary, #4a4a5a);
+    color: var(--text-secondary);
     margin-bottom: 0.8rem;
   }
 
@@ -101,24 +102,24 @@
     flex-direction: column;
     gap: 0.4rem;
     padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.65);
+    background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--glass-border);
     border-radius: 18px;
-    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.02);
+    box-shadow: var(--glass-shadow);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .glass-ex-card:hover {
     transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--glass-bg-hover);
   }
 
   .glass-ex-card.active {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
+    background: var(--card-bg-active);
+    border-color: var(--card-border-active);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.4);
   }
 
   .card-head {
@@ -131,13 +132,13 @@
     font-family: var(--font-sans);
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--text, #1a1a24);
+    color: var(--text);
   }
 
   .ex-script {
     font-family: var(--font-mono, monospace);
     font-size: 0.68rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 
   .card-flow {
@@ -152,19 +153,20 @@
   .flow-tag {
     padding: 0.15rem 0.55rem;
     border-radius: 9999px;
-    background: rgba(0, 0, 0, 0.04);
-    color: var(--text, #1a1a24);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: var(--pill-bg);
+    color: var(--pill-text);
+    border: 1px solid var(--border);
   }
 
   .out-tag {
     font-weight: 600;
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.15);
+    background: var(--card-bg-hover);
+    color: var(--text);
+    border-color: var(--border);
   }
 
   .flow-arrow {
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
     font-size: 0.65rem;
   }
 </style>

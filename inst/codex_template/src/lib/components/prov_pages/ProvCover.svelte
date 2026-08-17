@@ -1,19 +1,19 @@
 <script lang="ts">
   let { provData } = $props<{ provData: any }>();
 
-  let environment = provData?.entity?.['rdt:environment'] || {};
-  let scriptName = environment?.['rdt:script'] || 'Unknown Script';
-  let executionTime = environment?.['rdt:provTimestamp']?.replace(/\./g, ':') || '';
-  let architecture = environment?.['rdt:architecture'] || '';
-  let os = environment?.['rdt:operatingSystem'] || '';
-  let rVersion = environment?.['rdt:langVersion'] || '';
-  let totalTime = environment?.['rdt:totalElapsedTime'] || '';
+  let environment = $derived(provData?.entity?.['rdt:environment'] || {});
+  let scriptName = $derived(environment?.['rdt:script'] || 'Unknown Script');
+  let executionTime = $derived(environment?.['rdt:provTimestamp']?.replace(/\./g, ':') || '');
+  let architecture = $derived(environment?.['rdt:architecture'] || '');
+  let os = $derived(environment?.['rdt:operatingSystem'] || '');
+  let rVersion = $derived(environment?.['rdt:langVersion'] || '');
+  let totalTime = $derived(environment?.['rdt:totalElapsedTime'] || '');
 
   // Count activities and entities
-  const activities = provData?.activity || {};
-  const entities = provData?.entity || {};
-  const actCount = Object.keys(activities).length;
-  const entCount = Object.keys(entities).filter(k => !k.includes('environment')).length;
+  const activities = $derived(provData?.activity || {});
+  const entities = $derived(provData?.entity || {});
+  const actCount = $derived(Object.keys(activities).length);
+  const entCount = $derived(Object.keys(entities).filter(k => !k.includes('environment')).length);
 </script>
 
 <div class="cover">
@@ -63,17 +63,22 @@
     text-align: center;
     padding: 3rem 2rem;
     min-height: 100%;
+    color: var(--text);
   }
   .cover h1 {
     font-size: 2.2rem;
     margin-bottom: 0.6rem;
     letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  .subtitle {
+    color: var(--text-secondary);
   }
   .meta-table {
     width: 100%;
     max-width: 320px;
-    border-top: 1px solid var(--border, #e5e7eb);
-    border-bottom: 1px solid var(--border, #e5e7eb);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     padding: 1.2rem 0;
     margin: 2rem 0;
   }
@@ -84,8 +89,8 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.78rem;
   }
-  .meta-key { color: var(--text-muted, #94a3b8); }
-  .meta-val { color: var(--text, #1a1a2e); font-weight: 600; }
+  .meta-key { color: var(--text-muted); }
+  .meta-val { color: var(--text); font-weight: 600; }
   .stats {
     display: flex;
     gap: 3rem;
@@ -99,7 +104,7 @@
   .stat-num {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--accent, #2563eb);
+    color: var(--accent);
     line-height: 1;
   }
   .stat-label {
@@ -107,13 +112,13 @@
     font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted);
     margin-top: 0.3rem;
   }
   .hint {
     font-family: var(--font-sans);
     font-size: 0.75rem;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted);
     margin-top: 1rem;
   }
 </style>

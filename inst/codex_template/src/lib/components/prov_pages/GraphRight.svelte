@@ -4,10 +4,10 @@
 
   let selectedNode = $state<{ id: string; name: string; type: string; detail: string } | null>(null);
 
-  const activities = provData?.activity || {};
-  const entities = provData?.entity || {};
-  const usedRels = provData?.used || {};
-  const genRels = provData?.wasGeneratedBy || {};
+  const activities = $derived(provData?.activity || {});
+  const entities = $derived(provData?.entity || {});
+  const usedRels = $derived(provData?.used || {});
+  const genRels = $derived(provData?.wasGeneratedBy || {});
 
   const scriptToNum: Record<string, number> = {
     "proposal_workflow.R": 1,
@@ -105,10 +105,10 @@
     <svg viewBox="0 0 {graphData.viewW} 270" preserveAspectRatio="xMidYMid meet">
       <defs>
         <marker id="arr-u" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#71717a" />
+          <path d="M0,0 L8,4 L0,8 Z" fill="var(--text-muted)" />
         </marker>
         <marker id="arr-g" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#18181b" />
+          <path d="M0,0 L8,4 L0,8 Z" fill="var(--text)" />
         </marker>
       </defs>
 
@@ -121,7 +121,7 @@
           stroke-width="1.3"
           stroke-dasharray={e.kind === 'used' ? '4 3' : 'none'}
           marker-end={e.kind === 'used' ? 'url(#arr-u)' : 'url(#arr-g)'}
-          opacity="0.6"
+          opacity="0.65"
         />
       {/each}
 
@@ -139,7 +139,7 @@
           {#if n.type === 'act'}
             <!-- Operation Node -->
             <rect x="-30" y="-14" width="60" height="28" rx="8"
-              fill="var(--bg)" stroke="var(--border)" stroke-width="1.2"
+              fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.2"
               class="node-shape" />
             <text y="4" text-anchor="middle"
               font-family="var(--font-mono, monospace)" font-size="7.5" fill="var(--text)" font-weight="500">
@@ -148,7 +148,7 @@
           {:else}
             <!-- Entity Node (Liquid Bubble Circle) -->
             <circle r="16"
-              fill={n.isFile ? 'var(--bg-warm)' : 'var(--bg)'}
+              fill={n.isFile ? 'var(--card-bg-hover)' : 'var(--card-bg)'}
               stroke={n.isFile ? 'var(--text-muted)' : 'var(--border)'}
               stroke-width="1.3"
               class="node-shape" />
@@ -193,15 +193,15 @@
 
   .eink-canvas-container {
     flex: 1;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--code-paper-bg);
+    border: 1px solid var(--code-paper-border);
     border-radius: 20px;
     overflow: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+    box-shadow: var(--glass-shadow);
   }
 
   .eink-canvas-container svg {
@@ -224,7 +224,7 @@
   }
 
   .node:hover .node-shape {
-    stroke: #18181b;
+    stroke: var(--text);
     stroke-width: 1.8;
   }
 
@@ -242,53 +242,53 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.3rem 0.75rem;
-    background: rgba(255, 255, 255, 0.65);
+    background: var(--pill-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
     border-radius: 9999px;
     font-family: var(--font-sans);
     font-size: 0.68rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 
   .leg-rect {
     display: inline-block;
     width: 12px; height: 8px;
-    border: 1px solid #d4d4d8;
+    border: 1px solid var(--border);
     border-radius: 2px;
-    background: #ffffff;
+    background: var(--card-bg);
   }
 
   .leg-circle {
     display: inline-block;
     width: 9px; height: 9px;
     border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid #a1a1aa;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
   }
 
   .leg-dash {
     display: inline-block;
     width: 14px; height: 0;
-    border-top: 1.5px dashed #a1a1aa;
+    border-top: 1.5px dashed var(--text-muted);
   }
 
   .leg-solid {
     display: inline-block;
     width: 14px; height: 0;
-    border-top: 1.5px solid #27272a;
+    border-top: 1.5px solid var(--text);
   }
 
   /* Liquid Glass Inspector Bubble */
   .glass-inspector {
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--glass-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
     padding: 0.75rem 1.1rem;
-    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 1);
+    box-shadow: var(--glass-shadow);
   }
 
   .insp-header {
@@ -303,7 +303,7 @@
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
     font-weight: 600;
   }
 
@@ -319,7 +319,7 @@
   .insp-detail {
     font-family: var(--font-mono, monospace);
     font-size: 0.78rem;
-    color: var(--text, #1a1a24);
+    color: var(--text);
     word-break: break-word;
     font-weight: 500;
   }
