@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import provData from '$lib/data/prov.json';
   import ReadingSettings from './ReadingSettings.svelte';
-  import AudioPlayer from './AudioPlayer.svelte';
   import PageCurl from './PageCurl.svelte';
   import Dock from './Dock.svelte';
   import PageCanvas from './PageCanvas.svelte';
@@ -10,8 +9,6 @@
   import { themeState } from '../themeState.svelte';
   import { animationState } from '../animationState.svelte';
   import { activeScenarioState } from '../state.svelte';
-  import { typeComposerState } from '../typeComposerState.svelte';
-  import TypeComposer from './TypeComposer.svelte';
   import { resolveSweep } from './pageCurlTypes';
   import type { SweepStyle } from './pageCurlTypes';
 
@@ -363,7 +360,6 @@
     <!-- Mobile bottom bar -->
     <Dock>
       {#snippet leftControls()}
-        <AudioPlayer />
         <button 
           class="dock-btn" 
           class:active={animationState.isOpen} 
@@ -424,7 +420,6 @@
           bind:this={leftHalf}
           onscroll={checkScrollState}
         >
-          <TypeComposer pageKey={currentSpread === 0 ? 'page-cover' : `spread-${currentSpread}-left`} />
           <div class="page-content-wrapper">
             {@render leftPage()}
           </div>
@@ -457,7 +452,6 @@
           bind:this={rightHalf}
           onscroll={checkScrollState}
         >
-          <TypeComposer pageKey={`spread-${currentSpread}-right`} />
           <div class="page-content-wrapper">
             {@render rightPage()}
           </div>
@@ -494,16 +488,6 @@
   <!-- Desktop bottom bar -->
   <Dock>
     {#snippet leftControls()}
-      <AudioPlayer />
-      <button 
-        class="dock-btn" 
-        class:active={typeComposerState.isOpen} 
-        onclick={() => typeComposerState.isOpen = !typeComposerState.isOpen} 
-        aria-label="Type Studio" 
-        title="Type Studio (Dynamic Typography)"
-      >
-        <Icon name="type" size={15} />
-      </button>
       <button 
         class="dock-btn" 
         class:active={animationState.isOpen} 

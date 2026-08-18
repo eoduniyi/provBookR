@@ -15,24 +15,12 @@
   import OutputLeft from '$lib/components/prov_pages/OutputLeft.svelte';
   import OutputRight from '$lib/components/prov_pages/OutputRight.svelte';
   import BlankPage from '$lib/components/prov_pages/BlankPage.svelte';
-  import TypeToolbar from '$lib/components/TypeToolbar.svelte';
 
   import { activeScenarioState, viewModeState, bookNavigationState } from '$lib/state.svelte';
-  import { typeComposerState } from '$lib/typeComposerState.svelte';
   import { scenarios } from '$lib/data/scenarios';
 
   let provData = $derived(scenarios[activeScenarioState.currentId].provData);
   let isBlank = $derived(activeScenarioState.currentId === 'blank');
-
-  $effect(() => {
-    if (isBlank) {
-      if (bookNavigationState.currentSpread === 0) {
-        typeComposerState.activePageKey = 'blank-cover';
-      } else {
-        typeComposerState.activePageKey = `blank-spread-${bookNavigationState.currentSpread}-left`;
-      }
-    }
-  });
 
   const contentSpreads = [
     [IntroLeft, IntroRight],       // Chapter 1: Everyday Provenance
@@ -110,7 +98,6 @@
       {/if}
     {/snippet}
   </PageFlip>
-  <TypeToolbar />
   <GuideOverlay />
 {/if}
 
