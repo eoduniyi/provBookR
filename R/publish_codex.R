@@ -17,12 +17,17 @@ publish_codex <- function(script, output_dir = "codex_build") {
   
   # Step 1: Run the script and collect provenance
   message("Executing script and collecting provenance...")
-  # prov.run executes the script and writes prov.json to a temp dir
-  prov_json <- rdtLite::prov.run(script)
+  rdtLite::prov.run(script)
   
-  if (is.null(prov_json) || nchar(prov_json) == 0) {
+  json_path <- file.path("prov_data", "prov.json")
+  if (!file.exists(json_path)) {
+    json_path <- list.files(path = ".", pattern = "^prov.*\\.json$", recursive = TRUE, full.names = TRUE)[1]
+  }
+  
+  if (is.null(json_path) || is.na(json_path) || !file.exists(json_path)) {
     stop("Failed to generate provenance JSON.")
   }
+  prov_json <- paste(readLines(json_path, warn = FALSE), collapse = "\n")
   
   # Step 2: Scaffold the codex template
   template_dir <- system.file("codex_template", package = "provBookR")
@@ -35,7 +40,10 @@ publish_codex <- function(script, output_dir = "codex_build") {
   dir.create(build_ws)
   
   message("Scaffolding SvelteKit codex...")
-  file.copy(from = list.files(template_dir, full.names = TRUE),
+  files_to_copy <- list.files(template_dir, full.names = TRUE, all.files = TRUE, no.. = TRUE)
+  files_to_copy <- files_to_copy[!basename(files_to_copy) %in% c("node_modules", ".svelte-kit", "build")]
+  
+  file.copy(from = files_to_copy,
             to = build_ws,
             recursive = TRUE,
             copy.mode = TRUE)
