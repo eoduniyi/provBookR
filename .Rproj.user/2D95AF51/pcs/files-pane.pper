@@ -1,0 +1,9 @@
+{
+    "path" : "~/Research/HF/fruits-of-provenance/provBookR",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
