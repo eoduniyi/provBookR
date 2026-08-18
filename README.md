@@ -9,11 +9,25 @@ For ecologists and the wider scientific community, the reproducibility of comput
 
 **provBookR** addresses this by bridging formal provenance research with practical software engineering workflows. It utilizes End-to-end-provenance tools (such as `rdtLite`) to automatically collect the execution history of R scripts and packages that provenance into an interactive, static web booklet built with **SvelteKit**.
 
-![provBookR Main Interface](main-example.png)
-
 This allows researchers to visually explore the lineage of their data pipelines and specific R objects (e.g., plots, models, variables) through a browser-based reading experience. By making provenance transparent and easily shareable without requiring specialized backend infrastructure, `provBookR` empowers the scientific community to elevate the standard of computational reproducibility.
 
-![provBookR Settings](settings-example.png)
+![provBookR Main Interface](main-example.png)
+
+## Core Features & Capabilities
+
+- **Interactive Lineage Graph**: Directed acyclic graph (DAG) visualization of data derivation, tracking operations (functions) and entities (variables, dataframes, files).
+- **Cryptographic File Hash Integrity**: MD5 hash validation of generated file artifacts to guarantee authenticity and reproducibility across environments.
+- **W3C PROV-JSON Standard Compliance**: Full compatibility with the W3C PROV-JSON standard and End-to-End Extended Provenance specification.
+- **Sub-second Execution Timeline**: Granular operation duration and temporal ordering tracking for R workflows.
+- **Standalone Static Export**: Zero-backend deployment — compiles to plain HTML/CSS/JS ready for GitHub Pages, Netlify, or local offline reading.
+
+## Ecosystem Integration
+
+`provBookR` is part of the **[End-to-End Provenance](https://github.com/End-to-end-provenance)** (E2E) ecosystem. It seamlessly integrates with the suite's specialized tools:
+
+- **`rdtLite`**: Traces script execution and captures fine-grained provenance graphs.
+- **`provSummarizeR` / `provExplainR`**: Complements textual summaries and run-to-run diffing by providing an interactive visual reading experience.
+- **`provDebugR`**: Complements terminal-based time-travel debugging with high-level visual lineage navigation.
 
 ---
 
@@ -62,3 +76,13 @@ Show me how R object was created              : "BO"
 Show me what this R object was used to create : "AO"  
 Summarize provenance                          : "S"   
 ```
+
+---
+
+## Ecosystem & Citation
+
+`provBookR` is developed within the **End-to-End Provenance Project**, a multi-institutional research initiative supported by Mount Holyoke College, Harvard University, the University of British Columbia, and the National Science Foundation (NSF).
+
+If you use `provBookR` in your research, please cite the End-to-End Provenance project:
+
+> Lerner, B., Boose, E., & Perez, F. *Using End-to-End Provenance to Support Reproducibility in R*. The End-to-End Provenance Project. https://github.com/End-to-end-provenance

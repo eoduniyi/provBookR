@@ -115,7 +115,7 @@
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--glass-border, rgba(255,255,255,0.9));
     border-radius: 20px;
-    box-shadow: 0 12px 48px -4px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    box-shadow: var(--glass-shadow);
     animation: slideUpCenter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
@@ -129,13 +129,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.25rem 0.75rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--border, rgba(0, 0, 0, 0.05));
   }
   .popover-header h3 {
     margin: 0;
     font-size: 1.05rem;
     font-weight: 600;
     font-family: var(--font-sans);
+    color: var(--text);
   }
   .close-btn {
     all: unset;
@@ -150,7 +151,7 @@
     margin: 0;
     padding: 0.5rem 1.25rem;
     font-size: 0.75rem;
-    background: rgba(0,0,0,0.03);
+    background: var(--pill-bg, rgba(0,0,0,0.03));
     font-family: var(--font-sans);
     color: var(--text-secondary, #4a4a5a);
   }
@@ -168,8 +169,8 @@
   }
 
   .comment-bubble {
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--card-bg-active, #ffffff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
     padding: 0.75rem 1rem;
     border-radius: 16px;
     border-bottom-left-radius: 4px;
@@ -199,8 +200,8 @@
   .comment-input-area {
     display: flex;
     padding: 1rem 1.25rem;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    background: rgba(255,255,255,0.4);
+    border-top: 1px solid var(--border, rgba(0,0,0,0.05));
+    background: var(--pill-bg, rgba(255,255,255,0.4));
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     gap: 0.5rem;
@@ -208,23 +209,25 @@
   
   .comment-input-area input {
     flex: 1;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid var(--border, rgba(0,0,0,0.1));
     border-radius: 9999px;
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
     font-family: var(--font-sans);
+    background: var(--card-bg, #ffffff);
+    color: var(--text, #1a1a24);
     outline: none;
     transition: border-color 0.2s;
   }
   .comment-input-area input:focus {
-    border-color: rgba(0,0,0,0.3);
+    border-color: var(--accent);
   }
   
   .comment-input-area button {
     all: unset;
     cursor: pointer;
-    background: #1a1a24;
-    color: white;
+    background: var(--pill-badge-bg, #1a1a24);
+    color: var(--pill-badge-text, white);
     font-size: 0.8rem;
     font-weight: 600;
     font-family: var(--font-sans);

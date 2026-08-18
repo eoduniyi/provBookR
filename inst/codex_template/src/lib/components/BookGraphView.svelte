@@ -122,19 +122,19 @@
   .slide-frame {
     border-radius: 12px;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--page-bg, #ffffff);
     border: 2px solid var(--border, #e5e7eb);
     box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.08);
     transition: border-color 0.2s, box-shadow 0.2s;
     aspect-ratio: 16 / 10;
   }
   .slide-card:hover .slide-frame {
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: var(--card-border-active, rgba(0, 0, 0, 0.2));
     box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.12);
   }
   .slide-card.active .slide-frame {
     border-color: var(--text, #1a1a24);
-    box-shadow: 0 0 0 3px rgba(26, 26, 36, 0.15), 0 12px 32px -8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--accent, rgba(26, 26, 36, 0.15)), 0 12px 32px -8px rgba(0, 0, 0, 0.15);
   }
 
   .slide-content {
@@ -229,7 +229,7 @@
     border-radius: 50%;
     background: var(--glass-bg, rgba(255, 255, 255, 0.85));
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.6));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -240,8 +240,8 @@
     z-index: 2;
   }
   .slide-card.active .slide-number {
-    background: var(--text, #1a1a24);
-    color: #ffffff;
-    border-color: var(--text, #1a1a24);
+    background: var(--pill-badge-bg, var(--text));
+    color: var(--pill-badge-text, #ffffff);
+    border-color: var(--border, var(--text));
   }
 </style>

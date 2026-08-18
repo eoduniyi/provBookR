@@ -1,23 +1,25 @@
 <script lang="ts">
   let { provData } = $props<{ provData: any }>();
 
-  const activities = provData?.activity || {};
-  const genRels = provData?.wasGeneratedBy || {};
-  const usedRels = provData?.used || {};
+  const activities = $derived(provData?.activity || {});
+  const genRels = $derived(provData?.wasGeneratedBy || {});
+  const usedRels = $derived(provData?.used || {});
 
-  const operations = Object.entries(activities)
-    .filter(([_, a]: [string, any]) => a['rdt:type'] === 'Operation')
-    .map(([id, a]: [string, any]) => ({
-      id,
-      name: a['rdt:name'] || id,
-      time: parseFloat(a['rdt:elapsedTime'] || '0'),
-      line: a['rdt:startLine'] || '?',
-      script: a['rdt:scriptNum'] || '?'
-    }));
+  const operations = $derived(
+    Object.entries(activities)
+      .filter(([_, a]: [string, any]) => a['rdt:type'] === 'Operation')
+      .map(([id, a]: [string, any]) => ({
+        id,
+        name: a['rdt:name'] || id,
+        time: parseFloat(a['rdt:elapsedTime'] || '0'),
+        line: a['rdt:startLine'] || '?',
+        script: a['rdt:scriptNum'] || '?'
+      }))
+  );
 
-  const totalOps = operations.length;
-  const totalTime = operations.reduce((sum, op) => sum + op.time, 0);
-  const totalEdges = Object.keys(genRels).length + Object.keys(usedRels).length;
+  const totalOps = $derived(operations.length);
+  const totalTime = $derived(operations.reduce((sum, op) => sum + op.time, 0));
+  const totalEdges = $derived(Object.keys(genRels).length + Object.keys(usedRels).length);
 </script>
 
 <div class="output-intro">
@@ -63,19 +65,20 @@
   }
   .output-intro h2 {
     margin-top: 0.25rem;
+    color: var(--text);
   }
 
   .glass-summary {
     display: flex;
     justify-content: space-around;
-    padding: 0.9rem 1.2rem;
-    background: rgba(255, 255, 255, 0.65);
+    padding: 0.55rem 1rem;
+    background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--glass-border);
     border-radius: 9999px;
-    margin: 1.5rem 0;
-    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    margin: 0.75rem 0;
+    box-shadow: var(--glass-shadow);
   }
 
   .summary-stat {
@@ -85,41 +88,41 @@
   }
   .ss-val {
     font-family: var(--font-mono, monospace);
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    color: var(--text, #1a1a24);
+    color: var(--text);
   }
   .ss-key {
     font-family: var(--font-sans);
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 
   .timeline {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: 0.35rem;
   }
 
   .glass-step {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.6rem;
     align-items: center;
-    padding: 0.55rem 1rem;
-    background: rgba(255, 255, 255, 0.65);
+    padding: 0.4rem 0.8rem;
+    background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--glass-border);
     border-radius: 9999px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    box-shadow: var(--glass-shadow);
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
   }
 
   .glass-step:hover {
     transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--glass-bg-hover);
   }
 
   .step-badge {
@@ -127,8 +130,8 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: var(--text, #1a1a24);
-    color: #ffffff;
+    background: var(--pill-badge-bg, var(--text));
+    color: var(--pill-badge-text, #ffffff);
     font-family: var(--font-mono, monospace);
     font-size: 0.68rem;
     font-weight: 700;
@@ -146,7 +149,7 @@
   .step-code {
     font-family: var(--font-mono, monospace);
     font-size: 0.76rem;
-    color: var(--text, #1a1a24);
+    color: var(--text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -155,6 +158,6 @@
   .step-meta {
     font-family: var(--font-sans);
     font-size: 0.64rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 </style>

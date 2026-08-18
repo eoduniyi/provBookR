@@ -1,5 +1,6 @@
 <script lang="ts">
   import { themeState } from '../themeState.svelte';
+  import { animationState } from '../animationState.svelte';
   import { annotationsPanelState, viewModeState, annotationsState, currentScriptMeta, guideState } from '../state.svelte';
   import Icon from './Icon.svelte';
 
@@ -48,10 +49,7 @@
     <button 
       class="dock-btn"
       class:active={annotationsPanelState.isOpen}
-      onclick={() => {
-        annotationsPanelState.isOpen = !annotationsPanelState.isOpen;
-        if (annotationsPanelState.isOpen) themeState.isOpen = false;
-      }}
+      onclick={() => annotationsPanelState.isOpen = !annotationsPanelState.isOpen}
       aria-label="Annotations"
       title="Annotations"
     >
@@ -65,10 +63,7 @@
     <button 
       class="dock-btn"
       class:active={themeState.isOpen}
-      onclick={() => {
-        themeState.isOpen = !themeState.isOpen;
-        if (themeState.isOpen) annotationsPanelState.isOpen = false;
-      }}
+      onclick={() => themeState.isOpen = !themeState.isOpen}
       aria-label="Typography Settings"
       title="Typography & Theme"
     >
@@ -85,7 +80,7 @@
 <style>
   .dock-container {
     position: fixed;
-    bottom: 2.5rem;
+    bottom: 0.85rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -94,22 +89,22 @@
   .dock-pill {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.6rem;
+    gap: 0.35rem;
+    padding: 0.25rem 0.45rem;
     background: var(--glass-bg, rgba(255, 255, 255, 0.75));
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.9));
     border-radius: 9999px;
-    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.8);
   }
 
   :global(.dock-btn) {
     all: unset;
     cursor: pointer;
     position: relative;
-    width: 38px;
-    height: 38px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -124,7 +119,7 @@
   :global(.dock-btn.active) {
     background: #1a1a24;
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(26, 26, 36, 0.3);
+    box-shadow: 0 3px 10px rgba(26, 26, 36, 0.3);
   }
   :global(.dock-btn:disabled) {
     opacity: 0.3;
@@ -137,9 +132,9 @@
 
   :global(.divider) {
     width: 1px;
-    height: 20px;
+    height: 16px;
     background: rgba(0, 0, 0, 0.15);
-    margin: 0 0.2rem;
+    margin: 0 0.15rem;
   }
 
   :global(.badge) {
@@ -148,11 +143,11 @@
     right: -2px;
     background: #ef4444; /* red accent for notifications */
     color: white;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: 700;
     font-family: var(--font-mono, monospace);
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,12 +160,12 @@
 
   :global(.page-indicator) {
     font-family: var(--font-mono, monospace);
-    font-size: 0.7rem;
+    font-size: 0.64rem;
     font-weight: 500;
     color: var(--text-secondary, #4a4a5a);
     background: rgba(0, 0, 0, 0.05);
-    padding: 0 0.8rem;
-    height: 38px;
+    padding: 0 0.65rem;
+    height: 30px;
     border-radius: 9999px;
     display: flex;
     align-items: center;

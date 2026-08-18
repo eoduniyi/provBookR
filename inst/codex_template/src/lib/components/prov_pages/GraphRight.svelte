@@ -4,10 +4,10 @@
 
   let selectedNode = $state<{ id: string; name: string; type: string; detail: string } | null>(null);
 
-  const activities = provData?.activity || {};
-  const entities = provData?.entity || {};
-  const usedRels = provData?.used || {};
-  const genRels = provData?.wasGeneratedBy || {};
+  const activities = $derived(provData?.activity || {});
+  const entities = $derived(provData?.entity || {});
+  const usedRels = $derived(provData?.used || {});
+  const genRels = $derived(provData?.wasGeneratedBy || {});
 
   const scriptToNum: Record<string, number> = {
     "proposal_workflow.R": 1,
@@ -39,13 +39,11 @@
       k.startsWith('rdt:d') && entities[k]?.['rdt:type'] !== 'Environment'
     );
 
-    // 3. Build Nodes
-    const PAD = 44;
-    const SPACING_X = 76;
+    // 3. Build Nodes with Generous Breathing Room
+    const PAD = 65;
+    const SPACING_X = 130;
     const ACT_Y = 65;
-    const ENT_Y = 195;
-    const totalWidth = PAD * 2 + Math.max(actKeys.length, entKeys.length) * SPACING_X;
-    const viewW = Math.max(totalWidth, 500);
+    const ENT_Y = 215;
 
     type GNode = { id: string; label: string; type: 'act' | 'ent'; x: number; y: number; detail: string; isFile: boolean };
     const nodes: GNode[] = [];
@@ -55,23 +53,46 @@
       const a = activities[k];
       const rawName = a['rdt:name'] || k;
       const label = rawName.length > 22 ? rawName.slice(0, 20) + '…' : rawName;
-      const n: GNode = { id: k, label, type: 'act', x: PAD + i * SPACING_X, y: ACT_Y + (i % 2) * 26, detail: rawName, isFile: false };
+      const n: GNode = { id: k, label, type: 'act', x: PAD + i * SPACING_X, y: ACT_Y, detail: rawName, isFile: false };
       nodes.push(n);
       nodeMap.set(k, n);
     });
 
-    entKeys.forEach((k, i) => {
+    // Map entity to connected activity index for logical ordering
+    const entActIndexMap = new Map<string, number>();
+    Object.values(usedRels).forEach((u: any) => {
+      const actIdx = actKeys.indexOf(u['prov:activity']);
+      if (actIdx !== -1) entActIndexMap.set(u['prov:entity'], actIdx);
+    });
+    Object.values(genRels).forEach((g: any) => {
+      const actIdx = actKeys.indexOf(g['prov:activity']);
+      if (actIdx !== -1 && !entActIndexMap.has(g['prov:entity'])) {
+        entActIndexMap.set(g['prov:entity'], actIdx);
+      }
+    });
+
+    const sortedEntKeys = [...entKeys].sort((a, b) => {
+      const idxA = entActIndexMap.get(a) ?? 99;
+      const idxB = entActIndexMap.get(b) ?? 99;
+      return idxA - idxB;
+    });
+
+    const maxCount = Math.max(actKeys.length, sortedEntKeys.length);
+    const totalWidth = PAD * 2 + Math.max(1, maxCount - 1) * SPACING_X;
+    const viewW = Math.max(totalWidth, 520);
+
+    sortedEntKeys.forEach((k, i) => {
       const e = entities[k];
       const name = e['rdt:name'] || k;
-      const label = name.length > 14 ? name.slice(0, 12) + '…' : name;
+      const label = name.length > 16 ? name.slice(0, 14) + '…' : name;
       const isFile = e['rdt:type'] === 'File';
       const detail = `${name} = ${e['rdt:value'] || '?'}`;
-      const n: GNode = { id: k, label, type: 'ent', x: PAD + i * SPACING_X, y: ENT_Y + (i % 2) * 26, detail, isFile };
+      const n: GNode = { id: k, label, type: 'ent', x: PAD + i * SPACING_X, y: ENT_Y, detail, isFile };
       nodes.push(n);
       nodeMap.set(k, n);
     });
 
-    // 4. Build Edges (only keeping edges within the active graph)
+    // 4. Build Edges
     type GEdge = { from: GNode; to: GNode; kind: 'used' | 'generated' };
     const edges: GEdge[] = [];
 
@@ -91,8 +112,8 @@
   });
 
   function edgePath(e: any): string {
-    const dx = (e.to.x - e.from.x) * 0.45;
-    return `M ${e.from.x} ${e.from.y} C ${e.from.x + dx} ${e.from.y + 35}, ${e.to.x - dx} ${e.to.y - 35}, ${e.to.x} ${e.to.y}`;
+    const dy = (e.to.y - e.from.y) * 0.5;
+    return `M ${e.from.x} ${e.from.y} C ${e.from.x} ${e.from.y + dy}, ${e.to.x} ${e.to.y - dy}, ${e.to.x} ${e.to.y}`;
   }
 
   function selectNode(n: any) {
@@ -102,13 +123,13 @@
 
 <div class="graph-page">
   <div class="eink-canvas-container">
-    <svg viewBox="0 0 {graphData.viewW} 270" preserveAspectRatio="xMidYMid meet">
+    <svg viewBox="0 0 {graphData.viewW} 280" preserveAspectRatio="xMidYMid meet">
       <defs>
         <marker id="arr-u" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#71717a" />
+          <path d="M0,0 L8,4 L0,8 Z" fill="var(--text-muted)" />
         </marker>
         <marker id="arr-g" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#18181b" />
+          <path d="M0,0 L8,4 L0,8 Z" fill="var(--text)" />
         </marker>
       </defs>
 
@@ -118,10 +139,10 @@
           d={edgePath(e)}
           fill="none"
           stroke={e.kind === 'used' ? 'var(--text-muted)' : 'var(--text)'}
-          stroke-width="1.3"
+          stroke-width="1.4"
           stroke-dasharray={e.kind === 'used' ? '4 3' : 'none'}
           marker-end={e.kind === 'used' ? 'url(#arr-u)' : 'url(#arr-g)'}
-          opacity="0.6"
+          opacity="0.75"
         />
       {/each}
 
@@ -138,24 +159,24 @@
         >
           {#if n.type === 'act'}
             <!-- Operation Node -->
-            <rect x="-30" y="-14" width="60" height="28" rx="8"
-              fill="var(--bg)" stroke="var(--border)" stroke-width="1.2"
+            <rect x="-42" y="-16" width="84" height="32" rx="10"
+              fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.3"
               class="node-shape" />
             <text y="4" text-anchor="middle"
-              font-family="var(--font-mono, monospace)" font-size="7.5" fill="var(--text)" font-weight="500">
-              {n.label.length > 10 ? n.label.slice(0, 9) + '…' : n.label}
+              font-family="var(--font-mono, monospace)" font-size="8.5" fill="var(--text)" font-weight="500">
+              {n.label.length > 12 ? n.label.slice(0, 11) + '…' : n.label}
             </text>
           {:else}
             <!-- Entity Node (Liquid Bubble Circle) -->
-            <circle r="16"
-              fill={n.isFile ? 'var(--bg-warm)' : 'var(--bg)'}
+            <circle r="18"
+              fill={n.isFile ? 'var(--card-bg-hover)' : 'var(--card-bg)'}
               stroke={n.isFile ? 'var(--text-muted)' : 'var(--border)'}
-              stroke-width="1.3"
+              stroke-width="1.4"
               class="node-shape" />
             <text y="3.5" text-anchor="middle"
-              font-family="var(--font-mono, monospace)" font-size="7.5"
+              font-family="var(--font-mono, monospace)" font-size="8.5"
               fill="var(--text)" font-weight="600">
-              {n.label.length > 8 ? n.label.slice(0, 7) + '…' : n.label}
+              {n.label.length > 10 ? n.label.slice(0, 9) + '…' : n.label}
             </text>
           {/if}
         </g>
@@ -193,15 +214,15 @@
 
   .eink-canvas-container {
     flex: 1;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--code-paper-bg);
+    border: 1px solid var(--code-paper-border);
     border-radius: 20px;
     overflow: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+    box-shadow: var(--glass-shadow);
   }
 
   .eink-canvas-container svg {
@@ -224,7 +245,7 @@
   }
 
   .node:hover .node-shape {
-    stroke: #18181b;
+    stroke: var(--text);
     stroke-width: 1.8;
   }
 
@@ -242,53 +263,53 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.3rem 0.75rem;
-    background: rgba(255, 255, 255, 0.65);
+    background: var(--pill-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
     border-radius: 9999px;
     font-family: var(--font-sans);
     font-size: 0.68rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 
   .leg-rect {
     display: inline-block;
     width: 12px; height: 8px;
-    border: 1px solid #d4d4d8;
+    border: 1px solid var(--border);
     border-radius: 2px;
-    background: #ffffff;
+    background: var(--card-bg);
   }
 
   .leg-circle {
     display: inline-block;
     width: 9px; height: 9px;
     border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid #a1a1aa;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
   }
 
   .leg-dash {
     display: inline-block;
     width: 14px; height: 0;
-    border-top: 1.5px dashed #a1a1aa;
+    border-top: 1.5px dashed var(--text-muted);
   }
 
   .leg-solid {
     display: inline-block;
     width: 14px; height: 0;
-    border-top: 1.5px solid #27272a;
+    border-top: 1.5px solid var(--text);
   }
 
   /* Liquid Glass Inspector Bubble */
   .glass-inspector {
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--glass-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
     padding: 0.75rem 1.1rem;
-    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 1);
+    box-shadow: var(--glass-shadow);
   }
 
   .insp-header {
@@ -303,7 +324,7 @@
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
     font-weight: 600;
   }
 
@@ -319,7 +340,7 @@
   .insp-detail {
     font-family: var(--font-mono, monospace);
     font-size: 0.78rem;
-    color: var(--text, #1a1a24);
+    color: var(--text);
     word-break: break-word;
     font-weight: 500;
   }

@@ -4,13 +4,13 @@ export const themeState = $state({
   isOpen: false,                 // UI toggle for the settings panel
   
   // Typography/Reading Settings
-  fontSize: 14,
-  fontFamily: 'serif',
+  fontSize: 12.5,
+  fontFamily: 'sans',
   lineHeight: 1.78,
   justified: true,
 
   // Page Turn Settings
-  curlEnabled: true,
+  curlEnabled: false,
   curlRadius: 0.14,
   curlSpeed: 1.2,
   curlMode: 'ripple' as 'curl' | 'ripple',

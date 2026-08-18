@@ -2,28 +2,30 @@
   let { provData } = $props<{ provData: any }>();
   import Icon from '../Icon.svelte';
 
-  const entities = provData?.entity || {};
+  const entities = $derived(provData?.entity || {});
 
-  const files = Object.entries(entities)
-    .filter(([k, e]: [string, any]) => e['rdt:type'] === 'File')
-    .map(([id, e]: [string, any]) => ({
-      id,
-      name: e['rdt:name'] || id,
-      type: e['rdt:valType'] || 'File',
-      hash: e['rdt:hash'] || 'MD5 Recorded'
-    }));
+  const files = $derived(
+    Object.entries(entities)
+      .filter(([k, e]: [string, any]) => e['rdt:type'] === 'File')
+      .map(([id, e]: [string, any]) => ({
+        id,
+        name: e['rdt:name'] || id,
+        type: e['rdt:valType'] || 'File',
+        hash: e['rdt:hash'] || 'MD5 Recorded'
+      }))
+  );
 </script>
 
 <div class="registry-page">
   <h3>Generated File Artifacts</h3>
   <p class="reg-desc">
-    Every output file created by our everyday R examples, verified with cryptographic hash integrity:
+    Output files created by computational execution, verified with cryptographic hash integrity:
   </p>
 
   <div class="artifact-grid">
     {#each files as file}
       <div class="glass-artifact-card">
-        <div class="art-icon"><Icon name="document" size={20} /></div>
+        <div class="art-icon"><Icon name="file-output" size={20} /></div>
         <div class="art-details">
           <span class="art-name">{file.name}</span>
           <div class="art-meta">
@@ -48,10 +50,11 @@
   }
   .registry-page h3 {
     margin-top: 0;
+    color: var(--text);
   }
   .reg-desc {
     font-size: 0.84rem;
-    color: var(--text-secondary, #4a4a5a);
+    color: var(--text-secondary);
     margin-bottom: 1.2rem;
   }
 
@@ -68,22 +71,25 @@
     align-items: center;
     gap: 0.9rem;
     padding: 0.8rem 1.1rem;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--glass-border);
     border-radius: 18px;
-    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.03);
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
   }
 
   .glass-artifact-card:hover {
     transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--glass-bg-hover);
   }
 
   .art-icon {
-    font-size: 1.3rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .art-details {
@@ -97,7 +103,7 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--text, #1a1a24);
+    color: var(--text);
   }
 
   .art-meta {
@@ -105,7 +111,7 @@
     gap: 0.8rem;
     font-family: var(--font-sans);
     font-size: 0.68rem;
-    color: var(--text-muted, #8e8e9e);
+    color: var(--text-muted);
   }
 
   .art-hash {

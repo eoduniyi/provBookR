@@ -2,7 +2,8 @@ import type { ScenarioId } from './data/scenarios';
 import { scenarios } from './data/scenarios';
 
 export const activeScenarioState = $state({
-  currentId: 'everyday' as ScenarioId
+  currentId: 'everyday' as ScenarioId,
+  isOpen: false
 });
 
 export const activeScriptState = $state({
