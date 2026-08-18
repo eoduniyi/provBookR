@@ -1,13 +1,26 @@
 <script lang="ts">
-  import { typeComposerState, type DeliveryMode, type LayoutMode } from '../typeComposerState.svelte';
+  import { typeComposerState, type DeliveryMode, type LayoutMode, type TargetSide } from '../typeComposerState.svelte';
+  import { bookNavigationState } from '../state.svelte';
   import Icon from './Icon.svelte';
 
   let textInput = $state('');
 
+  const isCover = $derived(bookNavigationState.currentSpread === 0);
+  const currentSpread = $derived(bookNavigationState.currentSpread);
+
+  function setTargetSide(side: TargetSide) {
+    typeComposerState.targetSide = side;
+    if (side === 'left') {
+      typeComposerState.activePageKey = isCover ? 'page-cover' : `spread-${currentSpread}-left`;
+    } else if (side === 'right') {
+      typeComposerState.activePageKey = `spread-${currentSpread}-right`;
+    }
+  }
+
   function handleSeed() {
-    if (!textInput.trim()) return;
-    typeComposerState.seedText(typeComposerState.activePageKey, textInput);
-    textInput = '';
+    if (!typeComposerState.inputText.trim()) return;
+    typeComposerState.seedTextForSpread(currentSpread, typeComposerState.inputText);
+    // Keep inputText preserved so user doesn't have to re-type
   }
 
   function handleKeydown(e: KeyboardEvent) {
@@ -19,19 +32,19 @@
   }
 
   function handleZeroStateReset() {
-    typeComposerState.resetToZeroState(typeComposerState.activePageKey);
+    typeComposerState.resetToZeroStateForSpread(currentSpread);
   }
 
   function handleLayout(mode: LayoutMode) {
-    typeComposerState.applyLayout(typeComposerState.activePageKey, mode);
+    typeComposerState.applyLayoutForSpread(currentSpread, mode);
   }
 
   function handleWacky() {
-    typeComposerState.applyWackyDistortion(typeComposerState.activePageKey);
+    typeComposerState.applyWackyDistortionForSpread(currentSpread);
   }
 
   function handleClear() {
-    typeComposerState.clearPage(typeComposerState.activePageKey);
+    typeComposerState.clearPageForSpread(currentSpread);
   }
 </script>
 
@@ -56,15 +69,66 @@
       </button>
     </div>
 
+    <!-- Target Page Selector (Left | Right | Both) -->
+    {#if !isCover}
+      <div class="target-page-row">
+        <span class="target-label">Target:</span>
+        <div class="target-pills">
+          <button 
+            class="target-btn" 
+            class:active={typeComposerState.targetSide === 'left'}
+            onclick={() => setTargetSide('left')}
+          >
+            Left
+          </button>
+          <button 
+            class="target-btn" 
+            class:active={typeComposerState.targetSide === 'right'}
+            onclick={() => setTargetSide('right')}
+          >
+            Right
+          </button>
+          <button 
+            class="target-btn" 
+            class:active={typeComposerState.targetSide === 'both'}
+            onclick={() => setTargetSide('both')}
+          >
+            Both
+          </button>
+        </div>
+      </div>
+    {:else}
+      <div class="target-page-row">
+        <span class="target-label">Target:</span>
+        <span class="target-cover-tag">Cover Page</span>
+      </div>
+    {/if}
+
     <!-- Seed Input Box -->
     <div class="input-section">
-      <textarea 
-        class="seed-textarea" 
-        bind:value={textInput} 
-        onkeydown={handleKeydown}
-        placeholder="Type a letter, word, or poem... (⌘+Enter to seed)"
-        rows={2}
-      ></textarea>
+      <div class="textarea-wrapper">
+        <textarea 
+          class="seed-textarea" 
+          value={typeComposerState.inputText}
+          oninput={(e) => typeComposerState.updateSelectedText(e.currentTarget.value)}
+          onkeydown={handleKeydown}
+          placeholder="Type a letter, word, or poem... (Enter to seed)"
+          rows={2}
+        ></textarea>
+        {#if typeComposerState.inputText}
+          <button 
+            class="clear-input-btn" 
+            onclick={() => {
+              typeComposerState.selectedIds = new Set();
+              typeComposerState.inputText = '';
+            }}
+            title="Deselect & Clear text box"
+            aria-label="Deselect & Clear text box"
+          >
+            ✕
+          </button>
+        {/if}
+      </div>
       <div class="input-actions">
         <div class="delivery-pills">
           <button 
@@ -90,7 +154,7 @@
           </button>
         </div>
         <button class="seed-btn" onclick={handleSeed}>
-          <span>Seed</span>
+          <span>{typeComposerState.selectedIds.size === 1 ? 'Seed More' : 'Seed'}</span>
           <Icon name="sparkles" size={12} />
         </button>
       </div>
@@ -145,24 +209,24 @@
           <button 
             class="font-btn" 
             class:active={typeComposerState.fontFamily === 'serif'}
-            onclick={() => typeComposerState.fontFamily = 'serif'}
+            onclick={() => typeComposerState.setFontFamily('serif')}
           >Serif</button>
           <button 
             class="font-btn" 
             class:active={typeComposerState.fontFamily === 'mono'}
-            onclick={() => typeComposerState.fontFamily = 'mono'}
+            onclick={() => typeComposerState.setFontFamily('mono')}
           >Mono</button>
           <button 
             class="font-btn" 
             class:active={typeComposerState.fontFamily === 'sans'}
-            onclick={() => typeComposerState.fontFamily = 'sans'}
+            onclick={() => typeComposerState.setFontFamily('sans')}
           >Sans</button>
         </div>
 
         <button 
           class="italic-btn" 
           class:active={typeComposerState.isItalic}
-          onclick={() => typeComposerState.isItalic = !typeComposerState.isItalic}
+          onclick={() => typeComposerState.setItalic(!typeComposerState.isItalic)}
         >
           <em>I</em>
         </button>
@@ -176,7 +240,8 @@
           min="12" 
           max="64" 
           step="1"
-          bind:value={typeComposerState.fontSize}
+          value={typeComposerState.fontSize}
+          oninput={(e) => typeComposerState.setFontSize(Number(e.currentTarget.value))}
           class="range-slider"
         />
         <span class="slider-val">{typeComposerState.fontSize}px</span>
@@ -190,7 +255,8 @@
           min="200" 
           max="800" 
           step="100"
-          bind:value={typeComposerState.fontWeight}
+          value={typeComposerState.fontWeight}
+          oninput={(e) => typeComposerState.setFontWeight(Number(e.currentTarget.value))}
           class="range-slider"
         />
         <span class="slider-val">{typeComposerState.fontWeight}</span>
@@ -239,7 +305,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.65rem;
   }
 
   .header-title {
@@ -249,6 +315,56 @@
     font-family: var(--font-sans);
     font-size: 0.82rem;
     font-weight: 700;
+    color: var(--text);
+  }
+
+  /* Target Page Row */
+  .target-page-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.35rem 0.55rem;
+    background: var(--pill-bg, rgba(0, 0, 0, 0.04));
+    border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+  }
+
+  .target-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted, #94a3b8);
+  }
+
+  .target-pills { display: flex; gap: 0.25rem; }
+
+  .target-btn {
+    all: unset;
+    cursor: pointer;
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: transparent;
+    transition: all 0.15s;
+  }
+
+  .target-btn.active {
+    background: var(--pill-badge-bg, #1a1a24);
+    color: var(--pill-badge-text, #ffffff);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .target-cover-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    font-weight: 600;
     color: var(--text);
   }
 
@@ -273,11 +389,38 @@
   }
 
   /* Seed Area */
+  .textarea-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .clear-input-btn {
+    all: unset;
+    cursor: pointer;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pill-bg, rgba(0, 0, 0, 0.06));
+    transition: all 0.15s;
+  }
+  .clear-input-btn:hover {
+    background: var(--pill-badge-bg, #1a1a24);
+    color: var(--pill-badge-text, #ffffff);
+  }
+
   .seed-textarea {
     width: 100%;
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 0.6rem 0.75rem;
+    padding: 0.6rem 1.8rem 0.6rem 0.75rem;
     background: var(--pill-bg);
     color: var(--text);
     font-family: var(--font-sans);

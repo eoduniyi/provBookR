@@ -16,8 +16,8 @@
     if (editingId) return; // don't start drag if editing inline
     e.stopPropagation();
     
-    // Select item
-    typeComposerState.selectedIds = new Set([item.id]);
+    // Set active page & select item (syncs input field & typography settings)
+    typeComposerState.selectElement(pageKey, item.id);
 
     // Calculate drag offset relative to container
     const rect = container.getBoundingClientRect();
@@ -110,6 +110,7 @@
 <div 
   class="type-composer-container" 
   onclick={() => {
+    typeComposerState.activePageKey = pageKey;
     typeComposerState.selectedIds = new Set();
     if (editingId) finishInlineEdit();
   }}
@@ -172,7 +173,7 @@
     width: 100%;
     height: 100%;
     z-index: 10;
-    pointer-events: auto;
+    pointer-events: none;
     overflow: hidden;
     user-select: none;
     -webkit-user-select: none;
@@ -180,6 +181,7 @@
 
   .spatial-text-node {
     position: absolute;
+    pointer-events: auto;
     cursor: grab;
     padding: 0.15rem 0.4rem;
     border-radius: 6px;

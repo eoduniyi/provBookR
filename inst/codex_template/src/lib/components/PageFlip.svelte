@@ -11,6 +11,7 @@
   import { animationState } from '../animationState.svelte';
   import { activeScenarioState } from '../state.svelte';
   import { typeComposerState } from '../typeComposerState.svelte';
+  import TypeComposer from './TypeComposer.svelte';
   import { resolveSweep } from './pageCurlTypes';
   import type { SweepStyle } from './pageCurlTypes';
 
@@ -423,6 +424,7 @@
           bind:this={leftHalf}
           onscroll={checkScrollState}
         >
+          <TypeComposer pageKey={currentSpread === 0 ? 'page-cover' : `spread-${currentSpread}-left`} />
           <div class="page-content-wrapper">
             {@render leftPage()}
           </div>
@@ -455,6 +457,7 @@
           bind:this={rightHalf}
           onscroll={checkScrollState}
         >
+          <TypeComposer pageKey={`spread-${currentSpread}-right`} />
           <div class="page-content-wrapper">
             {@render rightPage()}
           </div>
