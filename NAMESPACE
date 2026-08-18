@@ -2,3 +2,5 @@
 
 export(provBookR)
 export(publish_codex)
+export(preview_codex)
+
