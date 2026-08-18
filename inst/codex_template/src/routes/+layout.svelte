@@ -4,6 +4,8 @@
   import { viewModeState } from '$lib/state.svelte';
   import SettingsPanel from '$lib/components/SettingsPanel.svelte';
   import AnnotationsPanel from '$lib/components/AnnotationsPanel.svelte';
+  import AnimationPanel from '$lib/components/AnimationPanel.svelte';
+  import ScenarioPanel from '$lib/components/ScenarioPanel.svelte';
   import Dock from '$lib/components/Dock.svelte';
   
   let { children } = $props();
@@ -13,6 +15,8 @@
   {@render children()}
   <SettingsPanel />
   <AnnotationsPanel />
+  <AnimationPanel />
+  <ScenarioPanel />
 </div>
 
 <style>

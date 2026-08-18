@@ -47,15 +47,15 @@
     color: var(--text);
   }
   .subtitle {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
   }
 
   .snapshot-list {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
-    overflow-y: auto;
+    gap: 0.35rem;
     padding-right: 0.2rem;
   }
 

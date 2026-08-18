@@ -28,13 +28,7 @@
     { label: '3D Ripple', value: 'ripple' }
   ];
 
-  function switchScenario(id: ScenarioId) {
-    activeScenarioState.currentId = id;
-    setTimeout(() => {
-      const keys = Object.keys(currentScenarioMetadata());
-      activeScriptState.currentId = keys[0];
-    }, 0);
-  }
+
 </script>
 
 {#if themeState.isOpen}
@@ -44,14 +38,7 @@
   <div class="settings-popover">
     
     <div class="settings-section">
-      <div class="settings-row">
-        <span class="row-label">Scenario</span>
-        <div class="seg-bar">
-          <button class="seg" class:on={activeScenarioState.currentId === 'everyday'} onclick={() => switchScenario('everyday')}>Everyday</button>
-          <button class="seg" class:on={activeScenarioState.currentId === 'hyperspec'} onclick={() => switchScenario('hyperspec')}>HyperSpec</button>
-          <button class="seg" class:on={activeScenarioState.currentId === 'hyspc_hpc'} onclick={() => switchScenario('hyspc_hpc')}>GSoC '26</button>
-        </div>
-      </div>
+
       
       <div class="settings-row">
         <span class="row-label">Theme</span>

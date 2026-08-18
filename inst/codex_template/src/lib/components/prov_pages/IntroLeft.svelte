@@ -55,8 +55,6 @@
   .intro-page {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-height: 100%;
   }
   .intro-page h2 {
     margin-top: 0.2rem;
@@ -64,28 +62,29 @@
     color: var(--text);
   }
   .subtitle {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.6rem;
     color: var(--text-secondary);
+    font-size: 0.88rem;
   }
 
   .flow-container {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    margin: 1.2rem 0;
+    gap: 0.45rem;
+    margin: 0.6rem 0;
   }
 
   /* Liquid Glass Bubble Pill */
   .flow-pill {
     display: flex;
     align-items: flex-start;
-    gap: 0.9rem;
-    padding: 0.85rem 1.2rem;
+    gap: 0.7rem;
+    padding: 0.55rem 0.9rem;
     background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
+    border-radius: 16px;
     box-shadow: var(--glass-shadow);
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s, box-shadow 0.2s;
   }
@@ -97,13 +96,13 @@
 
   .pill-badge {
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: var(--pill-badge-bg, var(--text));
     color: var(--pill-badge-text, #ffffff);
     font-family: var(--font-mono, monospace);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -114,17 +113,17 @@
 
   .pill-content h4 {
     font-family: var(--font-sans);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--text);
-    margin: 0 0 0.15rem;
+    margin: 0 0 0.1rem;
   }
 
   .pill-content p {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-secondary);
     margin: 0;
-    line-height: 1.45;
+    line-height: 1.38;
   }
 </style>

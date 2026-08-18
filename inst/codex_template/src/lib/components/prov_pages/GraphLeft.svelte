@@ -110,23 +110,23 @@
     color: var(--text);
   }
   .section-desc {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.78rem;
+    line-height: 1.45;
     color: var(--text-secondary);
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.6rem;
   }
   .script-pill-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    gap: 0.35rem;
+    margin-bottom: 0.8rem;
   }
   .script-select-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 0.8rem;
-    font-size: 0.78rem;
+    gap: 0.35rem;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.7rem;
     font-family: var(--font-sans);
     color: var(--text-secondary);
     background: var(--glass-bg);
@@ -141,9 +141,8 @@
   }
   .script-select-pill.active {
     background: var(--pill-badge-bg, #1a1a24);
-    color: var(--pill-badge-text, #ffffff);
     border-color: var(--card-border-active, #1a1a24);
-    box-shadow: 0 4px 12px -2px rgba(0,0,0,0.2);
+    color: var(--pill-badge-text, #ffffff);
     font-weight: 600;
   }
   .sc-name {
@@ -151,13 +150,13 @@
     font-weight: 500;
   }
   .entity-section {
-    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
   }
   .entity-section h3 {
     font-family: var(--font-sans);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.4rem;
     color: var(--text);
   }
   .count {

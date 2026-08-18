@@ -64,7 +64,7 @@
 }
 
 html {
-  font-size: 17px;
+  font-size: 14.5px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
@@ -74,7 +74,7 @@ body {
   font-family: var(--font-body);
   color: var(--text-body, var(--text));
   background: var(--bg-warm);
-  line-height: 1.82;
+  line-height: 1.65;
 }
 
 /* ── Typography ── */
@@ -82,23 +82,28 @@ body {
 h1, h2, h3, h4 {
   color: var(--text);
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: 2.6rem;
-  margin-bottom: 0.5rem;
+  font-size: clamp(1.8rem, 4vh, 2.4rem);
+  margin-bottom: 0.4rem;
 }
 h2 {
-  font-size: 1.6rem;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: clamp(1.25rem, 2.4vh, 1.55rem);
+  margin-top: 0.2rem;
+  margin-bottom: 0.4rem;
 }
 h3 {
-  font-size: 1.15rem;
-  margin-top: 1.8rem;
-  margin-bottom: 0.6rem;
+  font-size: clamp(0.98rem, 1.9vh, 1.15rem);
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+h4 {
+  font-size: clamp(0.85rem, 1.6vh, 0.95rem);
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
 }
 
 p {

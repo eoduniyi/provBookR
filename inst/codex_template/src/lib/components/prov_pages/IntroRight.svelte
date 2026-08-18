@@ -72,7 +72,6 @@
 
 <style>
   .intro-right {
-    min-height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -81,17 +80,15 @@
     color: var(--text);
   }
   .ex-desc {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
   }
 
   .ex-list {
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
-    overflow-y: auto;
-    padding-right: 0.2rem;
+    gap: 0.35rem;
   }
 
   /* Liquid Glass Pill Card */
@@ -100,13 +97,13 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.75rem 1rem;
+    gap: 0.25rem;
+    padding: 0.45rem 0.75rem;
     background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--glass-border);
-    border-radius: 18px;
+    border-radius: 14px;
     box-shadow: var(--glass-shadow);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -119,7 +116,7 @@
   .glass-ex-card.active {
     background: var(--card-bg-active);
     border-color: var(--card-border-active);
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.4);
   }
 
   .card-head {
@@ -130,28 +127,28 @@
 
   .ex-title {
     font-family: var(--font-sans);
-    font-size: 0.82rem;
+    font-size: 0.76rem;
     font-weight: 600;
     color: var(--text);
   }
 
   .ex-script {
     font-family: var(--font-mono, monospace);
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: var(--text-muted);
   }
 
   .card-flow {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.25rem;
     flex-wrap: wrap;
     font-family: var(--font-mono, monospace);
-    font-size: 0.68rem;
+    font-size: 0.64rem;
   }
 
   .flow-tag {
-    padding: 0.15rem 0.55rem;
+    padding: 0.1rem 0.45rem;
     border-radius: 9999px;
     background: var(--pill-bg);
     color: var(--pill-text);

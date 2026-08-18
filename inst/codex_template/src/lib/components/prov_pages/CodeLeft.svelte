@@ -101,8 +101,6 @@
   .code-left-page {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-height: 100%;
   }
   .code-left-page h2 {
     margin-top: 0.2rem;
@@ -110,28 +108,28 @@
     color: var(--text);
   }
   .section-desc {
-    font-size: 0.84rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.4rem;
   }
 
   /* Category Pills Bar */
   .cat-pill-bar {
     display: flex;
-    gap: 0.4rem;
-    margin-bottom: 0.6rem;
+    gap: 0.3rem;
+    margin-bottom: 0.35rem;
   }
   .cat-pill {
     all: unset;
     cursor: pointer;
-    padding: 0.25rem 0.75rem;
+    padding: 0.18rem 0.6rem;
     background: var(--pill-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--border);
     border-radius: 9999px;
     font-family: var(--font-sans);
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: var(--text-muted);
     transition: all 0.2s;
   }
@@ -150,8 +148,8 @@
   .script-pill-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.45rem;
-    margin-bottom: 1rem;
+    gap: 0.35rem;
+    margin-bottom: 0.6rem;
   }
 
   .script-select-pill {
@@ -159,15 +157,15 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 0.85rem;
+    gap: 0.35rem;
+    padding: 0.3rem 0.65rem;
     background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--glass-border);
     border-radius: 9999px;
     font-family: var(--font-mono, monospace);
-    font-size: 0.74rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
     box-shadow: var(--glass-shadow);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -193,11 +191,11 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 1rem 1.3rem;
+    border-radius: 16px;
+    padding: 0.75rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.45rem;
     box-shadow: var(--glass-shadow);
   }
 

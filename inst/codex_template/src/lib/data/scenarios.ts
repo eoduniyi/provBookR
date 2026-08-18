@@ -5,7 +5,7 @@ import { scriptMetadata } from '../scriptData';
 import { hyperSpecScriptMetadata } from './scriptData_hyperspec';
 import { hySpcHpcScriptMetadata } from './scriptData_hyspc_hpc';
 
-export type ScenarioId = 'everyday' | 'hyperspec' | 'hyspc_hpc';
+export type ScenarioId = 'everyday' | 'hyperspec' | 'hyspc_hpc' | 'blank';
 
 export interface GuideCaption {
   title: string;
@@ -23,6 +23,30 @@ export interface Scenario {
 }
 
 export const scenarios: Record<ScenarioId, Scenario> = {
+  blank: {
+    id: 'blank',
+    name: 'Blank Notebook',
+    description: 'A completely blank canvas for thoughts, animations, and focus.',
+    provData: { environment: {}, execution: {}, entities: [], operations: [] },
+    scriptMetadata: {
+      blank_script: {
+        id: 'blank_script',
+        name: 'Blank',
+        icon: 'book',
+        category: 'All',
+        sourceCode: '# This page is intentionally left blank.\n# Engage the animation panel to draw here.',
+        outputPreview: ''
+      }
+    },
+    guide: [
+      { title: 'Blank Notebook', body: 'This is a blank environment.' },
+      { title: 'Empty Space', body: 'No scripts found here.' },
+      { title: 'Empty Space', body: 'No code to review.' },
+      { title: 'Empty Space', body: 'No lineage.' },
+      { title: 'Empty Space', body: 'No data.' },
+      { title: 'Empty Space', body: 'No execution timeline.' }
+    ]
+  },
   everyday: {
     id: 'everyday',
     name: 'Everyday Provenance',

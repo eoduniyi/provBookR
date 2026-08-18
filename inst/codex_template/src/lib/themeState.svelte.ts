@@ -4,7 +4,7 @@ export const themeState = $state({
   isOpen: false,                 // UI toggle for the settings panel
   
   // Typography/Reading Settings
-  fontSize: 14,
+  fontSize: 12.5,
   fontFamily: 'serif',
   lineHeight: 1.78,
   justified: true,

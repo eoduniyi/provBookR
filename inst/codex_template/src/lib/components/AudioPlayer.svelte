@@ -222,21 +222,34 @@
   /* Panel */
   .panel {
     position: absolute;
-    bottom: calc(100% + 8px);
-    right: 0;
-    background: #fff;
-    border: 1px solid var(--border, #e5e7eb);
-    border-radius: 8px;
-    padding: 1rem 1.1rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    z-index: 200;
-    min-width: 280px;
+    bottom: calc(100% + 12px);
+    left: 0;
+    background: var(--glass-bg, rgba(255, 255, 255, 0.85));
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+    border-radius: 18px;
+    padding: 1.1rem 1.25rem;
+    box-shadow: 
+      0 16px 40px -8px rgba(0, 0, 0, 0.3),
+      0 0 0 1px inset rgba(255, 255, 255, 0.15);
+    z-index: 2000;
+    min-width: 290px;
     max-width: 340px;
+    color: var(--text);
+    animation: popUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform-origin: bottom left;
+  }
+
+  @keyframes popUp {
+    0% { opacity: 0; transform: scale(0.95) translateY(8px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
   }
 
   .panel-title {
-    font-family: var(--font-sans);
+    font-family: var(--font-mono, monospace);
     font-size: 0.65rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-muted, #94a3b8);
@@ -245,32 +258,38 @@
 
   .divider {
     height: 1px;
-    background: var(--border, #e5e7eb);
-    margin: 0.6rem 0;
+    background: var(--border, rgba(0, 0, 0, 0.08));
+    margin: 0.75rem 0;
   }
 
   /* Track list */
-  .track-list { display: flex; flex-direction: column; gap: 0.2rem; }
+  .track-list { display: flex; flex-direction: column; gap: 0.3rem; }
 
   .track {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.35rem 0.5rem;
-    border: none;
-    border-radius: 4px;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
     background: transparent;
     cursor: pointer;
-    transition: background 0.12s;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
     text-align: left;
     font-family: var(--font-sans);
-    font-size: 0.75rem;
-    color: var(--text-secondary, #555);
+    font-size: 0.74rem;
+    color: var(--text-secondary);
   }
-  .track:hover { background: var(--bg-figure, #fafbfc); }
+  .track:hover {
+    background: var(--glass-bg-hover, rgba(255, 255, 255, 0.2));
+    color: var(--text);
+  }
   .track.active {
-    background: var(--accent-light, #dbeafe);
-    color: var(--accent, #2563eb);
+    background: var(--pill-badge-bg, #1a1a24);
+    color: var(--pill-badge-text, #ffffff);
+    border: 1px solid var(--card-border-active, transparent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
   }
 
   .track-indicator {
@@ -278,9 +297,9 @@
     text-align: center;
     font-size: 0.65rem;
     flex-shrink: 0;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted);
   }
-  .track.active .track-indicator { color: var(--accent, #2563eb); }
+  .track.active .track-indicator { color: var(--pill-badge-text, #ffffff); }
 
   .track-label {
     white-space: nowrap;
@@ -288,10 +307,10 @@
     text-overflow: ellipsis;
   }
 
-  .mini-bars { display: inline-flex; align-items: flex-end; gap: 1px; height: 10px; }
+  .mini-bars { display: inline-flex; align-items: flex-end; gap: 1.5px; height: 10px; }
   .mini-bars .b {
     width: 1.5px;
-    background: var(--accent, #2563eb);
+    background: var(--pill-badge-text, #ffffff);
     border-radius: 1px;
     animation: eq 0.8s ease-in-out infinite alternate;
   }
@@ -303,43 +322,44 @@
   .transport {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
 
   .ctrl {
-    font-size: 0.7rem;
-    width: 1.8rem;
-    height: 1.8rem;
+    font-size: 0.72rem;
+    width: 2.1rem;
+    height: 2.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--border, #e5e7eb);
+    border: 1px solid var(--border);
     border-radius: 50%;
-    background: #fff;
-    color: var(--text, #1a1a2e);
+    background: var(--pill-bg, rgba(0, 0, 0, 0.04));
+    color: var(--text);
     cursor: pointer;
-    transition: background 0.12s, border-color 0.12s;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
     flex-shrink: 0;
   }
   .ctrl:hover {
-    background: var(--accent-light, #dbeafe);
-    border-color: var(--accent, #2563eb);
+    background: var(--pill-badge-bg, #1a1a24);
+    color: var(--pill-badge-text, #ffffff);
+    transform: scale(1.08);
   }
 
   .time {
     font-family: var(--font-mono, monospace);
-    font-size: 0.6rem;
-    color: var(--text-muted, #94a3b8);
-    min-width: 2.5rem;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    min-width: 2.4rem;
     text-align: center;
     flex-shrink: 0;
   }
 
   .progress-bar {
     flex: 1;
-    height: 4px;
-    background: var(--border, #e5e7eb);
-    border-radius: 2px;
+    height: 5px;
+    background: var(--pill-bg, rgba(0, 0, 0, 0.08));
+    border-radius: 999px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -349,8 +369,8 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background: var(--accent, #2563eb);
-    border-radius: 2px;
+    background: var(--pill-badge-bg, var(--text));
+    border-radius: 999px;
     transition: width 0.15s linear;
   }
 </style>

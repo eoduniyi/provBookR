@@ -71,13 +71,13 @@
   .glass-summary {
     display: flex;
     justify-content: space-around;
-    padding: 0.9rem 1.2rem;
+    padding: 0.55rem 1rem;
     background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--glass-border);
     border-radius: 9999px;
-    margin: 1.5rem 0;
+    margin: 0.75rem 0;
     box-shadow: var(--glass-shadow);
   }
 
@@ -88,13 +88,13 @@
   }
   .ss-val {
     font-family: var(--font-mono, monospace);
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--text);
   }
   .ss-key {
     font-family: var(--font-sans);
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--text-muted);
@@ -103,14 +103,14 @@
   .timeline {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: 0.35rem;
   }
 
   .glass-step {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.6rem;
     align-items: center;
-    padding: 0.55rem 1rem;
+    padding: 0.4rem 0.8rem;
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
