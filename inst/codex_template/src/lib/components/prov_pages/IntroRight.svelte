@@ -116,7 +116,7 @@
   .glass-ex-card.active {
     background: var(--card-bg-active);
     border-color: var(--card-border-active);
-    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.4);
   }
 
   .card-head {

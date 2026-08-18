@@ -103,7 +103,7 @@
     border-color: var(--card-border-active);
     color: var(--text);
     font-weight: 600;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   }
 
   /* E-Ink Paper */

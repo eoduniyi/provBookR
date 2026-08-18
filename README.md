@@ -9,11 +9,9 @@ For ecologists and the wider scientific community, the reproducibility of comput
 
 **provBookR** addresses this by bridging formal provenance research with practical software engineering workflows. It utilizes End-to-end-provenance tools (such as `rdtLite`) to automatically collect the execution history of R scripts and packages that provenance into an interactive, static web booklet built with **SvelteKit**.
 
-![provBookR Main Interface](main-example.png)
-
 This allows researchers to visually explore the lineage of their data pipelines and specific R objects (e.g., plots, models, variables) through a browser-based reading experience. By making provenance transparent and easily shareable without requiring specialized backend infrastructure, `provBookR` empowers the scientific community to elevate the standard of computational reproducibility.
 
-![provBookR Settings](settings-example.png)
+![provBookR Main Interface](main-example.png)
 
 ---
 

@@ -143,6 +143,7 @@
     border-color: var(--card-border-active, #1a1a24);
     color: var(--pill-badge-text, #ffffff);
     font-weight: 600;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   }
   .sc-name {
     font-family: var(--font-mono, monospace);
