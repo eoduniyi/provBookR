@@ -52,10 +52,16 @@ publish_codex <- function(script, output_dir = "codex_build") {
             recursive = TRUE,
             copy.mode = TRUE)
   
-  # Step 3: Inject the provenance data
+  # Step 3: Inject the provenance data and script source
   data_dir <- file.path(build_ws, "src", "lib", "data")
   dir.create(data_dir, recursive = TRUE, showWarnings = FALSE)
   writeLines(prov_json, file.path(data_dir, "prov.json"))
+  
+  script_content <- paste(readLines(script, warn = FALSE), collapse = "\n")
+  script_payload <- sprintf('{\n  "name": %s,\n  "code": %s\n}', 
+                            jsonlite::toJSON(basename(script), auto_unbox = TRUE),
+                            jsonlite::toJSON(script_content, auto_unbox = TRUE))
+  writeLines(script_payload, file.path(data_dir, "script_source.json"))
   
   # Step 4: Build the static site
   message("Building static booklet (this requires Node.js)...")
