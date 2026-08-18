@@ -10,6 +10,7 @@
   import { themeState } from '../themeState.svelte';
   import { animationState } from '../animationState.svelte';
   import { activeScenarioState } from '../state.svelte';
+  import { typeComposerState } from '../typeComposerState.svelte';
   import { resolveSweep } from './pageCurlTypes';
   import type { SweepStyle } from './pageCurlTypes';
 
@@ -181,6 +182,15 @@
   }
 
   function handleKey(e: KeyboardEvent) {
+    const target = e.target as HTMLElement | null;
+    const isInput = target && (
+      target.tagName === 'INPUT' || 
+      target.tagName === 'TEXTAREA' || 
+      target.isContentEditable ||
+      Boolean(target.closest('input, textarea, [contenteditable]'))
+    );
+    if (isInput) return; // Do not intercept typing or spacebar in input fields
+
     if (isMobile) {
       if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); mobileNext(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); mobilePrev(); }
@@ -482,6 +492,15 @@
   <Dock>
     {#snippet leftControls()}
       <AudioPlayer />
+      <button 
+        class="dock-btn" 
+        class:active={typeComposerState.isOpen} 
+        onclick={() => typeComposerState.isOpen = !typeComposerState.isOpen} 
+        aria-label="Type Studio" 
+        title="Type Studio (Dynamic Typography)"
+      >
+        <Icon name="type" size={15} />
+      </button>
       <button 
         class="dock-btn" 
         class:active={animationState.isOpen} 

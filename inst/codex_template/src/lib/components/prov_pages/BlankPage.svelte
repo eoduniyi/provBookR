@@ -1,11 +1,16 @@
 <script lang="ts">
-  // A clean, completely blank notebook page for pure paper canvas drawing and canvas animations
+  import TypeComposer from '../TypeComposer.svelte';
+
+  let { pageKey = 'blank-page' } = $props<{ pageKey?: string }>();
 </script>
 
-<div class="blank-page"></div>
+<div class="blank-page">
+  <TypeComposer {pageKey} />
+</div>
 
 <style>
   .blank-page {
+    position: relative;
     width: 100%;
     height: 100%;
     min-height: 400px;
