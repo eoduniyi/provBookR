@@ -1,8 +1,13 @@
 /.project
 .Rproj.user
+.RData
+.Rhistory
+.DS_Store
+*.DS_Store
 inst/codex_template/node_modules/
 inst/codex_template/.svelte-kit/
 inst/codex_template/build/
 *.wav
 *.mp3
 *.ogg
+
