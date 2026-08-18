@@ -3,4 +3,10 @@
 ^inst/codex_template/node_modules$
 ^inst/codex_template/\.svelte-kit$
 ^inst/codex_template/build$
+^books$
+^notebooks/books$
+^prov_data.*$
+^test_.*$
+^testing$
+
 
