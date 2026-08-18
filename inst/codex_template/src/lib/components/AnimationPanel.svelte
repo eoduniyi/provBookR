@@ -4,10 +4,6 @@
 
   const presets = [
     { id: 'off', label: 'Off', icon: 'circle-slash' },
-    { id: 'watercolor', label: 'Watercolor', icon: 'droplet' },
-    { id: 'clouds', label: 'Clouds', icon: 'cloud' },
-    { id: 'fire', label: 'Fire', icon: 'flame' },
-    { id: 'particles', label: 'Particles', icon: 'atom' },
     { id: 'streams', label: 'Streams', icon: 'git-branch' },
     { id: 'rainbow', label: 'Rainbow', icon: 'rainbow' }
   ];
@@ -109,6 +105,7 @@
     transform: translateX(-50%);
     z-index: 999;
     width: 440px;
+    max-width: calc(100vw - 2rem);
     background: var(--glass-bg, rgba(255, 255, 255, 0.82));
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
@@ -155,7 +152,7 @@
   /* ── Preset Grid ── */
   .preset-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
   }
 
