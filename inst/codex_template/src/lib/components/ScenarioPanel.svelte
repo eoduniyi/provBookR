@@ -5,8 +5,6 @@
 
   const scenariosList = [
     { id: 'everyday', label: 'Everyday', icon: 'coffee' },
-    { id: 'hyperspec', label: 'HyperSpec', icon: 'activity' },
-    { id: 'hyspc_hpc', label: 'GSoC \'26', icon: 'beaker' },
     { id: 'blank', label: 'Blank', icon: 'book' }
   ];
 

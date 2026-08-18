@@ -8,8 +8,7 @@
     "coffee_tracker.R": 2,
     "weather_analysis.R": 3,
     "recipe_scaling.R": 4,
-    "student_grades.R": 5,
-    "hyperspec_smoothing.R": 1
+    "student_grades.R": 5
   };
 
   const scripts = $derived(Object.values(currentScenarioMetadata()));
