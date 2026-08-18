@@ -1,5 +1,6 @@
 # provBookR Architecture
-provBookR creates an HTML-based visualizations of the collected provenance from R scripts. The provBookR package does this by utilizing previously developed R provenance tools. In particular, provBookR relies on **RDataTracker** (rdtLite) to **record** provenance generated from scripts in R, **provGraphR** for **querying** the collected provenance, and **provParseR** for **processing** the provenance.
+
+`provBookR` creates HTML-based interactive web codex visualizations of collected provenance from R scripts. The package bridges R provenance collection tools with a modern web interface.
 
 > _The provBookR package makes use of a number of **Data**, **HTML**, and **Provenance** R packages._
 

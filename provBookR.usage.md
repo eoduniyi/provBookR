@@ -1,5 +1,6 @@
-# 1: ```provBookR().browser```
-> The provBookR package uses a **browser interface** for the generation of **provbooks** and specification of **provenance operations**. The browser has two interface modes: **lite** and **full**. The lite mode is intended for quick generation of provbooks, while the full mode is intended to support the exploration of the collected provenance.
+# provBookR Usage & CLI Guide
+
+`provBookR` provides both an R publishing API (`publish_codex`) and an interactive terminal browser interface (`provBookR`) for querying provenance.
 
 ## 1.1: Using the browser's ```lite``` mode
 ```R

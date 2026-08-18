@@ -1,5 +1,6 @@
-# **provBookR TODO**
-> In this README file contains
+# provBookR TODO
+
+Development task tracking and roadmap for `provBookR`.
 
 ## Organizational Information
 ### Administrivia Type: _R Package Development_

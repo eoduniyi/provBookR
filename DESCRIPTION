@@ -1,7 +1,7 @@
 Package: provBookR
 Title: Creates an HTML-Based Visualization of Provenance
-Version: 0.1
-Date: 2019-08-06
+Version: 0.1.0
+Date: 2026-08-18
 Authors@R: c( person("Erick", "Oduniyi", role = "cre",
                       email = "eeoduniyi@gmail.com")
 		    )

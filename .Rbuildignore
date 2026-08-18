@@ -1,2 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^inst/codex_template/node_modules$
+^inst/codex_template/\.svelte-kit$
+^inst/codex_template/build$
+
