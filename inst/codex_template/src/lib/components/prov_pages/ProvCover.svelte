@@ -17,7 +17,7 @@
 </script>
 
 <div class="cover">
-  <p class="chapter-label">Provenance Codex</p>
+  <p class="chapter-label">provBook</p>
   <h1>{scriptName}</h1>
   <p class="subtitle">An interactive record of code execution,<br>data lineage, and computational history.</p>
 

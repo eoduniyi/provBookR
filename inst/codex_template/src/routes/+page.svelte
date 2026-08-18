@@ -37,7 +37,7 @@
 </script>
 
 <svelte:head>
-  <title>Provenance Codex</title>
+  <title>provBook</title>
 </svelte:head>
 
 {#if viewModeState.mode === 'graph'}

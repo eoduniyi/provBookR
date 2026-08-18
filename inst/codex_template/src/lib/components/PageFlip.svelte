@@ -293,7 +293,7 @@
     <!-- Disclaimer gate -->
     <div class="mobile-gate">
       <div class="gate-content">
-        <p class="gate-label">Provenance Codex</p>
+        <p class="gate-label">provBook</p>
         <h2 class="gate-title">Best experienced on desktop</h2>
         <p class="gate-body">
           This interactive book was designed for a two-page spread layout with
