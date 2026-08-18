@@ -96,11 +96,11 @@
   }
 
   .row-label {
-    font-family: var(--font-mono, monospace);
-    font-size: 0.7rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     color: var(--text-muted, #94a3b8);
     white-space: nowrap;
     flex-shrink: 0;

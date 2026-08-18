@@ -15,7 +15,7 @@
 
   let {
     fontSize = $bindable(14),
-    fontFamily = $bindable('serif'),
+    fontFamily = $bindable('sans'),
     lineHeight = $bindable(1.78),
     justified = $bindable(true),
     curlEnabled = $bindable(true),

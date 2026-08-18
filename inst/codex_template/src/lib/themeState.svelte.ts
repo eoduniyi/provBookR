@@ -5,12 +5,12 @@ export const themeState = $state({
   
   // Typography/Reading Settings
   fontSize: 12.5,
-  fontFamily: 'serif',
+  fontFamily: 'sans',
   lineHeight: 1.78,
   justified: true,
 
   // Page Turn Settings
-  curlEnabled: true,
+  curlEnabled: false,
   curlRadius: 0.14,
   curlSpeed: 1.2,
   curlMode: 'ripple' as 'curl' | 'ripple',
