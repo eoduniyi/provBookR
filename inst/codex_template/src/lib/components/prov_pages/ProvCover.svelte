@@ -2,7 +2,7 @@
   let { provData } = $props<{ provData: any }>();
 
   let environment = $derived(provData?.entity?.['rdt:environment'] || {});
-  let scriptName = $derived(environment?.['rdt:script'] || 'Unknown Script');
+  let scriptName = $derived(environment?.['rdt:script'] ? environment['rdt:script'].split(/[/\\]/).pop() : 'Analysis Script');
   let executionTime = $derived(environment?.['rdt:provTimestamp']?.replace(/\./g, ':') || '');
   let architecture = $derived(environment?.['rdt:architecture'] || '');
   let os = $derived(environment?.['rdt:operatingSystem'] || '');

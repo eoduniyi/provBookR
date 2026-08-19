@@ -17,8 +17,8 @@ export interface ProvSummary {
 
 export function parseProvData(provData: any, scriptSource?: { name?: string; code?: string }): ProvSummary {
   const env = provData?.entity?.['rdt:environment'] || {};
-  const rawScript = scriptSource?.name || env?.['rdt:script'] || 'R Script';
-  const scriptName = rawScript.split(/[/\\]/).pop() || rawScript;
+  const envScript = env?.['rdt:script'] ? env['rdt:script'].split(/[/\\]/).pop() : null;
+  const scriptName = envScript || (scriptSource?.name && scriptSource.name !== 'everyday_workflow.R' ? scriptSource.name : null) || 'Analysis Script';
   
   const activitiesObj = provData?.activity || {};
   const entitiesObj = provData?.entity || {};
@@ -98,6 +98,6 @@ export function parseProvData(provData: any, scriptSource?: { name?: string; cod
     inputFiles,
     activities,
     flowSteps,
-    sourceCode: scriptSource?.code || operations.map(a => a.name).join('\n')
+    sourceCode: (scriptSource?.code && scriptSource.name === scriptName) ? scriptSource.code : (operations.map(a => a.name).join('\n') || scriptSource?.code || '# Source code execution trace')
   };
 }

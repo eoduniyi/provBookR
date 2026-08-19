@@ -161,8 +161,6 @@
   .note {
     font-size: 0.72rem;
     color: var(--text-muted);
-    border-left: 2px solid var(--accent);
-    padding-left: 0.6rem;
     margin-top: 0.2rem;
     line-height: 1.4;
   }
