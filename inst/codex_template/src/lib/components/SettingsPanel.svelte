@@ -151,16 +151,16 @@
     transform: translateX(-50%);
     z-index: 999;
     width: 440px; /* Narrower width, perfect for vertical list */
-    background: var(--glass-bg, rgba(255, 255, 255, 0.82));
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.9));
+    background: var(--popover-bg, rgba(253, 252, 249, 0.96));
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--popover-border, rgba(0, 0, 0, 0.12));
     border-radius: 20px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--popover-shadow, 0 20px 48px -8px rgba(0, 0, 0, 0.2));
     animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
