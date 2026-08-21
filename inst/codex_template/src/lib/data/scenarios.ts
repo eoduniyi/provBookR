@@ -1,7 +1,10 @@
 import everydayProv from './prov.json';
+import scriptSource from './script_source.json';
 import { scriptMetadata } from '../scriptData';
 
 export type ScenarioId = 'everyday' | 'blank';
+
+const activeScriptName = (scriptSource as any)?.name || 'Provenance Notebook';
 
 export interface GuideCaption {
   title: string;
@@ -45,8 +48,8 @@ export const scenarios: Record<ScenarioId, Scenario> = {
   },
   everyday: {
     id: 'everyday',
-    name: 'Everyday Provenance',
-    description: 'A collection of basic tasks to demonstrate data lineage, like scaling recipes and tracking coffee.',
+    name: activeScriptName,
+    description: `Computational provenance and execution blueprint for ${activeScriptName}.`,
     provData: everydayProv,
     scriptMetadata: scriptMetadata,
     guide: [

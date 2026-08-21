@@ -1,10 +1,13 @@
 <script lang="ts">
   import { activeScenarioState, activeScriptState, currentScenarioMetadata } from '../state.svelte';
   import type { ScenarioId } from '../data/scenarios';
+  import scriptSource from '../data/script_source.json';
   import Icon from './Icon.svelte';
 
+  const activeLabel = (scriptSource as any)?.name ? (scriptSource as any).name : 'Notebook';
+
   const scenariosList = [
-    { id: 'everyday', label: 'Everyday', icon: 'coffee' },
+    { id: 'everyday', label: activeLabel, icon: 'file-text' },
     { id: 'blank', label: 'Blank', icon: 'book' }
   ];
 
@@ -37,7 +40,7 @@
             onclick={() => switchScenario(p.id as any)}
           >
             <Icon name={p.icon} size={20} strokeWidth={activeScenarioState.currentId === p.id ? 2.5 : 1.5} />
-            <span class="preset-label">{p.label}</span>
+            <span class="preset-label" title={p.label}>{p.label}</span>
           </button>
         {/each}
       </div>
@@ -125,6 +128,8 @@
     color: var(--text-secondary, #4a4a5a);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     border: 1px solid transparent;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .preset-card:hover {
@@ -144,6 +149,12 @@
     font-family: var(--font-sans);
     font-size: 0.7rem;
     font-weight: 500;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    padding: 0 0.25rem;
   }
   .preset-card.on .preset-label {
     font-weight: 600;
