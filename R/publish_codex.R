@@ -81,15 +81,17 @@ publish_codex <- function(script, output_dir = "codex_build") {
   
   # Step 5: Copy the final build to the output_dir
   setwd(old_wd)
-  if (!dir.exists(output_dir)) {
-    dir.create(output_dir, recursive = TRUE)
+  if (dir.exists(output_dir)) {
+    unlink(output_dir, recursive = TRUE)
   }
+  dir.create(output_dir, recursive = TRUE)
   
   message(sprintf("Copying build to %s...", output_dir))
   build_output <- file.path(build_ws, "build")
   file.copy(from = list.files(build_output, full.names = TRUE),
             to = output_dir,
-            recursive = TRUE)
+            recursive = TRUE,
+            overwrite = TRUE)
   
   message("Codex successfully published at: ", file.path(output_dir, "index.html"))
   return(TRUE)

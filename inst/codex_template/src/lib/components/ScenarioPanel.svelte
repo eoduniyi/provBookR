@@ -53,17 +53,15 @@
     bottom: 5.5rem;
     left: 2rem;
     width: 320px;
-    background: var(--glass-bg, rgba(255, 255, 255, 0.85));
-    backdrop-filter: blur(24px) saturate(1.5);
-    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.3));
+    background: var(--popover-bg, #faf9f5);
+    background-color: var(--popover-bg, #faf9f5);
+    border: 1px solid var(--popover-border, rgba(0, 0, 0, 0.14));
     border-radius: 20px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    box-shadow: 
-      0 12px 40px -8px rgba(0,0,0,0.15),
-      0 0 0 1px inset rgba(255,255,255,0.4);
+    box-shadow: var(--popover-shadow, 0 24px 60px -8px rgba(0, 0, 0, 0.25));
     z-index: 1000;
     font-family: var(--font-sans);
     animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;

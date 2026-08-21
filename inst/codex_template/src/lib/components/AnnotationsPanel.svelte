@@ -110,12 +110,11 @@
     max-height: 70vh;
     display: flex;
     flex-direction: column;
-    background: var(--glass-bg, rgba(255, 255, 255, 0.85));
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--glass-border, rgba(255,255,255,0.9));
+    background: var(--popover-bg, #faf9f5);
+    background-color: var(--popover-bg, #faf9f5);
+    border: 1px solid var(--popover-border, rgba(0, 0, 0, 0.14));
     border-radius: 20px;
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--popover-shadow, 0 24px 60px -8px rgba(0, 0, 0, 0.25));
     animation: slideUpCenter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
