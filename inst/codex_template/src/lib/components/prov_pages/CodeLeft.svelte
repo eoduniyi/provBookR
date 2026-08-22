@@ -43,7 +43,7 @@
               <span class="var-tag"><code>{v.name}</code> ({v.type})</span>
             {/each}
             {#if isLight && parsed.variables.length > 4}
-              <span class="more-pill">+{parsed.variables.length - displayedVars.length} more in Detailed Mode</span>
+              <span class="more-pill">+{parsed.variables.length - displayedVars.length} more in @detailedmode</span>
             {/if}
           </div>
         </div>
@@ -70,7 +70,7 @@
               </div>
             {/each}
             {#if isLight && parsed.activities.length > 3}
-              <span class="more-pill">+{parsed.activities.length - displayedOps.length} more operations in Detailed Mode</span>
+              <span class="more-pill">+{parsed.activities.length - displayedOps.length} more in @detailedmode</span>
             {/if}
           </div>
         </div>

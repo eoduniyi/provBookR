@@ -59,7 +59,7 @@
 
   {#if isLight && edgeDescs.length > 4}
     <div class="sparse-footer-pill">
-      <span>Showing {displayedEdges.length} primary relationships ({edgeDescs.length - displayedEdges.length} more in Detailed Mode)</span>
+      <span>Showing {displayedEdges.length} primary relationships ({edgeDescs.length - displayedEdges.length} more in @detailedmode)</span>
     </div>
   {/if}
 

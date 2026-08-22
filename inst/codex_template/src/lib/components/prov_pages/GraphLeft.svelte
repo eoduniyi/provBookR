@@ -57,7 +57,7 @@
     </div>
     {#if isLight && snapshots.length > 4}
       <div class="sparse-footer-pill">
-        <span>Showing {displayedSnapshots.length} key variables ({snapshots.length - displayedSnapshots.length} more in Detailed Mode)</span>
+        <span>Showing {displayedSnapshots.length} key variables ({snapshots.length - displayedSnapshots.length} more in @detailedmode)</span>
       </div>
     {/if}
   </div>
@@ -77,7 +77,7 @@
     </div>
     {#if isLight && files.length > 2}
       <div class="sparse-footer-pill">
-        <span>Showing {displayedFiles.length} primary artifacts ({files.length - displayedFiles.length} more in Detailed Mode)</span>
+        <span>Showing {displayedFiles.length} primary artifacts ({files.length - displayedFiles.length} more in @detailedmode)</span>
       </div>
     {/if}
   </div>

@@ -79,7 +79,7 @@
 
   {#if isLight && snapshots.length > 4}
     <div class="sparse-footer-pill">
-      <span>Showing {displayedSnapshots.length} key variables ({snapshots.length - displayedSnapshots.length} more in Detailed Mode)</span>
+      <span>Showing {displayedSnapshots.length} key variables ({snapshots.length - displayedSnapshots.length} more in @detailedmode)</span>
     </div>
   {/if}
 </div>

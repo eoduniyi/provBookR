@@ -70,7 +70,7 @@
 
   {#if isLight && operations.length > 3}
     <div class="sparse-footer-pill">
-      <span>Showing {displayedOps.length} milestone steps ({operations.length - displayedOps.length} more in Detailed Mode)</span>
+      <span>Showing {displayedOps.length} milestone steps ({operations.length - displayedOps.length} more in @detailedmode)</span>
     </div>
   {/if}
 </div>
