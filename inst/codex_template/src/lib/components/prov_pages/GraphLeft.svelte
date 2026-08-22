@@ -1,10 +1,13 @@
 <script lang="ts">
-  let { provData } = $props<{ provData: any }>();
+  import { themeState } from '../../themeState.svelte';
   import { parseProvData } from '../../data/provParser';
   import scriptSource from '../../data/script_source.json';
   import Icon from '../Icon.svelte';
 
+  let { provData } = $props<{ provData: any }>();
+
   const parsed = $derived(parseProvData(provData, scriptSource));
+  const isLight = $derived(themeState.readingMode === 'light');
 
   const filteredEntities = $derived.by(() => {
     const ents = provData?.entity || {};
@@ -15,9 +18,16 @@
 
   const snapshots = $derived(filteredEntities.filter(([_, e]) => e['rdt:type'] === 'Snapshot' || e['rdt:type'] === 'Data'));
   const files = $derived(filteredEntities.filter(([_, e]) => e['rdt:type'] === 'File' || e['rdt:type'] === 'OutputFile'));
+
+  const displayedSnapshots = $derived(
+    isLight ? snapshots.slice(0, Math.min(4, snapshots.length)) : snapshots
+  );
+  const displayedFiles = $derived(
+    isLight ? files.slice(0, Math.min(2, files.length)) : files
+  );
 </script>
 
-<div class="graph-intro">
+<div class="graph-intro" class:mode-light={isLight}>
   <p class="chapter-label">Chapter 3: Lineage Graph</p>
   <h2>Lineage &amp; Data Flow</h2>
   <p class="section-desc">
@@ -35,7 +45,7 @@
   <div class="entity-section">
     <h3>Variables &amp; Data <span class="count">({snapshots.length})</span></h3>
     <div class="entity-grid">
-      {#each snapshots as [id, ent]}
+      {#each displayedSnapshots as [id, ent]}
         <div class="glass-pill">
           <span class="ent-name">{ent['rdt:name']}</span>
           <span class="ent-value">{ent['rdt:value'] || ent['rdt:valType'] || 'Value'}</span>
@@ -45,12 +55,17 @@
         <div class="empty-state">No intermediate variables recorded.</div>
       {/if}
     </div>
+    {#if isLight && snapshots.length > 4}
+      <div class="sparse-footer-pill">
+        <span>Showing {displayedSnapshots.length} key variables ({snapshots.length - displayedSnapshots.length} more in Detailed Mode)</span>
+      </div>
+    {/if}
   </div>
 
   <div class="entity-section">
     <h3>Artifacts &amp; Files <span class="count">({files.length})</span></h3>
     <div class="entity-grid">
-      {#each files as [id, ent]}
+      {#each displayedFiles as [id, ent]}
         <div class="glass-pill file-pill">
           <span class="ent-name">{ent['rdt:name']}</span>
           <span class="ent-hash">{ent['rdt:hash'] ? ent['rdt:hash'].slice(0, 16) + '…' : 'artifact'}</span>
@@ -60,6 +75,11 @@
         <div class="empty-state">No files generated.</div>
       {/if}
     </div>
+    {#if isLight && files.length > 2}
+      <div class="sparse-footer-pill">
+        <span>Showing {displayedFiles.length} primary artifacts ({files.length - displayedFiles.length} more in Detailed Mode)</span>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -172,5 +192,16 @@
     color: var(--text-muted);
     font-style: italic;
     padding: 0.4rem;
+  }
+
+  .sparse-footer-pill {
+    margin-top: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--pill-bg, rgba(0, 0, 0, 0.04));
+    border-radius: 12px;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-align: center;
   }
 </style>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { themeState } from '../../themeState.svelte';
   import { parseProvData } from '../../data/provParser';
   import scriptSource from '../../data/script_source.json';
   import Icon from '../Icon.svelte';
@@ -6,9 +7,17 @@
   let { provData, active = true } = $props<{ provData?: any; active?: boolean }>();
 
   const parsed = $derived(provData ? parseProvData(provData, scriptSource) : null);
+  const isLight = $derived(themeState.readingMode === 'light');
+
+  const displayedVars = $derived(
+    parsed ? (isLight ? parsed.variables.slice(0, Math.min(4, parsed.variables.length)) : parsed.variables) : []
+  );
+  const displayedOps = $derived(
+    parsed ? (isLight ? parsed.activities.slice(0, Math.min(3, parsed.activities.length)) : parsed.activities.slice(0, 6)) : []
+  );
 </script>
 
-<div class="code-left-page">
+<div class="code-left-page" class:mode-light={isLight}>
   <p class="chapter-label">Chapter 2: Source Code</p>
   <h2>Source Code Breakdown</h2>
   <p class="section-desc">
@@ -30,9 +39,12 @@
         <div class="breakdown-row">
           <span class="row-label">Variables ({parsed.variables.length}):</span>
           <div class="tag-wrap">
-            {#each parsed.variables as v}
+            {#each displayedVars as v}
               <span class="var-tag"><code>{v.name}</code> ({v.type})</span>
             {/each}
+            {#if isLight && parsed.variables.length > 4}
+              <span class="more-pill">+{parsed.variables.length - displayedVars.length} more in Detailed Mode</span>
+            {/if}
           </div>
         </div>
 
@@ -49,14 +61,17 @@
         </div>
 
         <div class="breakdown-row">
-          <span class="row-label">Top Statements:</span>
+          <span class="row-label">Statements:</span>
           <div class="op-list">
-            {#each parsed.activities.slice(0, 4) as act}
+            {#each displayedOps as act}
               <div class="op-item">
                 <span class="op-time">{act.elapsedTime}s</span>
                 <code class="op-code">{act.name}</code>
               </div>
             {/each}
+            {#if isLight && parsed.activities.length > 3}
+              <span class="more-pill">+{parsed.activities.length - displayedOps.length} more operations in Detailed Mode</span>
+            {/if}
           </div>
         </div>
       </div>
@@ -192,6 +207,16 @@
     font-weight: 600;
     color: var(--accent);
     min-width: 38px;
+  }
+
+  .more-pill {
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    padding: 0.15rem 0.5rem;
+    background: var(--pill-bg, rgba(0, 0, 0, 0.04));
+    border-radius: 9999px;
+    color: var(--text-muted);
+    font-style: italic;
   }
 
   .op-code {
