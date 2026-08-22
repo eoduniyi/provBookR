@@ -38,8 +38,14 @@
   <div class="settings-popover">
     
     <div class="settings-section">
+      <div class="settings-row">
+        <span class="row-label">Reading</span>
+        <div class="seg-bar">
+          <button class="seg" class:on={themeState.readingMode === 'light'} onclick={() => themeState.readingMode = 'light'}>Light (Sparse)</button>
+          <button class="seg" class:on={themeState.readingMode === 'detailed'} onclick={() => themeState.readingMode = 'detailed'}>Detailed (Full)</button>
+        </div>
+      </div>
 
-      
       <div class="settings-row">
         <span class="row-label">Theme</span>
         <div class="seg-bar">
