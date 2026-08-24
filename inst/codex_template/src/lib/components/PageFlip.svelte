@@ -4,10 +4,8 @@
   import ReadingSettings from './ReadingSettings.svelte';
   import PageCurl from './PageCurl.svelte';
   import Dock from './Dock.svelte';
-  import PageCanvas from './PageCanvas.svelte';
   import Icon from './Icon.svelte';
   import { themeState } from '../themeState.svelte';
-  import { animationState } from '../animationState.svelte';
   import { activeScenarioState } from '../state.svelte';
   import { resolveSweep } from './pageCurlTypes';
   import type { SweepStyle } from './pageCurlTypes';
@@ -362,15 +360,6 @@
       {#snippet leftControls()}
         <button 
           class="dock-btn" 
-          class:active={animationState.isOpen} 
-          onclick={() => animationState.isOpen = !animationState.isOpen} 
-          aria-label="Animation Studio" 
-          title="Animate Page"
-        >
-          <Icon name="palette" size={18} />
-        </button>
-        <button 
-          class="dock-btn" 
           class:active={activeScenarioState.isOpen} 
           onclick={() => activeScenarioState.isOpen = !activeScenarioState.isOpen} 
           aria-label="Notebook Scenarios" 
@@ -404,7 +393,6 @@
   >
     {#if isCover && coverPage}
       <div class="cover-page" onclick={flipNext}>
-        <div class="canvas-wrapper"><PageCanvas /></div>
         {@render coverPage()}
       </div>
     {:else}
@@ -414,7 +402,6 @@
         class:justified
         style="font-size:var(--reading-size);font-family:var(--reading-font);line-height:var(--reading-lh);"
       >
-        <div class="canvas-wrapper"><PageCanvas /></div>
         <div 
           class="page-inner"
           bind:this={leftHalf}
@@ -446,7 +433,6 @@
         class:justified
         style="font-size:var(--reading-size);font-family:var(--reading-font);line-height:var(--reading-lh);"
       >
-        <div class="canvas-wrapper"><PageCanvas /></div>
         <div 
           class="page-inner"
           bind:this={rightHalf}
@@ -488,15 +474,6 @@
   <!-- Desktop bottom bar -->
   <Dock>
     {#snippet leftControls()}
-      <button 
-        class="dock-btn" 
-        class:active={animationState.isOpen} 
-        onclick={() => animationState.isOpen = !animationState.isOpen} 
-        aria-label="Animation Studio" 
-        title="Animate Page"
-      >
-        <Icon name="palette" size={15} />
-      </button>
       <button 
         class="dock-btn" 
         class:active={activeScenarioState.isOpen} 
@@ -566,16 +543,6 @@
     color: var(--text-body, var(--text));
   }
 
-  /* ── Canvas Wrapper fixed behind content ── */
-  .canvas-wrapper {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
 
   /* ── Bleed-through text effect (from reference image) ── */
   .half::before {

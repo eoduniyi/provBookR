@@ -1,6 +1,5 @@
 <script lang="ts">
   import { themeState } from '../themeState.svelte';
-  import { animationState } from '../animationState.svelte';
   import { annotationsPanelState, viewModeState, annotationsState, currentScriptMeta, guideState } from '../state.svelte';
   import Icon from './Icon.svelte';
 
