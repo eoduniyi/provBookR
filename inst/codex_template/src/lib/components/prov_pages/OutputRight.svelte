@@ -65,7 +65,7 @@
 
   <div class="colophon">
     <p>
-      Published by <strong>provBookR</strong> · Reproducible Codex
+      Assembled by <strong>provBookR</strong>
     </p>
   </div>
 </div>
