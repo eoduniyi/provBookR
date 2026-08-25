@@ -3,6 +3,8 @@
 
   let selectedNode = $state<{ id: string; name: string; type: string; detail: string } | null>(null);
   let hoveredNodeId = $state<string | null>(null);
+  let viewMode = $state<'backbone' | 'full'>('backbone');
+  let backboneExpanded = $state(false);
 
   const activities = $derived(provData?.activity || {});
   const entities = $derived(provData?.entity || {});
@@ -43,36 +45,52 @@
     });
 
     const inputEntKeys = allEntityIds.filter(id => usedEntityIds.has(id) && !genEntityIds.has(id));
-    const outputEntKeys = allEntityIds.filter(id => genEntityIds.has(id));
+    const allOutputEntKeys = allEntityIds.filter(id => genEntityIds.has(id));
+
+    // Terminal outputs: Files or entities generated and not used by any subsequent activity
+    const terminalOutputEntKeys = allEntityIds.filter(id => {
+      const e = entities[id];
+      const isFile = e?.['rdt:type'] === 'File' || e?.['rdt:type'] === 'OutputFile' || /\.(pdf|png|csv|rds|html|json)$/i.test(e?.['rdt:name'] || '');
+      const isTerminal = genEntityIds.has(id) && !usedEntityIds.has(id);
+      return isFile || isTerminal;
+    });
+
+    const isBackboneCollapsed = viewMode === 'backbone' && !backboneExpanded && actKeys.length > 1;
+    
+    // In Backbone mode, show only terminal outputs so it cleanly fits within the frame!
+    const outputEntKeys = isBackboneCollapsed
+      ? (terminalOutputEntKeys.length > 0 ? terminalOutputEntKeys : allOutputEntKeys.slice(-4))
+      : allOutputEntKeys;
     const hasInputs = inputEntKeys.length > 0;
 
-    // 3. Proportional Layout Calculation
+    // 3. Proportional Layout Calculation (Frame-Fitted)
     const CANVAS_WIDTH = 580;
-    const ROW_HEIGHT = 44;
+    const effectiveActCount = isBackboneCollapsed ? 1 : actKeys.length;
+    const maxCount = Math.max(
+      hasInputs ? inputEntKeys.length : 0,
+      effectiveActCount,
+      outputEntKeys.length,
+      1
+    );
+    const ROW_HEIGHT = Math.max(28, Math.min(46, 360 / Math.max(maxCount, 1)));
     const PAD_Y = 24;
+    const canvasHeight = Math.max(maxCount * ROW_HEIGHT + PAD_Y * 2, 280);
 
     type GNode = {
       id: string;
       label: string;
-      type: 'act' | 'ent';
+      type: 'act' | 'ent' | 'backbone';
       x: number;
       y: number;
       halfW: number;
       halfH: number;
       detail: string;
       isFile: boolean;
+      collapsedCount?: number;
     };
 
     const nodes: GNode[] = [];
     const nodeMap = new Map<string, GNode>();
-
-    const maxCount = Math.max(
-      hasInputs ? inputEntKeys.length : 0,
-      actKeys.length,
-      outputEntKeys.length,
-      1
-    );
-    const canvasHeight = Math.max(maxCount * ROW_HEIGHT + PAD_Y * 2, 320);
 
     function getY(index: number, totalInCol: number): number {
       const colSpan = totalInCol * ROW_HEIGHT;
@@ -106,24 +124,42 @@
         nodeMap.set(k, n);
       });
 
-      actKeys.forEach((k, idx) => {
-        const a = activities[k] || {};
-        const rawName = a['rdt:name'] || k;
-        const label = rawName.length > 20 ? rawName.slice(0, 18) + '…' : rawName;
+      if (isBackboneCollapsed) {
+        // Consolidated Backbone Capsule
         const n: GNode = {
-          id: k,
-          label,
-          type: 'act',
+          id: 'backbone-capsule',
+          label: `▶ ${actKeys.length} Operations`,
+          type: 'backbone',
           x: COL_X[1],
-          y: getY(idx, actKeys.length),
-          halfW: ACT_HALFW,
-          halfH: 15,
-          detail: rawName,
-          isFile: false
+          y: getY(0, 1),
+          halfW: 76,
+          halfH: 16,
+          detail: `${actKeys.length} computational operations collapsed on backbone. Click to unfold on canvas.`,
+          isFile: false,
+          collapsedCount: actKeys.length
         };
         nodes.push(n);
-        nodeMap.set(k, n);
-      });
+        nodeMap.set('backbone-capsule', n);
+      } else {
+        actKeys.forEach((k, idx) => {
+          const a = activities[k] || {};
+          const rawName = a['rdt:name'] || k;
+          const label = rawName.length > 20 ? rawName.slice(0, 18) + '…' : rawName;
+          const n: GNode = {
+            id: k,
+            label,
+            type: 'act',
+            x: COL_X[1],
+            y: getY(idx, actKeys.length),
+            halfW: ACT_HALFW,
+            halfH: 15,
+            detail: rawName,
+            isFile: false
+          };
+          nodes.push(n);
+          nodeMap.set(k, n);
+        });
+      }
 
       outputEntKeys.forEach((k, idx) => {
         const e = entities[k] || {};
@@ -150,24 +186,41 @@
       const ACT_HALFW = 80;
       const ENT_HALFW = 70;
 
-      actKeys.forEach((k, idx) => {
-        const a = activities[k] || {};
-        const rawName = a['rdt:name'] || k;
-        const label = rawName.length > 22 ? rawName.slice(0, 20) + '…' : rawName;
+      if (isBackboneCollapsed) {
         const n: GNode = {
-          id: k,
-          label,
-          type: 'act',
+          id: 'backbone-capsule',
+          label: `▶ ${actKeys.length} Operations`,
+          type: 'backbone',
           x: COL_X[0],
-          y: getY(idx, actKeys.length),
-          halfW: ACT_HALFW,
-          halfH: 15,
-          detail: rawName,
-          isFile: false
+          y: getY(0, 1),
+          halfW: 84,
+          halfH: 16,
+          detail: `${actKeys.length} computational operations collapsed on backbone. Click to unfold on canvas.`,
+          isFile: false,
+          collapsedCount: actKeys.length
         };
         nodes.push(n);
-        nodeMap.set(k, n);
-      });
+        nodeMap.set('backbone-capsule', n);
+      } else {
+        actKeys.forEach((k, idx) => {
+          const a = activities[k] || {};
+          const rawName = a['rdt:name'] || k;
+          const label = rawName.length > 22 ? rawName.slice(0, 20) + '…' : rawName;
+          const n: GNode = {
+            id: k,
+            label,
+            type: 'act',
+            x: COL_X[0],
+            y: getY(idx, actKeys.length),
+            halfW: ACT_HALFW,
+            halfH: 15,
+            detail: rawName,
+            isFile: false
+          };
+          nodes.push(n);
+          nodeMap.set(k, n);
+        });
+      }
 
       outputEntKeys.forEach((k, idx) => {
         const e = entities[k] || {};
@@ -190,7 +243,7 @@
       });
     }
 
-    // 4. Direction-Aware Flush Wires (Never crossing through node interiors)
+    // 4. Direction-Aware Flush Wires
     type GEdge = {
       id: string;
       sourceId: string;
@@ -232,23 +285,37 @@
       }
     }
 
-    // used: entity -> activity
-    Object.values(usedRels).forEach((u: any) => {
-      const eNode = nodeMap.get(u['prov:entity']);
-      const aNode = nodeMap.get(u['prov:activity']);
-      if (eNode && aNode) {
-        addEdge(eNode, aNode, `${eNode.id}->${aNode.id}`);
+    if (isBackboneCollapsed) {
+      const backboneNode = nodeMap.get('backbone-capsule');
+      if (backboneNode) {
+        inputEntKeys.forEach(k => {
+          const inNode = nodeMap.get(k);
+          if (inNode) addEdge(inNode, backboneNode, `${inNode.id}->backbone`);
+        });
+        outputEntKeys.forEach(k => {
+          const outNode = nodeMap.get(k);
+          if (outNode) addEdge(backboneNode, outNode, `backbone->${outNode.id}`);
+        });
       }
-    });
+    } else {
+      // used: entity -> activity
+      Object.values(usedRels).forEach((u: any) => {
+        const eNode = nodeMap.get(u['prov:entity']);
+        const aNode = nodeMap.get(u['prov:activity']);
+        if (eNode && aNode) {
+          addEdge(eNode, aNode, `${eNode.id}->${aNode.id}`);
+        }
+      });
 
-    // wasGeneratedBy: activity -> entity
-    Object.values(genRels).forEach((g: any) => {
-      const aNode = nodeMap.get(g['prov:activity']);
-      const eNode = nodeMap.get(g['prov:entity']);
-      if (aNode && eNode) {
-        addEdge(aNode, eNode, `${aNode.id}->${eNode.id}`);
-      }
-    });
+      // wasGeneratedBy: activity -> entity
+      Object.values(genRels).forEach((g: any) => {
+        const aNode = nodeMap.get(g['prov:activity']);
+        const eNode = nodeMap.get(g['prov:entity']);
+        if (aNode && eNode) {
+          addEdge(aNode, eNode, `${aNode.id}->${eNode.id}`);
+        }
+      });
+    }
 
     return { nodes, edges, width: CANVAS_WIDTH, height: canvasHeight };
   });
@@ -261,9 +328,27 @@
 </script>
 
 <div class="graph-right">
-  <!-- Legend Bar -->
+  <!-- Legend & Mode Switcher Bar -->
   <div class="graph-header">
-    <span class="graph-title">Lineage DAG</span>
+    <div class="graph-title-group">
+      <span class="graph-title">Lineage DAG</span>
+      <div class="dag-mode-toggle">
+        <button 
+          class="mode-toggle-btn" 
+          class:active={viewMode === 'backbone'} 
+          onclick={() => { viewMode = 'backbone'; backboneExpanded = false; }}
+        >
+          Backbone
+        </button>
+        <button 
+          class="mode-toggle-btn" 
+          class:active={viewMode === 'full'} 
+          onclick={() => { viewMode = 'full'; }}
+        >
+          Full DAG
+        </button>
+      </div>
+    </div>
     <div class="graph-legend">
       <div class="legend-item">
         <span class="legend-symbol act-symbol"></span>
@@ -343,12 +428,27 @@
             class="node-group"
             class:selected={selectedNode?.id === node.id}
             class:hovered={hoveredNodeId === node.id}
+            class:is-backbone={node.type === 'backbone'}
             transform="translate({node.x}, {node.y})"
             onmouseenter={() => hoveredNodeId = node.id}
             onmouseleave={() => hoveredNodeId = null}
-            onclick={() => selectedNode = { id: node.id, name: node.label, type: node.type, detail: node.detail }}
+            onclick={() => {
+              if (node.type === 'backbone') {
+                backboneExpanded = !backboneExpanded;
+              }
+              selectedNode = { id: node.id, name: node.label, type: node.type, detail: node.detail };
+            }}
           >
-            {#if node.type === 'act'}
+            {#if node.type === 'backbone'}
+              <rect
+                x={-node.halfW}
+                y={-node.halfH}
+                width={node.halfW * 2}
+                height={node.halfH * 2}
+                rx="8"
+                class="node-rect backbone-rect"
+              />
+            {:else if node.type === 'act'}
               <rect
                 x={-node.halfW}
                 y={-node.halfH}
@@ -370,7 +470,7 @@
             {/if}
 
             <!-- Node Label with Centered Monospace Typography -->
-            <text class="node-label" y="3.5" text-anchor="middle">{node.label}</text>
+            <text class="node-label" class:backbone-label={node.type === 'backbone'} y="3.5" text-anchor="middle">{node.label}</text>
           </g>
         {/each}
       </g>
@@ -415,10 +515,47 @@
     border-top-right-radius: 15px;
   }
 
+  .graph-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
   .graph-title {
     font-family: var(--font-sans);
     font-size: 0.76rem;
     font-weight: 600;
+    color: var(--text);
+  }
+
+  .dag-mode-toggle {
+    display: flex;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    gap: 2px;
+  }
+
+  .mode-toggle-btn {
+    all: unset;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    transition: all 0.15s ease;
+  }
+
+  .mode-toggle-btn.active {
+    background: var(--pill-badge-bg, var(--text));
+    color: var(--pill-badge-text, #ffffff);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  .mode-toggle-btn:hover:not(.active) {
     color: var(--text);
   }
 
@@ -463,16 +600,17 @@
 
   .graph-canvas-wrap {
     flex: 1;
-    overflow: auto;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 1.4rem;
+    padding: 0.6rem 0.8rem;
+    min-height: 0;
   }
 
   .graph-svg {
     width: 100%;
-    height: auto;
+    height: 100%;
     max-height: 100%;
     display: block;
   }
@@ -539,6 +677,27 @@
     fill: var(--code-paper-bg, var(--bg));
     stroke: var(--accent);
     stroke-width: 1.25;
+  }
+
+  .backbone-rect {
+    fill: var(--glass-bg, var(--bg));
+    stroke: var(--accent, #2563eb);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 2;
+    filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.15));
+  }
+
+  .node-group:hover .backbone-rect,
+  .node-group.hovered .backbone-rect {
+    fill: var(--accent, #2563eb);
+    stroke-width: 2;
+    stroke-dasharray: none;
+  }
+
+  .node-group:hover .backbone-label,
+  .node-group.hovered .backbone-label {
+    fill: #ffffff;
+    font-weight: 700;
   }
 
   .node-group:hover .act-rect,
