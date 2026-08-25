@@ -170,14 +170,19 @@
   }
 
   .out-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
     font-family: var(--font-mono, monospace);
     font-size: 0.64rem;
-    padding: 0.1rem 0.45rem;
-    background: rgba(46, 125, 50, 0.1);
-    border: 1px solid rgba(46, 125, 50, 0.25);
-    border-radius: 9999px;
-    color: #2e7d32;
     font-weight: 600;
+    padding: 0.16rem 0.5rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid #059669;
+    border-radius: 9999px;
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 
   .dim-text {

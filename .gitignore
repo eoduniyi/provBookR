@@ -19,9 +19,7 @@ test_*/
 prov_data/
 prov_data_*/
 *.rds
-sensor_daily_trends.png
+*.png
 reproducible_proposal_final.md
 reproducible_proposal.md
 testing/
-
-
