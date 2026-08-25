@@ -54,7 +54,7 @@ export const scenarios: Record<ScenarioId, Scenario> = {
     scriptMetadata: scriptMetadata,
     guide: [
       {
-        title: 'Welcome to provBook',
+        title: 'Welcome to provBookR',
         body: 'This cover page shows the script that was executed, the system it ran on, and high-level stats. Think of it as the title page of a research notebook.',
         lookAt: 'Notice the operation & data object counts at the center.'
       },

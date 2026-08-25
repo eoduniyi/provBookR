@@ -17,7 +17,7 @@
 </script>
 
 <div class="cover">
-  <p class="chapter-label">provBook</p>
+  <p class="chapter-label">provBookR</p>
   <h1>{scriptName}</h1>
   <p class="subtitle">An interactive record of code execution,<br>data lineage, and computational history.</p>
 

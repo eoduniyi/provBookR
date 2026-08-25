@@ -104,42 +104,6 @@
         </div>
       </div>
     </div>
-
-    <div class="settings-section">
-      <div class="settings-row">
-        <span class="row-label">Page Turn</span>
-        <div class="seg-bar">
-          {#each curlModes as m}
-            <button class="seg" class:on={m.value === 'off' ? !themeState.curlEnabled : (themeState.curlEnabled && themeState.curlMode === m.value)} 
-                    onclick={() => { 
-                      if (m.value === 'off') {
-                        themeState.curlEnabled = false;
-                      } else {
-                        themeState.curlEnabled = true; 
-                        themeState.curlMode = m.value as 'curl' | 'ripple';
-                      }
-                    }}>{m.label}</button>
-          {/each}
-        </div>
-      </div>
-
-      {#if themeState.curlEnabled}
-        <div class="settings-row">
-          <span class="row-label">Radius</span>
-          <div class="slider-pair">
-            <input type="range" min="0.04" max="0.2" step="0.02" bind:value={themeState.curlRadius} class="custom-range" />
-            <span class="slider-val">{themeState.curlRadius}</span>
-          </div>
-        </div>
-        <div class="settings-row">
-          <span class="row-label">Speed</span>
-          <div class="slider-pair">
-            <input type="range" min="0.3" max="2.0" step="0.1" bind:value={themeState.curlSpeed} class="custom-range" />
-            <span class="slider-val">{themeState.curlSpeed}s</span>
-          </div>
-        </div>
-      {/if}
-    </div>
   </div>
 {/if}
 

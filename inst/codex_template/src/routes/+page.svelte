@@ -37,7 +37,7 @@
 </script>
 
 <svelte:head>
-  <title>provBook</title>
+  <title>provBookR</title>
 </svelte:head>
 
 {#if viewModeState.mode === 'graph'}
