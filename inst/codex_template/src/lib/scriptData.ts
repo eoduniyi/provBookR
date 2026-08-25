@@ -19,8 +19,8 @@ export const scriptMetadata: Record<string, ScriptMeta> = {
     goal: "Drafts a research proposal, incorporates comments, and outputs a PDF.",
     variables: ["draft_v1", "draft_v2", "feedback", "final_text"],
     operations: ["paste() text merging", "c() vector creation", "pdf() device export"],
-    outputFile: "HF_2019_REU_PROPOSAL.pdf",
-    code: `# Proposal Workflow\n# 1. Draft content\ndraft_v1 <- 'Intro: First draft of HF 2019 REU Proposal'\ndraft_v2 <- paste(draft_v1, 'Methodology: Mixed-methods')\n\n# 2. Gather reviewer feedback\nfeedback <- c(rev1 = 'Add context', rev2 = 'Solid')\nfinal_text <- paste(draft_v2, paste(feedback, collapse='; '))\n\n# 3. Export PDF artifact\npdf('HF_2019_REU_PROPOSAL.pdf')\nplot.new()\ntext(0.5, 0.5, final_text)\ndev.off()`
+    outputFile: "proposal.pdf",
+    code: `# Proposal Workflow\n# 1. Draft content\ndraft_v1 <- 'Intro: First draft of proposal'\ndraft_v2 <- paste(draft_v1, 'Methodology: Mixed-methods')\n\n# 2. Gather reviewer feedback\nfeedback <- c(rev1 = 'Add context', rev2 = 'Solid')\nfinal_text <- paste(draft_v2, paste(feedback, collapse='; '))\n\n# 3. Export PDF artifact\npdf('proposal.pdf')\nplot.new()\ntext(0.5, 0.5, final_text)\ndev.off()`
   },
   "coffee_tracker.R": {
     id: "coffee_tracker.R",
