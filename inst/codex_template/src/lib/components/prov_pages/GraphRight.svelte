@@ -327,157 +327,159 @@
   }
 </script>
 
-<div class="graph-right">
-  <!-- Legend & Mode Switcher Bar -->
-  <div class="graph-header">
-    <div class="graph-title-group">
-      <span class="graph-title">Lineage DAG</span>
-      <div class="dag-mode-toggle">
-        <button 
-          class="mode-toggle-btn" 
-          class:active={viewMode === 'backbone'} 
-          onclick={() => { viewMode = 'backbone'; backboneExpanded = false; }}
-        >
-          Backbone
-        </button>
-        <button 
-          class="mode-toggle-btn" 
-          class:active={viewMode === 'full'} 
-          onclick={() => { viewMode = 'full'; }}
-        >
-          Full DAG
-        </button>
-      </div>
-    </div>
-    <div class="graph-legend">
-      <div class="legend-item">
-        <span class="legend-symbol act-symbol"></span>
-        <span>Operation</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-symbol ent-symbol"></span>
-        <span>Variable</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-symbol file-symbol"></span>
-        <span>Output File</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="graph-canvas-wrap">
-    <svg 
-      class="graph-svg" 
-      viewBox="0 0 {graphData.width} {graphData.height}" 
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <defs>
-        <!-- Arrowhead Marker -->
-        <marker 
-          id="dag-arrowhead" 
-          markerWidth="5" 
-          markerHeight="5" 
-          refX="4.5" 
-          refY="2.5" 
-          orient="auto"
-        >
-          <polygon points="0 0, 5 2.5, 0 5" fill="var(--text-muted)" opacity="0.65" />
-        </marker>
-
-        <!-- Active Arrowhead Marker -->
-        <marker 
-          id="dag-arrowhead-active" 
-          markerWidth="5" 
-          markerHeight="5" 
-          refX="4.5" 
-          refY="2.5" 
-          orient="auto"
-        >
-          <polygon points="0 0, 5 2.5, 0 5" fill="var(--accent)" />
-        </marker>
-      </defs>
-
-      <!-- Connection Wires / Flow Paths Layer (Under Nodes) -->
-      <g class="edges-layer">
-        {#each graphData.edges as edge (edge.id)}
-          <!-- Base Wire -->
-          <path
-            d={edge.d}
-            class="edge-path"
-            class:active={isEdgeActive(edge)}
-            marker-end={isEdgeActive(edge) ? "url(#dag-arrowhead-active)" : "url(#dag-arrowhead)"}
-          />
-          <!-- Animated Signal Flow -->
-          <path
-            d={edge.d}
-            class="edge-flow-pulse"
-            class:active={isEdgeActive(edge)}
-          />
-          <!-- Flush Hardware Terminals -->
-          <circle cx={edge.x1} cy={edge.y1} r="2" class="terminal-pin" class:active={isEdgeActive(edge)} />
-          <circle cx={edge.x2} cy={edge.y2} r="2" class="terminal-pin" class:active={isEdgeActive(edge)} />
-        {/each}
-      </g>
-
-      <!-- Opaque Centered Nodes Layer (Over Wires) -->
-      <g class="nodes-layer">
-        {#each graphData.nodes as node (node.id)}
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <g 
-            class="node-group"
-            class:selected={selectedNode?.id === node.id}
-            class:hovered={hoveredNodeId === node.id}
-            class:is-backbone={node.type === 'backbone'}
-            transform="translate({node.x}, {node.y})"
-            onmouseenter={() => hoveredNodeId = node.id}
-            onmouseleave={() => hoveredNodeId = null}
-            onclick={() => {
-              if (node.type === 'backbone') {
-                backboneExpanded = !backboneExpanded;
-              }
-              selectedNode = { id: node.id, name: node.label, type: node.type, detail: node.detail };
-            }}
+<div class="graph-right-page">
+  <div class="graph-right-card">
+    <div class="graph-header">
+      <div class="graph-title-group">
+        <span class="graph-title">Lineage DAG</span>
+        <div class="dag-mode-toggle">
+          <button 
+            class="mode-toggle-btn" 
+            class:active={viewMode === 'backbone'} 
+            onclick={() => { viewMode = 'backbone'; backboneExpanded = false; }}
           >
-            {#if node.type === 'backbone'}
-              <rect
-                x={-node.halfW}
-                y={-node.halfH}
-                width={node.halfW * 2}
-                height={node.halfH * 2}
-                rx="8"
-                class="node-rect backbone-rect"
-              />
-            {:else if node.type === 'act'}
-              <rect
-                x={-node.halfW}
-                y={-node.halfH}
-                width={node.halfW * 2}
-                height={node.halfH * 2}
-                rx="6"
-                class="node-rect act-rect"
-              />
-            {:else}
-              <rect
-                x={-node.halfW}
-                y={-node.halfH}
-                width={node.halfW * 2}
-                height={node.halfH * 2}
-                rx={node.halfH}
-                class="node-rect ent-rect"
-                class:is-file={node.isFile}
-              />
-            {/if}
+            Backbone
+          </button>
+          <button 
+            class="mode-toggle-btn" 
+            class:active={viewMode === 'full'} 
+            onclick={() => { viewMode = 'full'; }}
+          >
+            Full DAG
+          </button>
+        </div>
+      </div>
+      <div class="graph-legend">
+        <div class="legend-item">
+          <span class="legend-symbol act-symbol"></span>
+          <span>Operation</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-symbol ent-symbol"></span>
+          <span>Variable</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-symbol file-symbol"></span>
+          <span>Output File</span>
+        </div>
+      </div>
+    </div>
 
-            <!-- Node Label with Centered Monospace Typography -->
-            <text class="node-label" class:backbone-label={node.type === 'backbone'} y="3.5" text-anchor="middle">{node.label}</text>
-          </g>
-        {/each}
-      </g>
-    </svg>
+    <!-- 2D Spatial Canvas -->
+    <div class="graph-canvas-wrap">
+      <svg 
+        class="graph-svg" 
+        viewBox="0 0 {graphData.width} {graphData.height}" 
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          <!-- Arrowhead Marker -->
+          <marker 
+            id="dag-arrowhead" 
+            markerWidth="5" 
+            markerHeight="5" 
+            refX="4.5" 
+            refY="2.5" 
+            orient="auto"
+          >
+            <polygon points="0 0, 5 2.5, 0 5" fill="var(--text-muted)" opacity="0.65" />
+          </marker>
+
+          <!-- Active Arrowhead Marker -->
+          <marker 
+            id="dag-arrowhead-active" 
+            markerWidth="5" 
+            markerHeight="5" 
+            refX="4.5" 
+            refY="2.5" 
+            orient="auto"
+          >
+            <polygon points="0 0, 5 2.5, 0 5" fill="var(--accent)" />
+          </marker>
+        </defs>
+
+        <!-- Connection Wires / Flow Paths Layer (Under Nodes) -->
+        <g class="edges-layer">
+          {#each graphData.edges as edge (edge.id)}
+            <!-- Base Wire -->
+            <path
+              d={edge.d}
+              class="edge-path"
+              class:active={isEdgeActive(edge)}
+              marker-end={isEdgeActive(edge) ? "url(#dag-arrowhead-active)" : "url(#dag-arrowhead)"}
+            />
+            <!-- Animated Signal Flow -->
+            <path
+              d={edge.d}
+              class="edge-flow-pulse"
+              class:active={isEdgeActive(edge)}
+            />
+            <!-- Flush Hardware Terminals -->
+            <circle cx={edge.x1} cy={edge.y1} r="2" class="terminal-pin" class:active={isEdgeActive(edge)} />
+            <circle cx={edge.x2} cy={edge.y2} r="2" class="terminal-pin" class:active={isEdgeActive(edge)} />
+          {/each}
+        </g>
+
+        <!-- Opaque Centered Nodes Layer (Over Wires) -->
+        <g class="nodes-layer">
+          {#each graphData.nodes as node (node.id)}
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <g 
+              class="node-group"
+              class:selected={selectedNode?.id === node.id}
+              class:hovered={hoveredNodeId === node.id}
+              class:is-backbone={node.type === 'backbone'}
+              transform="translate({node.x}, {node.y})"
+              onmouseenter={() => hoveredNodeId = node.id}
+              onmouseleave={() => hoveredNodeId = null}
+              onclick={() => {
+                if (node.type === 'backbone') {
+                  backboneExpanded = !backboneExpanded;
+                }
+                selectedNode = { id: node.id, name: node.label, type: node.type, detail: node.detail };
+              }}
+            >
+              {#if node.type === 'backbone'}
+                <rect
+                  x={-node.halfW}
+                  y={-node.halfH}
+                  width={node.halfW * 2}
+                  height={node.halfH * 2}
+                  rx="8"
+                  class="node-rect backbone-rect"
+                />
+              {:else if node.type === 'act'}
+                <rect
+                  x={-node.halfW}
+                  y={-node.halfH}
+                  width={node.halfW * 2}
+                  height={node.halfH * 2}
+                  rx="6"
+                  class="node-rect act-rect"
+                />
+              {:else}
+                <rect
+                  x={-node.halfW}
+                  y={-node.halfH}
+                  width={node.halfW * 2}
+                  height={node.halfH * 2}
+                  rx={node.halfH}
+                  class="node-rect ent-rect"
+                  class:is-file={node.isFile}
+                />
+              {/if}
+
+              <!-- Node Label with Centered Monospace Typography -->
+              <text class="node-label" class:backbone-label={node.type === 'backbone'} y="3.5" text-anchor="middle">{node.label}</text>
+            </g>
+          {/each}
+        </g>
+      </svg>
+    </div>
   </div>
 
-  <!-- Detail Bottom Sheet -->
+  <!-- Detail Bottom Sheet (Positioned off graph surface, on page) -->
   {#if selectedNode}
     <div class="node-detail-sheet">
       <div class="detail-head">
@@ -490,9 +492,17 @@
 </div>
 
 <style>
-  .graph-right {
-    position: relative;
+  .graph-right-page {
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    gap: 0.5rem;
+  }
+
+  .graph-right-card {
+    flex: 1;
+    min-height: 0;
+    position: relative;
     display: flex;
     flex-direction: column;
     background: var(--code-paper-bg);
@@ -593,8 +603,8 @@
   }
 
   .file-symbol {
-    background: rgba(46, 125, 50, 0.15);
-    border: 1.5px solid #2e7d32;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1.5px solid #059669;
     border-radius: 9999px;
   }
 
@@ -719,8 +729,9 @@
   }
 
   .ent-rect.is-file {
-    stroke: #2e7d32;
-    fill: rgba(46, 125, 50, 0.08);
+    stroke: #059669;
+    fill: rgba(16, 185, 129, 0.1);
+    filter: drop-shadow(0 2px 6px rgba(16, 185, 129, 0.15));
   }
 
   .node-group.selected .node-rect {
@@ -736,12 +747,9 @@
     user-select: none;
   }
 
-  /* ── Detail Bottom Sheet ── */
+  /* ── Detail Bottom Sheet (Off Graph Card, on Book Page Surface) ── */
   .node-detail-sheet {
-    position: absolute;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    right: 0.5rem;
+    flex-shrink: 0;
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -749,7 +757,6 @@
     border-radius: 12px;
     padding: 0.55rem 0.8rem;
     box-shadow: var(--glass-shadow);
-    z-index: 10;
   }
 
   .detail-head {
