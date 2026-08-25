@@ -6,26 +6,23 @@
   import Prism from 'prismjs';
   import 'prismjs/components/prism-r';
 
+  import type { ScriptMeta } from '../../scriptData';
+
   let { provData } = $props<{ provData?: any }>();
 
-  const scripts = $derived(Object.values(currentScenarioMetadata()));
+  const scripts = $derived(Object.values(currentScenarioMetadata()) as ScriptMeta[]);
   const activeMeta = $derived(currentScriptMeta());
   const parsed = $derived(provData ? parseProvData(provData, scriptSource) : null);
 
-  const displayMeta = $derived.by(() => {
-    if (parsed && parsed.sourceCode) {
-      return {
-        id: parsed.scriptName,
-        name: parsed.scriptName,
-        category: 'Analysis Script',
-        icon: 'document',
-        variables: parsed.variables.map(v => v.name),
-        outputFile: parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory variables',
-        code: parsed.sourceCode
-      };
-    }
-    return activeMeta;
-  });
+  const displayMeta = $derived(activeMeta || (parsed && {
+    id: parsed.scriptName,
+    name: parsed.scriptName,
+    category: 'Analysis Script',
+    icon: 'document',
+    variables: parsed.variables.map(v => v.name),
+    outputFile: parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory variables',
+    code: parsed.sourceCode
+  }));
 
   const highlightedCode = $derived(
     displayMeta ? Prism.highlight(displayMeta.code, Prism.languages.r, 'r') : ''
@@ -35,23 +32,16 @@
 <div class="code-right-container">
   <!-- Tab Bar -->
   <div class="tab-bar">
-    {#if parsed}
-      <button class="tab-pill active">
-        <Icon name="document" size={14} />
-        <span class="tab-label">{parsed.scriptName}</span>
+    {#each scripts as sc}
+      <button 
+        class="tab-pill" 
+        class:active={activeScriptState.currentId === sc.id}
+        onclick={() => activeScriptState.currentId = sc.id}
+      >
+        <Icon name={sc.icon} size={14} />
+        <span class="tab-label">{sc.name}</span>
       </button>
-    {:else}
-      {#each scripts as sc}
-        <button 
-          class="tab-pill" 
-          class:active={activeScriptState.currentId === sc.id}
-          onclick={() => activeScriptState.currentId = sc.id}
-        >
-          <Icon name={sc.icon} size={14} />
-          <span class="tab-label">{sc.name}</span>
-        </button>
-      {/each}
-    {/if}
+    {/each}
   </div>
 
   <!-- E-Ink Paper View -->

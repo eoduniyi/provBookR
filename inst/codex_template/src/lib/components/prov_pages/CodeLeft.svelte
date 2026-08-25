@@ -1,19 +1,26 @@
 <script lang="ts">
   import { themeState } from '../../themeState.svelte';
+  import { currentScriptMeta } from '../../state.svelte';
   import { parseProvData } from '../../data/provParser';
   import scriptSource from '../../data/script_source.json';
   import Icon from '../Icon.svelte';
 
   let { provData, active = true } = $props<{ provData?: any; active?: boolean }>();
 
+  const activeMeta = $derived(currentScriptMeta());
   const parsed = $derived(provData ? parseProvData(provData, scriptSource) : null);
   const isLight = $derived(themeState.readingMode === 'light');
 
+  const scriptName = $derived(activeMeta?.name || parsed?.scriptName || 'Analysis Script');
+  const variables = $derived(activeMeta?.variables || parsed?.variables.map(v => v.name) || []);
+  const operations = $derived(activeMeta?.operations || parsed?.activities.map(a => a.name) || []);
+  const outputFile = $derived(activeMeta?.outputFile || parsed?.outputArtifacts.map(a => a.name).join(', ') || 'In-memory workspace');
+
   const displayedVars = $derived(
-    parsed ? (isLight ? parsed.variables.slice(0, Math.min(4, parsed.variables.length)) : parsed.variables) : []
+    isLight ? variables.slice(0, Math.min(4, variables.length)) : variables
   );
   const displayedOps = $derived(
-    parsed ? (isLight ? parsed.activities.slice(0, Math.min(3, parsed.activities.length)) : parsed.activities.slice(0, 6)) : []
+    isLight ? operations.slice(0, Math.min(3, operations.length)) : operations.slice(0, 6)
   );
 </script>
 
@@ -21,62 +28,54 @@
   <p class="chapter-label">Chapter 2: Source Code</p>
   <h2>Source Code Breakdown</h2>
   <p class="section-desc">
-    Execution profile and structural analysis for <code>{parsed?.scriptName || 'Analysis Script'}</code>.
+    Execution profile and structural analysis for <code>{scriptName}</code>.
   </p>
 
-  {#if parsed}
-    <!-- Active Script Breakdown Card (Liquid Glass Bubble) -->
-    <div class="glass-breakdown-card">
-      <div class="breakdown-header">
-        <Icon name="document" size={18} />
-        <div>
-          <h3>{parsed.scriptName}</h3>
-          <span class="breakdown-cat">{parsed.langVersion} • {parsed.operationsCount} Operations</span>
+  <!-- Active Script Breakdown Card (Liquid Glass Bubble) -->
+  <div class="glass-breakdown-card">
+    <div class="breakdown-header">
+      <Icon name={activeMeta?.icon || "document"} size={18} />
+      <div>
+        <h3>{scriptName}</h3>
+        <span class="breakdown-cat">{activeMeta?.category || 'R 4.x'} • {operations.length} Operations</span>
+      </div>
+    </div>
+
+    <div class="breakdown-body">
+      <div class="breakdown-row">
+        <span class="row-label">Variables ({variables.length}):</span>
+        <div class="tag-wrap">
+          {#each displayedVars as v}
+            <span class="var-tag"><code>{v}</code></span>
+          {/each}
+          {#if isLight && variables.length > 4}
+            <span class="more-pill">+{variables.length - displayedVars.length} more in @detailedmode</span>
+          {/if}
         </div>
       </div>
 
-      <div class="breakdown-body">
-        <div class="breakdown-row">
-          <span class="row-label">Variables ({parsed.variables.length}):</span>
-          <div class="tag-wrap">
-            {#each displayedVars as v}
-              <span class="var-tag"><code>{v.name}</code> ({v.type})</span>
-            {/each}
-            {#if isLight && parsed.variables.length > 4}
-              <span class="more-pill">+{parsed.variables.length - displayedVars.length} more in @detailedmode</span>
-            {/if}
-          </div>
+      <div class="breakdown-row">
+        <span class="row-label">Output Artifact:</span>
+        <div class="tag-wrap">
+          <span class="out-tag"><code>{outputFile}</code></span>
         </div>
+      </div>
 
-        <div class="breakdown-row">
-          <span class="row-label">Artifacts ({parsed.outputArtifacts.length}):</span>
-          <div class="tag-wrap">
-            {#each parsed.outputArtifacts as a}
-              <span class="out-tag"><code>{a.name}</code></span>
-            {/each}
-            {#if parsed.outputArtifacts.length === 0}
-              <span class="dim-text">In-memory workspace</span>
-            {/if}
-          </div>
-        </div>
-
-        <div class="breakdown-row">
-          <span class="row-label">Statements:</span>
-          <div class="op-list">
-            {#each displayedOps as act}
-              <div class="op-item">
-                <span class="op-time">{act.elapsedTime}s</span>
-                <code class="op-code">{act.name}</code>
-              </div>
-            {/each}
-            {#if isLight && parsed.activities.length > 3}
-              <span class="more-pill">+{parsed.activities.length - displayedOps.length} more in @detailedmode</span>
-            {/if}
-          </div>
+      <div class="breakdown-row">
+        <span class="row-label">Key Operations:</span>
+        <div class="op-list">
+          {#each displayedOps as op}
+            <div class="op-item">
+              <code class="op-code">{op}</code>
+            </div>
+          {/each}
+          {#if isLight && operations.length > 3}
+            <span class="more-pill">+{operations.length - displayedOps.length} more in @detailedmode</span>
+          {/if}
         </div>
       </div>
     </div>
-  {/if}
+  </div>
 </div>
 
 <style>
