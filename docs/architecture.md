@@ -1,39 +1,52 @@
 # provBookR Architecture
 
-`provBookR` creates HTML-based interactive web codex visualizations of collected provenance from R scripts. The package bridges R provenance collection tools with a modern web interface.
+`provBookR` bridges computational provenance collection in R with modern, web-native digital booklet visualization. The system transforms raw R execution traces into a zero-backend, interactive SvelteKit Single Page Application (SPA) called a **provbook** (or **codex**).
 
-> _The provBookR package makes use of a number of **Data**, **HTML**, and **Provenance** R packages._
+---
 
-```R
-# Data packages:
-library(DT)
-library(gdata)
-library(gsubfn)
-library(lubridate)
-library(tidyverse)
+## 1. System Data Flow
 
-# HTML packages:
-library(knitr)
-library(htmltools)
-library(markdown)
-library(shiny)
-library(shinyjs)
+```mermaid
+flowchart TD
+    subgraph R_Layer ["R Execution & Collection Layer"]
+        A["User R Script (.R)"] -->|rdtLite::prov.run| B["W3C PROV Trace (prov.json)"]
+    end
 
-# Provenance packages:
-library(rdtLite) # Load Provenance Collector
-library(provGraphR) # Load Provenance Traveler
-library(provParseR) # Load Provenance Parser
-library(provDebugR) # Load Provenance Debugger
-library(provSummarizeR) # Load Provenance Summarizer
+    subgraph Package_Layer ["provBookR Scaffolding Engine"]
+        B -->|publish_codex| C["Inject prov.json & script source"]
+        C --> D["Scaffold SvelteKit Template (inst/codex_template)"]
+        D -->|npm run build| E["Static Build Artifacts (build/index.html)"]
+    end
+
+    subgraph Client_Layer ["Reactive Codex UI (Svelte 5)"]
+        E --> F["PageFlip Book View"]
+        E --> G["Lineage Graph Explorer (DAG)"]
+        E --> H["Execution Timeline & Artifacts"]
+    end
 ```
 
-As a result, provBookR is capable of recording and generating presentations of data provenance from individual R data objects, which users specify through a **browser interface**. The **presentation** done by provBookR is in the form of booklets called **provbooks** - _interactive booklet-like web pages created from R_.
+---
 
-## Systems overview of provBookR
-The systems perspective of the provBookR pacakge is as follows:
+## 2. Architectural Layers
 
-## Architecture of provbooks
-The motivation for provBookR's booklet interface is to produce a document with familiar appears (i.e., books) that contains the data provenance and animation of the data provenance.
+### 2.1 Provenance Collection Layer
+* **Collector**: Utilizes `rdtLite` to intercept R script execution, tracking data entities (variables, dataframes, output files) and operations (functions, system calls).
+* **Standardization**: Exports provenance graphs complying with the **W3C PROV-JSON** specification and End-to-End Extended Provenance standards.
 
-## Visualizing data provenance
-The animations and visualizations represent the various data manipulations of the respective data objects. In doing so, provBookR affords scientist and programmers a visual aid for understanding and reproducing scientific analyses and results in R.
+### 2.2 R Scaffolding & Publishing Engine (`publish_codex`)
+* **Payload Assembly**: Reads `prov.json` and the source R script, serializing them into structured JSON payloads inside `inst/codex_template/src/lib/data/`.
+* **Static Site Compilation**: Triggers Node.js Vite compilation (`npm run build`) via `@sveltejs/adapter-static` to generate a bundle.
+* **Output Delivery**: Copies the resulting HTML/JS/CSS assets into a user-specified output directory (e.g. `codex_build/`).
+
+### 2.3 SvelteKit Codex Engine (`inst/codex_template`)
+* **State Management**: Reactive state handled using **Svelte 5 runes** (`$state`, `$derived`) for book navigation, theme options, and annotation panels.
+* **Dual View Modes**:
+  * **Book Mode**: Interactive two-page flipbook layout for structured reading.
+  * **Overview Mode (Slide Sorter)**: Macroscopic spread overview allowing rapid chapter jumping.
+* **Visual Lineage Graph**: Directed Acyclic Graph (DAG) rendering node connections, operation dependencies, and cryptographic MD5 file verification hashes.
+
+---
+
+## 3. Deployment & Hosting
+* **Zero Backend Requirement**: Compiled codices rely entirely on static client-side web technologies (HTML, SVG, JS, CSS).
+* **Cross-Platform Compatibility**: Can be opened locally via `preview_codex()` or deployed directly to GitHub Pages, Netlify, or academic archives.
