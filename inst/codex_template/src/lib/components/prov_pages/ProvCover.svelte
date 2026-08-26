@@ -1,5 +1,6 @@
 <script lang="ts">
   import { themeState } from '../../themeState.svelte';
+  import FlutteringRing from './FlutteringRing.svelte';
 
   let { provData } = $props<{ provData: any }>();
 
@@ -29,8 +30,11 @@
       <span class="cover-subtitle">An interactive record of code execution and data lineage</span>
     </div>
 
-    <!-- Dead Center Script Title -->
+    <!-- Dead Center Script Title with Generative Fluttering Ring -->
     <div class="cover-hero">
+      <div class="ring-canvas-layer">
+        <FlutteringRing />
+      </div>
       <h1 class="script-title">{scriptName}</h1>
     </div>
 
@@ -157,15 +161,30 @@
   }
 
   .cover-hero {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
     text-align: center;
     padding: 2rem 0;
+    overflow: hidden;
+  }
+
+  .ring-canvas-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.85;
   }
 
   .cover-hero .script-title {
+    position: relative;
+    z-index: 1;
     font-family: var(--font-sans, system-ui);
     font-size: 1.7rem;
     font-weight: 500;

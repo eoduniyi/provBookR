@@ -11,18 +11,16 @@
   let { provData } = $props<{ provData?: any }>();
 
   const parsed = $derived(provData ? parseProvData(provData, scriptSource) : null);
-  const hasParsedData = $derived(!!parsed && (parsed.operationsCount > 0 || !!parsed.sourceCode));
-
   const activeMeta = $derived(currentScriptMeta());
 
   const scripts = $derived(
-    hasParsedData
+    parsed
       ? [{ id: parsed.scriptName, name: parsed.scriptName, icon: 'document' }]
       : (Object.values(currentScenarioMetadata()) as ScriptMeta[])
   );
 
   const displayMeta = $derived(
-    hasParsedData
+    parsed
       ? {
           id: parsed.scriptName,
           name: parsed.scriptName,
@@ -32,15 +30,7 @@
           outputFile: parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory workspace',
           code: parsed.sourceCode
         }
-      : (activeMeta || (parsed && {
-          id: parsed.scriptName,
-          name: parsed.scriptName,
-          category: 'Analysis Script',
-          icon: 'document',
-          variables: parsed.variables.map(v => v.name),
-          outputFile: parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory workspace',
-          code: parsed.sourceCode
-        }))
+      : activeMeta
   );
 
   const highlightedCode = $derived(
