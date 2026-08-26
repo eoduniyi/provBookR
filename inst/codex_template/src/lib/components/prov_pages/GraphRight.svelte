@@ -366,7 +366,12 @@
     </div>
 
     <!-- 2D Spatial Canvas -->
-    <div class="graph-canvas-wrap">
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div 
+      class="graph-canvas-wrap"
+      onclick={() => selectedNode = null}
+    >
       <svg 
         class="graph-svg" 
         viewBox="0 0 {graphData.width} {graphData.height}" 
@@ -433,9 +438,11 @@
               transform="translate({node.x}, {node.y})"
               onmouseenter={() => hoveredNodeId = node.id}
               onmouseleave={() => hoveredNodeId = null}
-              onclick={() => {
+              onclick={(e) => {
+                e.stopPropagation();
                 if (node.type === 'backbone') {
-                  backboneExpanded = !backboneExpanded;
+                  viewMode = 'full';
+                  backboneExpanded = false;
                 }
                 selectedNode = { id: node.id, name: node.label, type: node.type, detail: node.detail };
               }}

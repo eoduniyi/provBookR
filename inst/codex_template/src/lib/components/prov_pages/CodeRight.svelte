@@ -10,19 +10,38 @@
 
   let { provData } = $props<{ provData?: any }>();
 
-  const scripts = $derived(Object.values(currentScenarioMetadata()) as ScriptMeta[]);
-  const activeMeta = $derived(currentScriptMeta());
   const parsed = $derived(provData ? parseProvData(provData, scriptSource) : null);
+  const hasParsedData = $derived(!!parsed && (parsed.operationsCount > 0 || !!parsed.sourceCode));
 
-  const displayMeta = $derived(activeMeta || (parsed && {
-    id: parsed.scriptName,
-    name: parsed.scriptName,
-    category: 'Analysis Script',
-    icon: 'document',
-    variables: parsed.variables.map(v => v.name),
-    outputFile: parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory variables',
-    code: parsed.sourceCode
-  }));
+  const activeMeta = $derived(currentScriptMeta());
+
+  const scripts = $derived(
+    hasParsedData
+      ? [{ id: parsed.scriptName, name: parsed.scriptName, icon: 'document' }]
+      : (Object.values(currentScenarioMetadata()) as ScriptMeta[])
+  );
+
+  const displayMeta = $derived(
+    hasParsedData
+      ? {
+          id: parsed.scriptName,
+          name: parsed.scriptName,
+          category: 'Analysis Script',
+          icon: 'document',
+          variables: parsed.variables.map(v => v.name),
+          outputFile: parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory workspace',
+          code: parsed.sourceCode
+        }
+      : (activeMeta || (parsed && {
+          id: parsed.scriptName,
+          name: parsed.scriptName,
+          category: 'Analysis Script',
+          icon: 'document',
+          variables: parsed.variables.map(v => v.name),
+          outputFile: parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory workspace',
+          code: parsed.sourceCode
+        }))
+  );
 
   const highlightedCode = $derived(
     displayMeta ? Prism.highlight(displayMeta.code, Prism.languages.r, 'r') : ''

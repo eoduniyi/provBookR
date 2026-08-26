@@ -11,10 +11,12 @@
   const parsed = $derived(provData ? parseProvData(provData, scriptSource) : null);
   const isLight = $derived(themeState.readingMode === 'light');
 
-  const scriptName = $derived(activeMeta?.name || parsed?.scriptName || 'Analysis Script');
-  const variables = $derived(activeMeta?.variables || parsed?.variables.map(v => v.name) || []);
-  const operations = $derived(activeMeta?.operations || parsed?.activities.map(a => a.name) || []);
-  const outputFile = $derived(activeMeta?.outputFile || parsed?.outputArtifacts.map(a => a.name).join(', ') || 'In-memory workspace');
+  const hasParsedData = $derived(!!parsed && (parsed.operationsCount > 0 || !!parsed.sourceCode));
+
+  const scriptName = $derived(hasParsedData ? parsed.scriptName : (activeMeta?.name || 'Analysis Script'));
+  const variables = $derived(hasParsedData ? parsed.variables.map(v => v.name) : (activeMeta?.variables || []));
+  const operations = $derived(hasParsedData ? parsed.activities.map(a => a.name) : (activeMeta?.operations || []));
+  const outputFile = $derived(hasParsedData ? (parsed.outputArtifacts.map(a => a.name).join(', ') || 'In-memory workspace') : (activeMeta?.outputFile || 'In-memory workspace'));
 
   const displayedVars = $derived(
     isLight ? variables.slice(0, Math.min(4, variables.length)) : variables

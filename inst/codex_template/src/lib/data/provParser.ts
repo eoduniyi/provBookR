@@ -98,6 +98,6 @@ export function parseProvData(provData: any, scriptSource?: { name?: string; cod
     inputFiles,
     activities,
     flowSteps,
-    sourceCode: (scriptSource?.code && scriptSource.name === scriptName) ? scriptSource.code : (operations.map(a => a.name).join('\n') || scriptSource?.code || '# Source code execution trace')
+    sourceCode: scriptSource?.code || (operations.map(a => a.name).join('\n') || '# Source code execution trace')
   };
 }
