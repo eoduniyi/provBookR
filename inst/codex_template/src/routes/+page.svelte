@@ -18,9 +18,15 @@
 
   import { activeScenarioState, viewModeState, bookNavigationState } from '$lib/state.svelte';
   import { scenarios } from '$lib/data/scenarios';
+  import scriptSource from '$lib/data/script_source.json';
+  import { parseProvData } from '$lib/data/provParser';
 
   let provData = $derived(scenarios[activeScenarioState.currentId].provData);
   let isBlank = $derived(activeScenarioState.currentId === 'blank');
+
+  const parsed = $derived(provData ? parseProvData(provData, scriptSource) : null);
+  const scriptName = $derived(parsed?.scriptName || (scriptSource as any)?.name || 'script.R');
+  const pageTitle = $derived(`provBookR: ${scriptName}`);
 
   const contentSpreads = [
     [IntroLeft, IntroRight],       // Chapter 1: Everyday Provenance
@@ -37,7 +43,7 @@
 </script>
 
 <svelte:head>
-  <title>provBookR</title>
+  <title>{pageTitle}</title>
 </svelte:head>
 
 {#if viewModeState.mode === 'graph'}
@@ -100,4 +106,3 @@
   </PageFlip>
   <GuideOverlay />
 {/if}
-
