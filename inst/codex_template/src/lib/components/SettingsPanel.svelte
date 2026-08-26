@@ -103,6 +103,14 @@
           <button class="seg" class:on={themeState.justified} onclick={() => themeState.justified = true}>Justified</button>
         </div>
       </div>
+
+      <div class="settings-row">
+        <span class="row-label">Cover Style</span>
+        <div class="seg-bar">
+          <button class="seg" class:on={themeState.coverStyle === 'modern'} onclick={() => themeState.coverStyle = 'modern'}>Modern</button>
+          <button class="seg" class:on={themeState.coverStyle === 'classic'} onclick={() => themeState.coverStyle = 'classic'}>Classic</button>
+        </div>
+      </div>
     </div>
   </div>
 {/if}

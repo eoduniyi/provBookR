@@ -9,6 +9,7 @@ export const themeState = $state({
   fontFamily: 'sans',
   lineHeight: 1.78,
   justified: true,
+  coverStyle: 'modern' as 'modern' | 'classic',
 
   // Page Turn Settings
   curlEnabled: false,
