@@ -1,4 +1,4 @@
-# [provBookR](provBookR.architecture.md)
+# [provBookR](docs/architecture.md)
 > Creates an HTML-based visualization of provenance
 
 ## Nature of Provenance
@@ -11,7 +11,7 @@ For ecologists and the wider scientific community, the reproducibility of comput
 
 This allows researchers to visually explore the lineage of their data pipelines and specific R objects (e.g., plots, models, variables) through a browser-based reading experience. By making provenance transparent and easily shareable without requiring specialized backend infrastructure, `provBookR` empowers the scientific community to elevate the standard of computational reproducibility.
 
-![provBookR Main Interface](main-example.png)
+![provBookR Main Interface](inst/extdata/main-example.png)
 
 ## Core Features & Capabilities
 
@@ -54,28 +54,15 @@ provBookR::publish_codex("myscript.R", output_dir = "my_provbook")
 ```
 This generates a `my_provbook/` folder containing the static HTML, CSS, and JS files. The `index.html` file can be opened directly in a browser or hosted via standard static site hosting services (e.g., GitHub Pages).
 
-## 2. CLI Explorer (Advanced Usage)
-> The `provBookR` package also includes a **terminal browser interface** for quickly querying the collected provenance.
+## 2. Local Booklet Preview (`preview_codex`)
+To view the compiled booklet locally without running into browser Same-Origin (CORS) restrictions on local `file://` URLs, use `preview_codex`:
 
-To record the provenance from an R script in the terminal:
 ```R
-> provBookR("myscript.R", mode="full")
+# Launch a local server to preview your built codex
+provBookR::preview_codex(output_dir = "my_provbook", port = 8000)
 ```
 
-To explore different object lineages using the E2E terminal tools:
-```R
-> provBookR("prov.json", mode="full")
-```
-```
-provBookR browser running, type "help" for more information or Q to quit
-provBookR> help
-provBookR(operations)> [command][space][variable.name]:
-Quit provBookR                                : "q"   
-List R objects                                : "ls"  
-Show me how R object was created              : "BO"  
-Show me what this R object was used to create : "AO"  
-Summarize provenance                          : "S"   
-```
+> **Note on Legacy Prototypes**: Early 2019 terminal-based interactive CLI prototypes (`provBookR(..., mode="full")`) are archived in [`inst/legacy/`](inst/legacy/README.md) for historical reference.
 
 ---
 

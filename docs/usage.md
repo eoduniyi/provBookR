@@ -1,140 +1,57 @@
-# provBookR Usage & CLI Guide
+# provBookR Usage Guide
 
-`provBookR` provides both an R publishing API (`publish_codex`) and an interactive terminal browser interface (`provBookR`) for querying provenance.
+`provBookR` provides a modern R API for collecting computational provenance from R scripts and generating interactive, web-native digital booklets ("codices").
 
-## 1.1: Using the browser's ```lite``` mode
-```R
-# Run provBookR with lite option specified
-> provBookR("prov.json", mode="lite")
-```
+---
 
-    variable name?:
-    provBookR.lite> f
-    Running provBookR lite for f from prov.json...
-    Checking file extension...
-    [1] "f <- function(x) {\ty <- x^2\treturn(y)}"
-    [2] "f"                                       
-    Generate a provbook for this object history? (Y/N):
-    provBookR> Y
-    Done!
-    provbook for variable "f" is stored in /path/to/current/working/directory
+## 1. Publishing a Codex (`publish_codex`)
 
-## 1.2: Using the browser's ```full``` mode (_quit/start_)
+The primary function of `provBookR` is `publish_codex()`. It performs the following end-to-end pipeline:
+1. Executes your R script and captures fine-grained W3C-compliant PROV trace data using `rdtLite`.
+2. Scaffolds the SvelteKit digital booklet template.
+3. Injects the provenance graph and source code payload.
+4. Compiles the static web bundle using Node.js/Vite into an output directory.
+
+### Basic Usage
 
 ```R
-# Run provBookR with full option specified (quit/start)
-> provBookR("prov.json", mode="full")
-```
-    provBookR browser initializing...
-    Checking file extension...
-    provBookR browser initialized!
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> help
-    provBookR operations [command][space][variable.name]:
-    Quit provBookR                                : "q"   
-    provBookR operations                          : "help"
-    List R objects                                : "ls"  
-    Show me how R object was created              : "BO"  
-    Show me what this R object was used to create : "AO"  
-    Summarize provenance                          : "S"   
-    Debug script                                  : "DB"  
-    Clean script                                  : "C"   
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> q
-    Are you sure you want to quit? (Y/N):
-    provBookR> y
+library(provBookR)
 
-## 1.3 Using the browser's ```full``` mode (_generate provbook_)
+# Publish a codex for an R analysis script
+publish_codex(
+  script = "path/to/analysis.R",
+  output_dir = "my_codex_build"
+)
+```
+
+### Parameters
+* `script`: The file path to the target `.R` script.
+* `output_dir`: The directory where the compiled HTML/JS/CSS digital booklet will be saved (default: `"codex_build"`).
+
+---
+
+## 2. Previewing a Codex (`preview_codex`)
+
+Because modern web browsers enforce strict Same-Origin Policy (CORS) restrictions on local `file://` URLs, `provBookR` includes a built-in preview server.
+
 ```R
-# Run provBookR with full option specified (generate provbook)
-> provBookR("prov.json", mode="full")
+# Launch a local server to preview the built codex in your browser
+preview_codex(
+  output_dir = "my_codex_build",
+  port = 8000
+)
 ```
 
-    provBookR browser initializing...
-    Checking file extension...
-    provBookR browser initialized!
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> help
-    provBookR operations [command][space][variable.name]:
-    Quit provBookR                                : "q"   
-    provBookR operations                          : "help"
-    List R objects                                : "ls"  
-    Show me how R object was created              : "BO"  
-    Show me what this R object was used to create : "AO"  
-    Summarize provenance                          : "S"   
-    Debug script                                  : "DB"  
-    Clean script                                  : "C"   
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> ls
-    [1] "f"             "a"             "b"             "dev.off.4.pdf"
+### Parameters
+* `output_dir`: The directory containing the published digital booklet (default: `"codex_build"`).
+* `port`: The local HTTP server port number (default: `8000`).
 
-## 1.3.1 Showing provenance "before object" (BO)
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> BO f
-    [1] "f <- function(x) {\ty <- x^2\treturn(y)}"
-    [2] "f"                                       
-    Generate a provbook for this object history? (Y/N):
-    provBookR> N
+---
 
-## 1.3.2 Showing provenance "after object" (AO)  
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> AO f
-    [1] "b"         "b <- f(a)" "f"        
-    Generate a provbook for this object history? (Y/N):
-    provBookR> Y
-    Making provbook for "f" from prov.json...
-    Done!
-    provbook for variable "f" is stored in /path/to/current/working/directory
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> quit
-    Are you sure you want to quit? (Y/N):
-    provBookR> Y
+## 3. Interactive Codex Features
 
-## 1.4 Using the browser's ```full``` mode (_E2E provenance_)    
-```R
-# Run provBookR with full options specified (E2E provenance tools)
-provBookR("prov.json", mode="full")
-```
-
-    provBookR browser initializing...
-    Checking file extension...
-    provBookR browser initialized!
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> help
-    provBookR(operations)> [command][space][variable.name]:
-    Quit provBookR                                : "q"   
-    provBookR operations                          : "help"
-    List R objects                                : "ls"  
-    Show me how R object was created              : "BO"  
-    Show me what this R object was used to create : "AO"  
-    Summarize provenance                          : "S"   
-    Debug script                                  : "DB"  
-    Clean script                                  : "C"   
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> S
-    Running provSummarizeR...
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> C
-    Running RClean...
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> DB
-    Running provDebugR...
-    Debug> Q
-    Debugger initialized, type "help" for more information or Q to quit
-    /path/to/current/working/directory/myscript.r
-    provBookR browser running, type "help" for more information or Q to quit
-    prov.json
-    provBookR> Q
-    Are you sure you want to quit? (Y/N):
-    provBookR> Y
+Once generated, the digital booklet provides an interactive reactive interface featuring:
+* **Page Flip Book Mode**: Book-like chapter navigation separating Overview, Flow, Source Code, Lineage Graph, Data Entities, and Execution Timelines.
+* **Overview Sorter (Graph View)**: Macroscopic spread overview allowing one-click jumping to any chapter.
+* **Lineage DAG Explorer**: Interactive node graph rendering operations, data objects, and execution dependencies.
+* **Custom Typography & Appearance**: Configurable reading modes (Light/Detailed), serif/sans fonts, and font size stepping.
