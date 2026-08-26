@@ -5,7 +5,7 @@
 [![License: GPL-3](https://img.shields.io/badge/license-GPL--3-0969da?style=flat-square)](LICENSE)
 [![Svelte 5](https://img.shields.io/badge/Svelte-v5.0-ff3e00?style=flat-square&logo=svelte&logoColor=white)](inst/codex_template)
 
-> Creates interactive, web-native digital booklet codices of R computational provenance.
+> Generates interactive, web-native digital booklet codices of R computational provenance.
 
 ## Nature of Provenance
 How scientific results come to be is the product of various domain-specific, economic, historical, social, and technical factors. Information about how these factors shaped and produced these results is essential to both artistic trade and scientific reproducibility. Whether these results are material or digital, **provenance** provides the historical accounts of objects: paintings, bones, essays, scientific tables, and plots.
@@ -17,7 +17,7 @@ For ecologists and the wider scientific community, the reproducibility of comput
 
 This allows researchers to visually explore the lineage of their data pipelines and specific R objects (e.g., plots, models, variables) through a browser-based reading experience. By making provenance transparent and easily shareable without requiring specialized backend infrastructure, `provBookR` empowers the scientific community to elevate the standard of computational reproducibility.
 
-![provBookR Main Interface](inst/extdata/main-example.png)
+![provBookR Main Interface](docs/provbook_example_chapter_4.png)
 
 ## Features
 
