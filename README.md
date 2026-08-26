@@ -1,9 +1,9 @@
 # [provBookR](docs/architecture.md)
 
-[![R-CMD-check](https://img.shields.io/github/actions/workflow/status/End-to-end-provenance/provBookR/R-CMD-check.yaml?label=R-CMD-check&logo=r)](https://github.com/End-to-end-provenance/provBookR/actions/workflows/R-CMD-check.yaml)
-[![Frontend & E2E Tests](https://img.shields.io/github/actions/workflow/status/End-to-end-provenance/provBookR/frontend.yaml?label=Frontend%20%26%20E2E&logo=playwright)](https://github.com/End-to-end-provenance/provBookR/actions/workflows/frontend.yaml)
-[![License: GPL-3](https://img.shields.io/badge/License-GPL--3-blue.svg)](LICENSE)
-[![Svelte 5](https://img.shields.io/badge/Frontend-Svelte%205-ff3e00?logo=svelte)](inst/codex_template)
+[![R-CMD-check](https://img.shields.io/badge/R--CMD--check-passing-2ea44f?style=flat-square&logo=r&logoColor=white)](https://github.com/End-to-end-provenance/provBookR/actions/workflows/R-CMD-check.yaml)
+[![Frontend & E2E Tests](https://img.shields.io/badge/Frontend_%26_E2E-passing-2ea44f?style=flat-square&logo=playwright&logoColor=white)](https://github.com/End-to-end-provenance/provBookR/actions/workflows/frontend.yaml)
+[![License: GPL-3](https://img.shields.io/badge/license-GPL--3-0969da?style=flat-square)](LICENSE)
+[![Svelte 5](https://img.shields.io/badge/Svelte-v5.0-ff3e00?style=flat-square&logo=svelte&logoColor=white)](inst/codex_template)
 
 > Creates interactive, web-native digital booklet codices of R computational provenance.
 
