@@ -17,3 +17,4 @@
 ^demo/.*\.pdf$
 ^inst/codex_template/playwright-report$
 ^inst/codex_template/test-results$
+^CITATION\.cff$

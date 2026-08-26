@@ -1,5 +1,11 @@
 # [provBookR](docs/architecture.md)
-> Creates an HTML-based visualization of provenance
+
+[![R-CMD-check](https://img.shields.io/github/actions/workflow/status/End-to-end-provenance/provBookR/R-CMD-check.yaml?label=R-CMD-check&logo=r)](https://github.com/End-to-end-provenance/provBookR/actions/workflows/R-CMD-check.yaml)
+[![Frontend & E2E Tests](https://img.shields.io/github/actions/workflow/status/End-to-end-provenance/provBookR/frontend.yaml?label=Frontend%20%26%20E2E&logo=playwright)](https://github.com/End-to-end-provenance/provBookR/actions/workflows/frontend.yaml)
+[![License: GPL-3](https://img.shields.io/badge/License-GPL--3-blue.svg)](LICENSE)
+[![Svelte 5](https://img.shields.io/badge/Frontend-Svelte%205-ff3e00?logo=svelte)](inst/codex_template)
+
+> Creates interactive, web-native digital booklet codices of R computational provenance.
 
 ## Nature of Provenance
 How scientific results come to be is the product of various domain-specific, economic, historical, social, and technical factors. Information about how these factors shaped and produced these results is essential to both artistic trade and scientific reproducibility. Whether these results are material or digital, **provenance** provides the historical accounts of objects: paintings, bones, essays, scientific tables, and plots.
@@ -13,7 +19,7 @@ This allows researchers to visually explore the lineage of their data pipelines 
 
 ![provBookR Main Interface](inst/extdata/main-example.png)
 
-## Core Features & Capabilities
+## Features
 
 - **Interactive Lineage Graph**: Directed acyclic graph (DAG) visualization of data derivation, tracking operations (functions) and entities (variables, dataframes, files).
 - **Cryptographic File Hash Integrity**: MD5 hash validation of generated file artifacts to guarantee authenticity and reproducibility across environments.
@@ -21,7 +27,7 @@ This allows researchers to visually explore the lineage of their data pipelines 
 - **Sub-second Execution Timeline**: Granular operation duration and temporal ordering tracking for R workflows.
 - **Standalone Static Export**: Zero-backend deployment — compiles to plain HTML/CSS/JS ready for GitHub Pages, Netlify, or local offline reading.
 
-## Ecosystem Integration
+## Ecosystem
 
 `provBookR` is part of the **[End-to-End Provenance](https://github.com/End-to-end-provenance)** (E2E) ecosystem. It seamlessly integrates with the suite's specialized tools:
 
