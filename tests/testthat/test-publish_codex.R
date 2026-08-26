@@ -7,8 +7,9 @@ test_that("publish_codex throws error for missing script", {
 })
 
 test_that("publish_codex builds a valid digital codex from an R script", {
-  # Skip on CRAN or systems without npm/rdtLite to adhere to CRAN guidelines
+  # Skip on CRAN and CI runners to keep R CMD check fast and avoid external network/node build issues
   skip_on_cran()
+  skip_on_ci()
   skip_if_not_installed("rdtLite")
   skip_if_not(nzchar(Sys.which("npm")), "npm binary not found in system PATH")
 

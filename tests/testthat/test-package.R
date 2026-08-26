@@ -6,9 +6,8 @@ test_that("package exports expected functions", {
 
 test_that("codex template contains required assets and configuration", {
   template_dir <- system.file("codex_template", package = "provBookR")
-  # If running in local source tree during devtools::test(), fallback to inst/codex_template
   if (template_dir == "" || !dir.exists(template_dir)) {
-    template_dir <- file.path(rprojroot::find_package_root_file(), "inst", "codex_template")
+    template_dir <- testthat::test_path("../../inst/codex_template")
   }
   
   expect_true(dir.exists(template_dir))
