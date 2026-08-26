@@ -16,3 +16,5 @@
 ^inst/codex_template/\.npmrc$
 ^inst/codex_template/\.vscode$
 ^demo/.*\.pdf$
+^inst/codex_template/playwright-report$
+^inst/codex_template/test-results$

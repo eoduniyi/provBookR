@@ -36,7 +36,9 @@
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="settings-backdrop" onclick={() => themeState.isOpen = false}></div>
   <div class="settings-popover">
-    
+    <div class="popover-header">
+      <h3>Typography & Appearance</h3>
+    </div>
     <div class="settings-section">
       <div class="settings-row">
         <span class="row-label">Reading</span>

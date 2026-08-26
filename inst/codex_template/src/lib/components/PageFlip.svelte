@@ -422,7 +422,7 @@
             </button>
           {/if}
         </div>
-        <button class="page-tap left-tap" onclick={flipPrev} aria-label="Previous page" tabindex="-1"></button>
+        <button class="page-tap left-tap" onclick={flipPrev} aria-label="Tap to go back" tabindex="-1"></button>
       </div>
 
       <div class="spine"></div>
@@ -453,7 +453,7 @@
             </button>
           {/if}
         </div>
-        <button class="page-tap right-tap" onclick={flipNext} aria-label="Next page" tabindex="-1"></button>
+        <button class="page-tap right-tap" onclick={flipNext} aria-label="Tap to advance" tabindex="-1"></button>
       </div>
     {/if}
   </div>
@@ -491,7 +491,7 @@
       <button class="dock-btn" onclick={flipNext} disabled={currentSpread >= totalSpreads - 1 || flipping} aria-label="Next Page">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
-      <span class="page-indicator">{currentSpread + 1} / {totalSpreads}</span>
+      <span class="page-indicator">{currentSpread === 0 ? 'Cover' : `Sp ${currentSpread}`}</span>
     {/snippet}
   </Dock>
 {/if}

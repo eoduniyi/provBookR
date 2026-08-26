@@ -59,9 +59,10 @@
     {provData} 
   />
 {:else}
-  <PageFlip
-    currentSpread={bookNavigationState.currentSpread}
-    {totalSpreads}
+  <div class="page-flip-container">
+    <PageFlip
+      currentSpread={bookNavigationState.currentSpread}
+      {totalSpreads}
     onNext={next}
     onPrev={prev}
     isCover={bookNavigationState.currentSpread === 0}
@@ -104,5 +105,15 @@
       {/if}
     {/snippet}
   </PageFlip>
+  </div>
   <GuideOverlay />
 {/if}
+
+<style>
+  .page-flip-container {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    position: relative;
+  }
+</style>

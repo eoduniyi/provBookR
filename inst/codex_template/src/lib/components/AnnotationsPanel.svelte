@@ -40,7 +40,7 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="anno-backdrop" onclick={() => annotationsPanelState.isOpen = false}></div>
-  <div class="anno-popover">
+  <div class="anno-popover annotations-panel">
     <div class="popover-header">
       <h3>Annotations</h3>
       <button class="close-btn" onclick={() => annotationsPanelState.isOpen = false}>✕</button>
