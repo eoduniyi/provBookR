@@ -42,10 +42,10 @@ export function parseProvData(provData: any, scriptSource?: { name?: string; cod
     const type = ent?.['rdt:type'] || 'Data';
     const value = ent?.['rdt:value'] || '';
 
-    if (type === 'OutputFile' || name.endsWith('.pdf') || name.endsWith('.csv') || name.endsWith('.png') || name.endsWith('.rds') || name.endsWith('.md')) {
-      outputArtifacts.push({ name, type: valType, hash: ent?.['rdt:hash'] });
-    } else if (type === 'InputFile') {
+    if (type === 'InputFile') {
       inputFiles.push({ name, type: valType });
+    } else if (type === 'OutputFile' || name.endsWith('.pdf') || name.endsWith('.csv') || name.endsWith('.png') || name.endsWith('.rds') || name.endsWith('.md')) {
+      outputArtifacts.push({ name, type: valType, hash: ent?.['rdt:hash'] });
     } else {
       if (!variables.some(v => v.name === name)) {
         variables.push({ name, type: valType, value });
