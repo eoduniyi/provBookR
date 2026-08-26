@@ -19,6 +19,10 @@ Suggests:
     rdtLite,
     rdt,
     testthat (>= 3.0.0)
+Remotes: 
+    End-to-end-provenance/provParseR,
+    End-to-end-provenance/rdtLite,
+    End-to-end-provenance/rdt
 Additional_repositories: https://end-to-end-provenance.github.io/drat/
 URL: https://github.com/End-to-end-provenance
 BugReports: https://github.com/End-to-end-provenance/provBookR/issues
