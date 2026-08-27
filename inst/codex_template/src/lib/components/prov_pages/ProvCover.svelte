@@ -4,12 +4,20 @@
 
   let { provData } = $props<{ provData: any }>();
 
+  let isMetaOpen = $state(false);
+
   let environment = $derived(provData?.entity?.['rdt:environment'] || {});
   let scriptName = $derived(environment?.['rdt:script'] ? environment['rdt:script'].split(/[/\\]/).pop() : 'script.R');
-  let executionTime = $derived(environment?.['rdt:provTimestamp']?.replace(/\./g, ':') || '14:22:05');
+  let rawTime = $derived(environment?.['rdt:provTimestamp'] || '');
+  let executionTime = $derived(
+    rawTime
+      ? rawTime.replace('T', ' ').replace(/([A-Z]{3,4})$/, '').trim()
+      : '14:22:05'
+  );
   let architecture = $derived(environment?.['rdt:architecture'] || 'x86_64');
-  let os = $derived(environment?.['rdt:operatingSystem'] || 'macOS / R');
-  let rVersion = $derived(environment?.['rdt:langVersion'] || 'R 4.3.2');
+  let os = $derived(environment?.['rdt:operatingSystem'] || 'macOS');
+  let rawRVersion = $derived(environment?.['rdt:langVersion'] || 'R 4.3.2');
+  let rVersion = $derived(rawRVersion.replace(/^R version\s*/i, 'R '));
   let totalTime = $derived(environment?.['rdt:totalElapsedTime'] || '0.42');
 
   // Count activities and entities
@@ -30,40 +38,64 @@
       <span class="cover-subtitle">An interactive record of code execution and data lineage</span>
     </div>
 
-    <!-- Dead Center Script Title with Generative Fluttering Ring -->
+    <!-- Dead Center Script Title with Generative Fluttering Ring & FAB -->
     <div class="cover-hero">
       <div class="ring-canvas-layer">
         <FlutteringRing />
       </div>
-      <h1 class="script-title">{scriptName}</h1>
+      <div class="hero-center-content">
+        <h1 class="script-title">{scriptName}</h1>
+        <!-- FAB (+) Toggle Button -->
+        <button 
+          class="fab-toggle-btn"
+          class:open={isMetaOpen}
+          onclick={(e) => { e.stopPropagation(); isMetaOpen = !isMetaOpen; }}
+          aria-label="Toggle Metadata Overview"
+          title="Toggle metadata overview"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            {#if isMetaOpen}
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            {:else}
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            {/if}
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Architectural Footer Lockup -->
+    <!-- Architectural Footer Lockup (Popover Card triggered by FAB) -->
     <div class="cover-footer">
-      <div class="footer-left-lockup">
-        <!-- Left Metadata Column -->
-        <div class="meta-col">
-          <div class="meta-item"><span class="m-key">language</span><span class="m-val">{rVersion}</span></div>
-          <div class="meta-item"><span class="m-key">system</span><span class="m-val">{os}</span></div>
-          <div class="meta-item"><span class="m-key">recorded</span><span class="m-val">{executionTime}</span></div>
-          <div class="meta-item"><span class="m-key">duration</span><span class="m-val">{totalTime}s</span></div>
-        </div>
-
-        <!-- Vertical Hairline Divider -->
-        <div class="footer-divider"></div>
-
-        <!-- Stacked Stats Column -->
-        <div class="stats-col">
-          <div class="stat-unit">
-            <span class="stat-num">{actCount}</span>
-            <span class="stat-lbl">Operations</span>
+      {#if isMetaOpen}
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div class="footer-left-lockup popover-card" onclick={(e) => e.stopPropagation()}>
+          <!-- Left Metadata Column -->
+          <div class="meta-col">
+            <div class="meta-item"><span class="m-key">Language</span><span class="m-val">{rVersion}</span></div>
+            <div class="meta-item"><span class="m-key">System</span><span class="m-val">{os}</span></div>
+            <div class="meta-item"><span class="m-key">Recorded</span><span class="m-val">{executionTime}</span></div>
+            <div class="meta-item"><span class="m-key">Duration</span><span class="m-val">{totalTime}s</span></div>
           </div>
-          <div class="stat-unit">
-            <span class="stat-num">{entCount}</span>
-            <span class="stat-lbl">Data Objects</span>
+
+          <!-- Vertical Hairline Divider -->
+          <div class="footer-divider"></div>
+
+          <!-- Stacked Stats Column -->
+          <div class="stats-col">
+            <div class="stat-unit">
+              <span class="stat-num">{actCount}</span>
+              <span class="stat-lbl">Operations</span>
+            </div>
+            <div class="stat-unit">
+              <span class="stat-num">{entCount}</span>
+              <span class="stat-lbl">Data Objects</span>
+            </div>
           </div>
         </div>
-      </div>
+      {/if}
 
       <!-- Right Action Pill -->
       <div class="action-col">
@@ -182,6 +214,15 @@
     opacity: 0.85;
   }
 
+  .hero-center-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
   .cover-hero .script-title {
     position: relative;
     z-index: 1;
@@ -193,17 +234,71 @@
     letter-spacing: -0.02em;
   }
 
+  .fab-toggle-btn {
+    position: relative;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--pill-bg, rgba(0, 0, 0, 0.05));
+    border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.12));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+
+  .fab-toggle-btn:hover {
+    transform: scale(1.12);
+    background: var(--pill-bg-hover, rgba(0, 0, 0, 0.1));
+    color: var(--text);
+  }
+
+  .fab-toggle-btn.open {
+    background: var(--text);
+    color: var(--bg-warm, #faf9f7);
+    border-color: var(--text);
+  }
+
   .cover-footer {
+    position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: flex-end;
+    align-items: center;
     width: 100%;
+    min-height: 32px;
   }
 
   .footer-left-lockup {
+    position: absolute;
+    bottom: 2.8rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+    padding: 0.75rem 1.4rem;
+    background: var(--popover-bg, var(--bg-warm, #f7f6f1));
+    border: 1px solid var(--popover-border, var(--border, rgba(0, 0, 0, 0.12)));
+    border-radius: 14px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+    pointer-events: auto;
+    max-width: calc(100% - 2rem);
+    box-sizing: border-box;
+    width: max-content;
+  }
+
+  :global(.theme-eink-dark) .footer-left-lockup,
+  :global(.mode-dark) .footer-left-lockup,
+  .mode-dark .footer-left-lockup {
+    background: var(--popover-bg, #1e1e24);
+    border-color: var(--popover-border, rgba(255, 255, 255, 0.15));
   }
 
   .meta-col {
@@ -214,59 +309,84 @@
 
   .meta-item {
     display: flex;
-    gap: 1.6rem;
+    align-items: center;
+    gap: 1.2rem;
     font-family: var(--font-mono, monospace);
-    font-size: 0.64rem;
+    font-size: 0.62rem;
     line-height: 1.2;
+    white-space: nowrap;
   }
 
   .m-key {
     color: var(--text-muted);
     font-size: 0.62rem;
-    min-width: 54px;
+    min-width: 68px;
+    letter-spacing: -0.01em;
   }
 
   .m-val {
     color: var(--text);
     font-weight: 500;
+    font-size: 0.64rem;
+    white-space: nowrap;
   }
 
   .footer-divider {
     width: 1px;
-    height: 64px;
-    background: var(--border, rgba(0, 0, 0, 0.12));
+    height: 52px;
+    background: var(--border, rgba(0, 0, 0, 0.1));
+    flex-shrink: 0;
+  }
+
+  :global(.mode-dark) .footer-divider,
+  .mode-dark .footer-divider {
+    background: rgba(255, 255, 255, 0.15);
   }
 
   .stats-col {
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.45rem;
+    white-space: nowrap;
   }
 
   .stat-unit {
     display: flex;
-    flex-direction: column;
+    align-items: baseline;
+    gap: 0.45rem;
     line-height: 1.1;
+    white-space: nowrap;
   }
 
   .stat-unit .stat-num {
     font-family: var(--font-sans);
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--text);
   }
 
   .stat-unit .stat-lbl {
     font-family: var(--font-sans);
-    font-size: 0.6rem;
+    font-size: 0.64rem;
     color: var(--text-muted);
-    letter-spacing: 0.02em;
-    margin-top: 0.1rem;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 580px) {
+    .footer-left-lockup {
+      gap: 1rem;
+      padding: 0.6rem 1rem;
+    }
+    .m-key {
+      min-width: 58px;
+    }
   }
 
   .action-col {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    pointer-events: auto;
   }
 
   .begin-pill {
