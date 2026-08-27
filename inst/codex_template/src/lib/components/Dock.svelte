@@ -144,7 +144,7 @@
     color: var(--bg, #fff);
     font-size: 0.55rem;
     font-weight: 700;
-    font-family: var(--font-label, "Cabinet Grotesk", sans-serif);
+    font-family: var(--font-sans);
     width: 14px;
     height: 14px;
     display: flex;
@@ -161,8 +161,8 @@
     all: unset;
     cursor: pointer;
     box-sizing: border-box;
-    font-family: var(--font-mono, monospace);
-    font-size: 0.64rem;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
     font-weight: 500;
     line-height: 1;
     color: var(--text-secondary, #4a4a5a);

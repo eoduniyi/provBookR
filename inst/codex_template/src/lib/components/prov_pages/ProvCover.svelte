@@ -226,7 +226,7 @@
   .cover-hero .script-title {
     position: relative;
     z-index: 1;
-    font-family: var(--font-sans, system-ui);
+    font-family: var(--font-sans);
     font-size: 1.7rem;
     font-weight: 500;
     color: var(--text);
@@ -311,10 +311,11 @@
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    font-family: var(--font-mono, monospace);
-    font-size: 0.62rem;
-    line-height: 1.2;
+    font-family: var(--font-sans);
+    font-size: 0.64rem;
+    line-height: 1.25;
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
   }
 
   .m-key {
