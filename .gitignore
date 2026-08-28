@@ -1,2 +1,26 @@
 /.project
 .Rproj.user
+.RData
+.Rhistory
+.DS_Store
+*.DS_Store
+inst/codex_template/node_modules/
+inst/codex_template/.svelte-kit/
+inst/codex_template/build/
+*.wav
+*.mp3
+*.ogg
+
+# Generated ProvBooks & Pipeline Data
+books/
+notebooks/books/
+*_book/
+test_*/
+prov_data/
+prov_data_*/
+*.rds
+*.png
+!docs/*.png
+reproducible_proposal_final.md
+reproducible_proposal.md
+testing/
